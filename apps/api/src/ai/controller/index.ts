@@ -11,8 +11,18 @@ const dataAssistant = new DataAssistantClient(
 /**
  * Extracts user session information from the request
  */
-function extractSessionInfo(request: FastifyRequest): UserSessionInfo {
-  // TODO: Implement proper session extraction from auth token
+export function extractSessionInfo(request: FastifyRequest): UserSessionInfo {
+  // Extract real session info if available
+  if (request.user) {
+    return {
+      userId: request.user.id || 'user-123',
+      organizationId: request.user.organizationId || 'org-123',
+      email: request.user.email || 'user@example.com',
+      name: request.user.name || 'Test User'
+    };
+  }
+
+  // Return mock session info as fallback
   return {
     userId: 'user-123',
     organizationId: 'org-123',

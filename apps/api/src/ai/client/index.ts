@@ -7,6 +7,8 @@ import * as dataSourceModule from "../../datasources/index.js";
 import { fetchDataSourceStructure } from "../../datasources/structure.js";
 import { IOServer } from "../../websocket/index.js";
 import { config } from "../../config/index.js";
+import fs from 'fs';
+import path from 'path';
 
 // Class for handling data analysis AI operations
 export class DataAssistantClient {
@@ -173,18 +175,25 @@ IMPORTANT: The content should be educational, accurate, and written at a level a
     socketServer: IOServer
   ): Promise<string> {
     try {
-      // Fetch the data source structure to get schema information
-      const dataSource = await this.getDataSource(dataSourceId, dataSourceType);
-      if (!dataSource) {
-        throw new Error(`Data source with ID ${dataSourceId} not found`);
-      }
+      // Check if this is a test/demo data source
+      let schemaStructure;
+      if (dataSourceId === 'sample-educational-data') {
+        // Load sample educational data schema
+        schemaStructure = await this.loadSampleSchema('educational-data');
+      } else {
+        // Fetch the data source structure to get schema information
+        const dataSource = await this.getDataSource(dataSourceId, dataSourceType);
+        if (!dataSource) {
+          throw new Error(`Data source with ID ${dataSourceId} not found`);
+        }
 
-      // Fetch schema information
-      const schemaStructure = await fetchDataSourceStructure(
-        socketServer,
-        dataSource.config,
-        { forceRefresh: false, additionalInfo: null }
-      );
+        // Fetch schema information
+        schemaStructure = await fetchDataSourceStructure(
+          socketServer,
+          dataSource.config,
+          { forceRefresh: false, additionalInfo: null }
+        );
+      }
 
       if (!schemaStructure) {
         throw new Error("Failed to fetch data source schema");
@@ -254,21 +263,21 @@ Please generate a SQL query that addresses the user's question using the provide
     sessionInfo: UserSessionInfo
   ): Promise<any> {
     try {
-      // This would connect to the data source and execute the query
-      // For now we'll stub this out as it needs to be implemented based on the existing datasource module
-      console.log(`Executing SQL against ${dataSourceType} data source ${dataSourceId}:\n${sql}`);
+      // Check if this is a test/demo data source
+      if (dataSourceId === 'sample-educational-data') {
+        // For sample data, generate mock results based on the SQL query
+        return this.generateMockResults(sql);
+      }
       
-      // In a real implementation, this would use the datasource module to execute the query
-      // The implementation would depend on the data source type
+      // For real data sources, use the actual data source
+      const dataSource = await this.getDataSource(dataSourceId, dataSourceType);
+      if (!dataSource) {
+        throw new Error(`Data source with ID ${dataSourceId} not found`);
+      }
       
-      // Return mock data for now - this should be replaced with actual query execution
-      return {
-        columns: ["column1", "column2", "column3"],
-        rows: [
-          { column1: "value1", column2: "value2", column3: "value3" },
-          { column1: "value4", column2: "value5", column3: "value6" }
-        ]
-      };
+      // TODO: Implement actual query execution against the data source
+      // For now, return mock results
+      return this.generateMockResults(sql);
     } catch (error) {
       console.error("Error in executeQuery:", error);
       throw new Error(error instanceof Error ? error.message : "Unknown error in query execution");
@@ -369,33 +378,114 @@ Please analyze these results and generate meaningful insights.`
    * Formats schema information for use in AI prompts
    */
   private formatSchemaForPrompt(schemaStructure: any): string {
-    // Extract and format schema information for the AI prompt
-    let schemaInfo = "";
-    
-    // In a real implementation, this would extract and format table and column information
-    // from the schema structure in a way that's useful for the AI
-    
-    // For example:
-    if (schemaStructure.schemas) {
-      Object.entries(schemaStructure.schemas).forEach(([schemaName, schema]: [string, any]) => {
-        if (schema.tables) {
-          schemaInfo += `Schema: ${schemaName}\n`;
-          
-          Object.entries(schema.tables).forEach(([tableName, table]: [string, any]) => {
-            schemaInfo += `  Table: ${tableName}\n`;
-            
-            if (table.columns) {
-              Object.entries(table.columns).forEach(([columnName, column]: [string, any]) => {
-                schemaInfo += `    Column: ${columnName}, Type: ${column.type || 'unknown'}\n`;
-              });
+    // Check if this is a sample schema with a specific format
+    if (schemaStructure?.tables && Array.isArray(schemaStructure.tables)) {
+      // Format tables and columns
+      let schemaInfo = '';
+      
+      schemaStructure.tables.forEach((table: any) => {
+        schemaInfo += `Table: ${table.name}\n`;
+        if (table.description) {
+          schemaInfo += `Description: ${table.description}\n`;
+        }
+        schemaInfo += 'Columns:\n';
+        
+        if (Array.isArray(table.columns)) {
+          table.columns.forEach((column: any) => {
+            schemaInfo += `  - ${column.name} (${column.type})`;
+            if (column.description) {
+              schemaInfo += `: ${column.description}`;
             }
-            
             schemaInfo += '\n';
           });
         }
+        
+        schemaInfo += '\n';
       });
+      
+      // Add relationships if available
+      if (schemaStructure.relationships && Array.isArray(schemaStructure.relationships)) {
+        schemaInfo += 'Relationships:\n';
+        schemaStructure.relationships.forEach((rel: any) => {
+          schemaInfo += `  - ${rel.from}.${rel.from_column} -> ${rel.to}.${rel.to_column}\n`;
+        });
+      }
+      
+      return schemaInfo;
     }
     
-    return schemaInfo || "Schema information not available";
+    // Default format for regular schema structure
+    return JSON.stringify(schemaStructure, null, 2);
+  }
+
+  /**
+   * Loads a sample schema from the sample-schemas directory
+   */
+  private async loadSampleSchema(schemaName: string): Promise<any> {
+    try {
+      const filePath = path.join(__dirname, '../../data/sample-schemas', `${schemaName}.json`);
+      const fileContent = await fs.promises.readFile(filePath, 'utf8');
+      return JSON.parse(fileContent);
+    } catch (error) {
+      console.error(`Error loading sample schema ${schemaName}:`, error);
+      return null;
+    }
+  }
+
+  // Helper method to generate mock results based on SQL
+  private generateMockResults(sql: string): any {
+    // Parse the SQL to determine what kind of data to return
+    const lowerSql = sql.toLowerCase();
+    
+    // For student retention queries
+    if (lowerSql.includes('retention') && lowerSql.includes('first-gen')) {
+      return {
+        columns: ['term', 'enrolled_count', 'retained_count', 'retention_rate'],
+        rows: [
+          ['Fall 2024', 250, 213, 85.2],
+          ['Spring 2025', 225, 171, 76.0],
+          ['Summer 2025', 120, 98, 81.7],
+          ['Fall 2025', 260, 218, 83.8]
+        ]
+      };
+    }
+    
+    // For engagement queries
+    if (lowerSql.includes('engagement') || lowerSql.includes('lms_activity')) {
+      return {
+        columns: ['student_id', 'first_name', 'last_name', 'avg_weekly_logins', 'avg_weekly_minutes', 'avg_completion_rate'],
+        rows: [
+          ['S001', 'John', 'Smith', 12.3, 245.6, 0.89],
+          ['S002', 'Maria', 'Garcia', 8.7, 198.2, 0.76],
+          ['S003', 'James', 'Wilson', 5.2, 112.5, 0.65],
+          ['S004', 'Emily', 'Johnson', 14.8, 287.1, 0.92],
+          ['S005', 'Omar', 'Hassan', 7.3, 156.8, 0.72]
+        ]
+      };
+    }
+    
+    // For at-risk student queries
+    if (lowerSql.includes('risk') || lowerSql.includes('at-risk')) {
+      return {
+        columns: ['student_id', 'first_name', 'last_name', 'overall_risk', 'predicted_retention', 'advising_sessions', 'last_advising_date', 'last_lms_login'],
+        rows: [
+          ['S006', 'Lisa', 'Chen', 85, 0.35, 1, '2025-04-15', '2025-05-01'],
+          ['S007', 'David', 'Patel', 82, 0.38, 0, null, '2025-04-20'],
+          ['S008', 'Olivia', 'Washington', 78, 0.42, 2, '2025-05-12', '2025-05-18'],
+          ['S009', 'Miguel', 'Rodriguez', 77, 0.45, 1, '2025-04-05', '2025-05-10'],
+          ['S010', 'Aisha', 'Mohammed', 76, 0.47, 3, '2025-05-15', '2025-05-19']
+        ]
+      };
+    }
+    
+    // Default mock results
+    return {
+      columns: ['mock_column_1', 'mock_column_2'],
+      rows: [
+        ['Mock data 1', 123],
+        ['Mock data 2', 456],
+        ['Mock data 3', 789]
+      ]
+    };
   }
 } 

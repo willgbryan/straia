@@ -2,7 +2,7 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import Layout from '@/components/Layout'
 import { useSession } from '@/hooks/useAuth'
-import DataAssistantSimple from '@/components/dataAssistant/simplified/DataAssistantSimple'
+import DataAssistant from '@/components/dataAssistant/DataAssistant'
 
 export default function DataAssistantPage() {
   const router = useRouter()
@@ -44,7 +44,7 @@ export default function DataAssistantPage() {
             </div>
           </div>
 
-          <DataAssistantSimple workspaceId={workspaceId} />
+          <DataAssistant workspaceId={workspaceId} />
         </div>
       </div>
     </Layout>

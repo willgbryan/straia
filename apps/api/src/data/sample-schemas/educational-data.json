@@ -1,0 +1,171 @@
+{
+  "tables": [
+    {
+      "name": "students",
+      "description": "Student demographic and enrollment information",
+      "columns": [
+        { "name": "student_id", "type": "VARCHAR", "description": "Unique identifier for the student" },
+        { "name": "first_name", "type": "VARCHAR", "description": "Student's first name" },
+        { "name": "last_name", "type": "VARCHAR", "description": "Student's last name" },
+        { "name": "email", "type": "VARCHAR", "description": "Student's email address" },
+        { "name": "enrollment_date", "type": "DATE", "description": "Date when the student first enrolled" },
+        { "name": "graduation_date", "type": "DATE", "description": "Expected graduation date" },
+        { "name": "major", "type": "VARCHAR", "description": "Student's declared major" },
+        { "name": "parent_education_level", "type": "VARCHAR", "description": "Highest education level of parents (None, High School, Some College, Associate's, Bachelor's, Graduate)" },
+        { "name": "residence_type", "type": "VARCHAR", "description": "Type of residence (On-Campus, Off-Campus, Commuter)" },
+        { "name": "home_zip", "type": "VARCHAR", "description": "Student's home ZIP code" },
+        { "name": "is_first_gen", "type": "BOOLEAN", "description": "Flag indicating if student is first-generation (based on parent education)" },
+        { "name": "is_transfer", "type": "BOOLEAN", "description": "Flag indicating if student transferred from another institution" },
+        { "name": "is_active", "type": "BOOLEAN", "description": "Flag indicating if student is currently active" }
+      ]
+    },
+    {
+      "name": "enrollments",
+      "description": "Course enrollment records for each term",
+      "columns": [
+        { "name": "enrollment_id", "type": "VARCHAR", "description": "Unique identifier for the enrollment record" },
+        { "name": "student_id", "type": "VARCHAR", "description": "Foreign key to students table" },
+        { "name": "course_id", "type": "VARCHAR", "description": "Foreign key to courses table" },
+        { "name": "term_id", "type": "VARCHAR", "description": "Foreign key to terms table" },
+        { "name": "enrollment_date", "type": "DATE", "description": "Date when the student enrolled in this course" },
+        { "name": "withdrawal_date", "type": "DATE", "description": "Date when the student withdrew (if applicable)" },
+        { "name": "final_grade", "type": "VARCHAR", "description": "Final letter grade received" },
+        { "name": "grade_points", "type": "NUMERIC", "description": "Grade points associated with the final grade" },
+        { "name": "credits", "type": "NUMERIC", "description": "Number of credits for this course" },
+        { "name": "status", "type": "VARCHAR", "description": "Current status (Enrolled, Completed, Withdrawn, Incomplete)" }
+      ]
+    },
+    {
+      "name": "courses",
+      "description": "Course catalog information",
+      "columns": [
+        { "name": "course_id", "type": "VARCHAR", "description": "Unique identifier for the course" },
+        { "name": "department_id", "type": "VARCHAR", "description": "Foreign key to departments table" },
+        { "name": "course_code", "type": "VARCHAR", "description": "Course code (e.g., CSC101)" },
+        { "name": "title", "type": "VARCHAR", "description": "Course title" },
+        { "name": "description", "type": "TEXT", "description": "Course description" },
+        { "name": "credits", "type": "NUMERIC", "description": "Number of credits" },
+        { "name": "level", "type": "VARCHAR", "description": "Course level (Introductory, Intermediate, Advanced)" }
+      ]
+    },
+    {
+      "name": "terms",
+      "description": "Academic terms information",
+      "columns": [
+        { "name": "term_id", "type": "VARCHAR", "description": "Unique identifier for the term" },
+        { "name": "name", "type": "VARCHAR", "description": "Term name (e.g., Fall 2025)" },
+        { "name": "start_date", "type": "DATE", "description": "Start date of the term" },
+        { "name": "end_date", "type": "DATE", "description": "End date of the term" },
+        { "name": "type", "type": "VARCHAR", "description": "Term type (Fall, Spring, Summer)" },
+        { "name": "academic_year", "type": "VARCHAR", "description": "Academic year (e.g., 2024-2025)" },
+        { "name": "is_current", "type": "BOOLEAN", "description": "Flag indicating if this is the current term" }
+      ]
+    },
+    {
+      "name": "departments",
+      "description": "Academic departments information",
+      "columns": [
+        { "name": "department_id", "type": "VARCHAR", "description": "Unique identifier for the department" },
+        { "name": "name", "type": "VARCHAR", "description": "Department name" },
+        { "name": "code", "type": "VARCHAR", "description": "Department code (e.g., CSC)" },
+        { "name": "college_id", "type": "VARCHAR", "description": "Foreign key to colleges table" }
+      ]
+    },
+    {
+      "name": "attendance",
+      "description": "Class attendance records",
+      "columns": [
+        { "name": "attendance_id", "type": "VARCHAR", "description": "Unique identifier for the attendance record" },
+        { "name": "enrollment_id", "type": "VARCHAR", "description": "Foreign key to enrollments table" },
+        { "name": "class_date", "type": "DATE", "description": "Date of the class" },
+        { "name": "is_present", "type": "BOOLEAN", "description": "Flag indicating if student was present" },
+        { "name": "minutes_late", "type": "INTEGER", "description": "Minutes late to class (if applicable)" }
+      ]
+    },
+    {
+      "name": "advisors",
+      "description": "Academic advisor information",
+      "columns": [
+        { "name": "advisor_id", "type": "VARCHAR", "description": "Unique identifier for the advisor" },
+        { "name": "first_name", "type": "VARCHAR", "description": "Advisor's first name" },
+        { "name": "last_name", "type": "VARCHAR", "description": "Advisor's last name" },
+        { "name": "email", "type": "VARCHAR", "description": "Advisor's email address" },
+        { "name": "department_id", "type": "VARCHAR", "description": "Foreign key to departments table" }
+      ]
+    },
+    {
+      "name": "advising_sessions",
+      "description": "Records of advising sessions",
+      "columns": [
+        { "name": "session_id", "type": "VARCHAR", "description": "Unique identifier for the session" },
+        { "name": "student_id", "type": "VARCHAR", "description": "Foreign key to students table" },
+        { "name": "advisor_id", "type": "VARCHAR", "description": "Foreign key to advisors table" },
+        { "name": "date", "type": "DATE", "description": "Date of the session" },
+        { "name": "duration_minutes", "type": "INTEGER", "description": "Duration of the session in minutes" },
+        { "name": "notes", "type": "TEXT", "description": "Session notes" },
+        { "name": "status", "type": "VARCHAR", "description": "Session status (Scheduled, Completed, Missed)" }
+      ]
+    },
+    {
+      "name": "lms_activity",
+      "description": "Learning Management System activity metrics",
+      "columns": [
+        { "name": "activity_id", "type": "VARCHAR", "description": "Unique identifier for the activity record" },
+        { "name": "student_id", "type": "VARCHAR", "description": "Foreign key to students table" },
+        { "name": "course_id", "type": "VARCHAR", "description": "Foreign key to courses table" },
+        { "name": "term_id", "type": "VARCHAR", "description": "Foreign key to terms table" },
+        { "name": "login_count", "type": "INTEGER", "description": "Number of logins in the time period" },
+        { "name": "minutes_active", "type": "INTEGER", "description": "Total minutes active in the time period" },
+        { "name": "last_login_date", "type": "DATE", "description": "Date of the last login" },
+        { "name": "assignment_completion_rate", "type": "NUMERIC", "description": "Percentage of assignments completed" },
+        { "name": "time_period", "type": "VARCHAR", "description": "Time period for these metrics (Week, Month, Term)" }
+      ]
+    },
+    {
+      "name": "risk_scores",
+      "description": "Student risk assessment scores",
+      "columns": [
+        { "name": "risk_id", "type": "VARCHAR", "description": "Unique identifier for the risk record" },
+        { "name": "student_id", "type": "VARCHAR", "description": "Foreign key to students table" },
+        { "name": "term_id", "type": "VARCHAR", "description": "Foreign key to terms table" },
+        { "name": "academic_risk", "type": "NUMERIC", "description": "Academic risk score (0-100)" },
+        { "name": "engagement_risk", "type": "NUMERIC", "description": "Engagement risk score (0-100)" },
+        { "name": "financial_risk", "type": "NUMERIC", "description": "Financial risk score (0-100)" },
+        { "name": "overall_risk", "type": "NUMERIC", "description": "Overall risk score (0-100)" },
+        { "name": "predicted_retention", "type": "NUMERIC", "description": "Probability of retention (0-1)" },
+        { "name": "assessment_date", "type": "DATE", "description": "Date the risk assessment was generated" }
+      ]
+    }
+  ],
+  "relationships": [
+    { "from": "students", "from_column": "student_id", "to": "enrollments", "to_column": "student_id" },
+    { "from": "courses", "from_column": "course_id", "to": "enrollments", "to_column": "course_id" },
+    { "from": "terms", "from_column": "term_id", "to": "enrollments", "to_column": "term_id" },
+    { "from": "departments", "from_column": "department_id", "to": "courses", "to_column": "department_id" },
+    { "from": "enrollments", "from_column": "enrollment_id", "to": "attendance", "to_column": "enrollment_id" },
+    { "from": "students", "from_column": "student_id", "to": "advising_sessions", "to_column": "student_id" },
+    { "from": "advisors", "from_column": "advisor_id", "to": "advising_sessions", "to_column": "advisor_id" },
+    { "from": "students", "from_column": "student_id", "to": "lms_activity", "to_column": "student_id" },
+    { "from": "courses", "from_column": "course_id", "to": "lms_activity", "to_column": "course_id" },
+    { "from": "terms", "from_column": "term_id", "to": "lms_activity", "to_column": "term_id" },
+    { "from": "students", "from_column": "student_id", "to": "risk_scores", "to_column": "student_id" },
+    { "from": "terms", "from_column": "term_id", "to": "risk_scores", "to_column": "term_id" }
+  ],
+  "sample_queries": [
+    {
+      "name": "First-Gen Student Retention",
+      "description": "Analyzes retention rates for first-generation students",
+      "query": "SELECT t.name as term, COUNT(DISTINCT e1.student_id) as enrolled_count, COUNT(DISTINCT e2.student_id) as retained_count, (COUNT(DISTINCT e2.student_id)::FLOAT / NULLIF(COUNT(DISTINCT e1.student_id), 0)) * 100 as retention_rate FROM students s JOIN enrollments e1 ON s.student_id = e1.student_id JOIN terms t ON e1.term_id = t.term_id LEFT JOIN enrollments e2 ON s.student_id = e2.student_id AND e2.term_id = (SELECT term_id FROM terms WHERE start_date > t.start_date ORDER BY start_date ASC LIMIT 1) WHERE s.is_first_gen = true AND e1.status = 'Completed' GROUP BY t.name ORDER BY t.name;"
+    },
+    {
+      "name": "Commuter Student Engagement",
+      "description": "Measures LMS engagement for commuter students",
+      "query": "SELECT s.student_id, s.first_name, s.last_name, AVG(l.login_count) as avg_weekly_logins, AVG(l.minutes_active) as avg_weekly_minutes, AVG(l.assignment_completion_rate) as avg_completion_rate FROM students s JOIN lms_activity l ON s.student_id = l.student_id JOIN terms t ON l.term_id = t.term_id WHERE s.residence_type = 'Commuter' AND t.is_current = true GROUP BY s.student_id, s.first_name, s.last_name ORDER BY avg_weekly_minutes DESC;"
+    },
+    {
+      "name": "At-Risk Student Identification",
+      "description": "Identifies students at high risk of non-retention",
+      "query": "SELECT s.student_id, s.first_name, s.last_name, r.overall_risk, r.predicted_retention, COUNT(a.session_id) as advising_sessions, MAX(a.date) as last_advising_date, MAX(l.last_login_date) as last_lms_login FROM students s JOIN risk_scores r ON s.student_id = r.student_id JOIN terms t ON r.term_id = t.term_id LEFT JOIN advising_sessions a ON s.student_id = a.student_id AND a.date BETWEEN t.start_date AND CURRENT_DATE LEFT JOIN lms_activity l ON s.student_id = l.student_id AND l.term_id = t.term_id WHERE t.is_current = true AND r.overall_risk > 75 GROUP BY s.student_id, s.first_name, s.last_name, r.overall_risk, r.predicted_retention ORDER BY r.overall_risk DESC;"
+    }
+  ]
+} 
