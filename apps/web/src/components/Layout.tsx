@@ -25,6 +25,7 @@ import {
   MagnifyingGlassIcon,
   RocketLaunchIcon,
   AcademicCapIcon,
+  ChatBubbleLeftRightIcon,
 } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -75,6 +76,14 @@ const configs = (workspaceId: string): ConfigItem[] => [
     hidden: true,
     icon: CpuChipIcon,
     allowedRoles: new Set<UserWorkspaceRole>(['admin']),
+    openInNewTab: false,
+  },
+  {
+    id: 'data-assistant-sidebar-item',
+    name: 'Data Assistant',
+    href: `/workspaces/${workspaceId}/data-assistant`,
+    icon: ChatBubbleLeftRightIcon,
+    allowedRoles: new Set<UserWorkspaceRole>(['admin', 'editor', 'viewer']),
     openInNewTab: false,
   },
   {
