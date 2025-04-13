@@ -18,6 +18,7 @@ import { config } from '../../../config/index.js'
 import { isWorkspaceNameValid } from '../../../utils/validation.js'
 import tutorialsRouter from './tutorials.js'
 import flagsRouter from './flags.js'
+import analystRouter from './analyst.js'
 
 const isAdmin = hasWorkspaceRoles([UserWorkspaceRole.admin])
 
@@ -98,6 +99,7 @@ export default function workspaceRouter(socketServer: IOServer) {
   router.use('/files', canUpdateWorkspace, filesRouter)
   router.use('/components', canUpdateWorkspace, componentsRouter(socketServer))
   router.use('/flags', flagsRouter)
+  router.use('/analyst', analystRouter)
 
   return router
 }

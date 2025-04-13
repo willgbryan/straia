@@ -66,6 +66,18 @@ services:
     volumes:
       - ecommerce_data:/var/lib/postgresql/data
 
+  education:
+    build: data/psql/education
+    restart: always
+    ports:
+      - '5434:5432'
+    environment:
+      POSTGRES_DB: 'education'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'password'
+    volumes:
+      - education_data:/var/lib/postgresql/data
+
   haproxy:
     image: haproxy:3.0
     volumes:
@@ -76,3 +88,4 @@ services:
 volumes:
   postgres_dev_data:
   ecommerce_data:
+  education_data:

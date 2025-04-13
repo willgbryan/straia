@@ -32,14 +32,17 @@ import {
   getDefaultNumberFormat,
 } from './blocks/visualization-v2.js'
 import { ascend, descend, head, sortWith } from 'ramda'
+import { type AnalystBlock } from './blocks/analyst.js'
 
 export * from './operations/index.js'
+export * from './ui/index.js'
+export * from './execution/index.js'
 export * from './blocks/index.js'
+export * from './blocks/analyst.js'
 export * from './blocks/visualization-v2.js'
 export * from './dashboard.js'
 export * from './metadata.js'
 export * from './component.js'
-export * from './execution/index.js'
 export * from './ai-tasks/index.js'
 
 export function getBlocks(doc: Y.Doc) {
@@ -305,6 +308,7 @@ export function switchBlockType<T>(
     onDashboardHeader: (block: Y.XmlElement<DashboardHeaderBlock>) => T
     onWriteback: (block: Y.XmlElement<WritebackBlock>) => T
     onPivotTable: (block: Y.XmlElement<PivotTableBlock>) => T
+    onAnalyst: (block: Y.XmlElement<AnalystBlock>) => T
   }
 ): T {
   const type = block.getAttribute('type') as BlockType
@@ -337,6 +341,8 @@ export function switchBlockType<T>(
       return handles.onWriteback(block as Y.XmlElement<WritebackBlock>)
     case BlockType.PivotTable:
       return handles.onPivotTable(block as Y.XmlElement<PivotTableBlock>)
+    case BlockType.Analyst:
+      return handles.onAnalyst(block as Y.XmlElement<AnalystBlock>)
   }
 }
 

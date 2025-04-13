@@ -1,0 +1,1001 @@
+student_id,first_name,last_name,email,gender,date_of_birth,enrollment_date,expected_graduation,major,gpa,credits_completed,parent_education_level,housing_status,zip_code,is_international,financial_aid_status
+1,William,Martinez,william.martinez1@university.edu,Female,2003-12-08,2023-09-01,2028-09-01,Engineering,2.02,38,Master's Degree,off_campus,12397,f,Work Study
+2,Fatima,Rahman,fatima.rahman2@university.edu,Male,2001-06-11,2024-09-30,2028-09-30,Physics,3.01,1,Bachelor's Degree,on_campus,49424,f,Scholarship
+3,Miguel,Lewis,miguel.lewis3@university.edu,Male,1997-04-02,2024-12-06,2027-12-06,Political Science,3.76,88,Doctoral Degree,on_campus,34181,t,Grants
+4,Aisha,Nelson,aisha.nelson4@university.edu,Non-binary,2006-03-11,2024-06-11,2029-06-11,Business,2.57,78,Doctoral Degree,off_campus,12378,f,Work Study
+5,Robert,Garcia,robert.garcia5@university.edu,Non-binary,2004-10-22,2024-01-11,2027-01-11,Computer Science,3.90,52,Master's Degree,off_campus,57578,f,Multiple
+6,Li,Allen,li.allen6@university.edu,Non-binary,2003-07-17,2024-06-09,2029-06-09,Political Science,2.80,17,Master's Degree,off_campus,12303,f,Loans
+7,Elizabeth,King,elizabeth.king7@university.edu,Female,1998-12-25,2024-08-31,2029-08-31,Physics,2.09,28,Associate's Degree,on_campus,52235,f,Scholarship
+8,Barbara,Brown,barbara.brown8@university.edu,Male,2000-01-17,2024-03-02,2027-03-02,History,2.60,53,Bachelor's Degree,off_campus,12331,f,Multiple
+9,Fatima,Carter,fatima.carter9@university.edu,Male,2000-11-22,2024-01-10,2029-01-10,History,3.77,44,Doctoral Degree,on_campus,39954,f,Work Study
+10,Joseph,Allen,joseph.allen10@university.edu,Female,1999-02-22,2024-08-23,2028-08-23,History,2.44,20,Some College,on_campus,63114,f,Loans
+11,Joseph,Lewis,joseph.lewis11@university.edu,Non-binary,2005-03-26,2024-02-06,2028-02-06,Political Science,2.85,7,Bachelor's Degree,on_campus,21493,f,Scholarship
+12,Elizabeth,White,elizabeth.white12@university.edu,Non-binary,1997-06-17,2024-11-15,2027-11-15,Psychology,2.92,114,Bachelor's Degree,off_campus,12358,f,None
+13,Richard,Jones,richard.jones13@university.edu,Male,2005-11-22,2024-06-25,2028-06-25,Engineering,3.12,92,High School,on_campus,85526,f,Loans
+14,Lisa,Mitchell,lisa.mitchell14@university.edu,Male,2004-01-24,2024-10-15,2029-10-15,English,3.85,55,Associate's Degree,off_campus,68250,f,Grants
+15,Joseph,Wright,joseph.wright15@university.edu,Non-binary,1999-11-24,2024-11-14,2029-11-14,Sociology,3.39,61,Master's Degree,on_campus,69656,t,None
+16,Omar,Martinez,omar.martinez16@university.edu,Male,2002-10-31,2023-10-27,2028-10-27,Economics,3.74,81,Bachelor's Degree,on_campus,24237,t,Loans
+17,Li,Jackson,li.jackson17@university.edu,Non-binary,1996-10-26,2025-01-15,2030-01-15,English,2.10,28,Bachelor's Degree,on_campus,54363,f,Scholarship
+18,Mohammad,Zhang,mohammad.zhang18@university.edu,Female,1999-09-22,2023-12-18,2028-12-18,Sociology,3.47,56,Master's Degree,on_campus,46737,f,None
+19,Jessica,Ahmed,jessica.ahmed19@university.edu,Female,2002-03-30,2024-09-10,2027-09-10,Engineering,3.13,12,Associate's Degree,off_campus,12377,f,Loans
+20,Patricia,Nelson,patricia.nelson20@university.edu,Female,2002-02-06,2024-03-05,2028-03-05,Psychology,3.57,102,Doctoral Degree,off_campus,01929,f,Work Study
+21,William,Walker,william.walker21@university.edu,Female,2002-01-12,2024-10-08,2028-10-08,Economics,3.81,104,Master's Degree,on_campus,68276,f,Grants
+22,Jessica,Ali,jessica.ali22@university.edu,Male,2002-02-25,2024-03-03,2028-03-03,Engineering,3.02,38,Master's Degree,off_campus,12387,f,None
+23,Robert,Lee,robert.lee23@university.edu,Non-binary,2004-04-01,2023-10-15,2027-10-15,English,3.06,54,Master's Degree,off_campus,12326,f,Multiple
+24,Fatima,Lee,fatima.lee24@university.edu,Female,1997-10-09,2025-02-01,2029-02-01,Political Science,2.07,115,Some College,off_campus,12346,f,Loans
+25,Jessica,Brown,jessica.brown25@university.edu,Non-binary,1998-07-27,2024-02-12,2028-02-12,English,2.69,79,Doctoral Degree,on_campus,48787,t,Multiple
+26,Elizabeth,Wright,elizabeth.wright26@university.edu,Male,1997-02-26,2023-10-25,2026-10-25,Engineering,2.84,73,Master's Degree,on_campus,79837,f,Scholarship
+27,Mary,Zhang,mary.zhang27@university.edu,Male,2005-09-09,2024-05-11,2027-05-11,Chemistry,3.42,38,Bachelor's Degree,on_campus,32370,f,Work Study
+28,William,Ali,william.ali28@university.edu,Male,2003-06-19,2023-08-16,2028-08-16,Art,2.81,95,Bachelor's Degree,off_campus,12328,f,Grants
+29,Barbara,Jackson,barbara.jackson29@university.edu,Female,1999-11-25,2024-01-18,2027-01-18,Business,2.07,58,Bachelor's Degree,on_campus,69882,f,Scholarship
+30,Aisha,Mitchell,aisha.mitchell30@university.edu,Non-binary,2002-11-16,2023-09-02,2028-09-02,Political Science,3.12,113,High School,on_campus,76559,f,Grants
+31,Lisa,Adams,lisa.adams31@university.edu,Male,1995-10-19,2023-10-10,2028-10-10,Economics,2.92,78,Master's Degree,off_campus,12396,f,Work Study
+32,Linda,Green,linda.green32@university.edu,Male,2000-03-05,2024-02-28,2029-02-28,Psychology,2.33,86,Master's Degree,on_campus,95449,t,Scholarship
+33,Miguel,Robinson,miguel.robinson33@university.edu,Non-binary,1998-01-29,2024-06-19,2029-06-19,Sociology,3.63,82,Doctoral Degree,off_campus,89951,f,Multiple
+34,Jennifer,Rahman,jennifer.rahman34@university.edu,Non-binary,2002-12-07,2024-01-10,2027-01-10,Economics,3.13,99,Master's Degree,on_campus,63419,f,Loans
+35,John,Smith,john.smith35@university.edu,Female,2001-01-14,2024-09-16,2028-09-16,Business,2.07,43,Doctoral Degree,off_campus,12322,f,None
+36,Juan,Harris,juan.harris36@university.edu,Female,2000-04-11,2023-09-27,2028-09-27,Biology,3.28,112,Bachelor's Degree,on_campus,22751,f,None
+37,Omar,Moore,omar.moore37@university.edu,Non-binary,2004-10-01,2024-03-25,2027-03-25,Economics,2.06,72,Bachelor's Degree,off_campus,96565,f,Work Study
+38,Michael,Thomas,michael.thomas38@university.edu,Female,2004-10-15,2024-12-25,2027-12-25,Mathematics,2.24,82,Some College,on_campus,93920,f,Scholarship
+39,Omar,Adams,omar.adams39@university.edu,Non-binary,1996-05-22,2024-10-20,2027-10-20,Sociology,3.67,29,Doctoral Degree,on_campus,65425,f,Loans
+40,Lisa,Chen,lisa.chen40@university.edu,Male,2000-10-21,2024-04-29,2029-04-29,Physics,2.51,104,Associate's Degree,on_campus,71173,f,Multiple
+41,María,Carter,maría.carter41@university.edu,Female,2000-05-05,2024-09-21,2028-09-21,Business,3.38,58,Bachelor's Degree,off_campus,12343,f,Multiple
+42,Carlos,Carter,carlos.carter42@university.edu,Female,2006-11-01,2024-12-11,2027-12-11,Psychology,3.26,70,Doctoral Degree,off_campus,12344,f,Loans
+43,Sarah,Rahman,sarah.rahman43@university.edu,Male,2000-12-08,2024-05-03,2028-05-03,History,2.27,5,Master's Degree,on_campus,08942,f,Loans
+44,Wei,Chen,wei.chen44@university.edu,Female,2005-11-27,2024-01-20,2027-01-20,Computer Science,2.09,25,Doctoral Degree,off_campus,12361,f,Work Study
+45,Thomas,Zhang,thomas.zhang45@university.edu,Male,2003-05-19,2024-07-18,2027-07-18,Computer Science,3.06,48,Bachelor's Degree,off_campus,13037,f,Loans
+46,Juan,Miller,juan.miller46@university.edu,Male,2000-08-21,2024-12-21,2029-12-21,Communications,3.91,43,No High School,on_campus,81868,f,Scholarship
+47,Mary,Moore,mary.moore47@university.edu,Male,2003-04-23,2025-01-28,2028-01-28,Economics,2.60,119,Bachelor's Degree,on_campus,13010,f,Work Study
+48,José,Williams,josé.williams48@university.edu,Non-binary,2003-05-09,2024-09-19,2028-09-19,Sociology,3.61,33,Associate's Degree,off_campus,50661,f,Scholarship
+49,Elizabeth,Moore,elizabeth.moore49@university.edu,Male,2000-11-10,2024-03-08,2028-03-08,Physics,3.88,55,High School,off_campus,12376,f,None
+50,Michael,Scott,michael.scott50@university.edu,Non-binary,2002-10-20,2023-09-07,2028-09-07,Communications,3.48,8,Master's Degree,off_campus,84060,f,Work Study
+51,David,Chen,david.chen51@university.edu,Male,2001-11-11,2024-10-17,2027-10-17,Communications,2.78,107,Doctoral Degree,off_campus,12057,t,Scholarship
+52,Richard,Hall,richard.hall52@university.edu,Female,2003-05-02,2024-12-04,2029-12-04,Political Science,2.06,50,Doctoral Degree,off_campus,68102,f,Multiple
+53,Joseph,Jones,joseph.jones53@university.edu,Female,2004-02-25,2024-11-09,2029-11-09,Art,3.83,0,Bachelor's Degree,on_campus,22056,f,Grants
+54,Yan,Brown,yan.brown54@university.edu,Non-binary,2007-01-04,2024-02-28,2029-02-28,Communications,3.31,94,Associate's Degree,off_campus,12369,f,None
+55,Barbara,Smith,barbara.smith55@university.edu,Non-binary,2005-01-13,2024-10-12,2028-10-12,Political Science,3.36,10,Doctoral Degree,on_campus,07674,f,Scholarship
+56,Mohammad,Wang,mohammad.wang56@university.edu,Non-binary,2001-01-13,2024-04-10,2028-04-10,Physics,2.07,68,Associate's Degree,off_campus,12317,f,Multiple
+57,Linda,Garcia,linda.garcia57@university.edu,Non-binary,1998-05-12,2024-04-21,2027-04-21,Psychology,3.54,96,Bachelor's Degree,on_campus,56355,f,Loans
+58,Fatima,Anderson,fatima.anderson58@university.edu,Female,2004-12-23,2024-04-06,2029-04-06,History,3.83,3,Some College,off_campus,69282,f,Loans
+59,Aisha,Zhang,aisha.zhang59@university.edu,Male,2004-08-07,2024-03-27,2029-03-27,Computer Science,3.82,108,High School,off_campus,12379,f,None
+60,Elizabeth,Jones,elizabeth.jones60@university.edu,Non-binary,2006-03-25,2024-12-22,2027-12-22,Economics,3.79,33,No High School,off_campus,12305,f,Loans
+61,María,Ahmed,maría.ahmed61@university.edu,Male,2005-11-15,2024-11-30,2028-11-30,Communications,3.96,89,No High School,off_campus,94810,f,Grants
+62,María,Anderson,maría.anderson62@university.edu,Male,2003-12-18,2024-08-14,2029-08-14,Political Science,2.42,52,Doctoral Degree,on_campus,15720,f,None
+63,James,Rodriguez,james.rodriguez63@university.edu,Male,1999-09-16,2024-08-09,2028-08-09,History,3.22,37,Master's Degree,off_campus,33105,t,Work Study
+64,Lisa,Nelson,lisa.nelson64@university.edu,Female,1999-01-30,2025-02-02,2029-02-02,Economics,2.83,92,Master's Degree,on_campus,60195,t,Work Study
+65,Michael,Davis,michael.davis65@university.edu,Non-binary,2004-08-21,2023-09-22,2027-09-22,Political Science,3.29,30,Some College,on_campus,23210,f,None
+66,Mary,Jones,mary.jones66@university.edu,Non-binary,1996-04-05,2024-04-22,2029-04-22,Art,3.01,40,Master's Degree,on_campus,66669,t,Scholarship
+67,Sarah,Wang,sarah.wang67@university.edu,Female,1997-07-09,2025-02-04,2028-02-04,Engineering,3.90,79,Master's Degree,on_campus,33340,f,Grants
+68,Abdul,Smith,abdul.smith68@university.edu,Male,2007-02-27,2024-04-07,2027-04-07,Mathematics,2.42,57,Bachelor's Degree,off_campus,12313,f,Work Study
+69,Karen,Green,karen.green69@university.edu,Male,2005-06-30,2024-05-21,2027-05-21,Computer Science,2.47,67,Doctoral Degree,on_campus,98678,f,Work Study
+70,Jessica,White,jessica.white70@university.edu,Female,2006-01-26,2025-01-11,2030-01-11,Economics,2.39,48,Master's Degree,off_campus,12312,f,Scholarship
+71,Susan,Johnson,susan.johnson71@university.edu,Female,1999-07-15,2023-12-07,2026-12-07,Biology,2.23,106,Doctoral Degree,off_campus,41793,t,Work Study
+72,Zhang,Thomas,zhang.thomas72@university.edu,Male,2007-03-22,2023-09-21,2026-09-21,Computer Science,2.28,99,Doctoral Degree,off_campus,12359,f,Multiple
+73,Elizabeth,Khan,elizabeth.khan73@university.edu,Male,1999-08-08,2023-12-07,2028-12-07,Political Science,3.78,77,Doctoral Degree,off_campus,61826,f,Loans
+74,Jennifer,Harris,jennifer.harris74@university.edu,Female,2002-07-19,2024-12-30,2027-12-30,History,3.21,69,Doctoral Degree,off_campus,12390,f,Multiple
+75,Richard,Harris,richard.harris75@university.edu,Female,1996-04-07,2024-01-02,2027-01-02,Physics,2.64,100,High School,off_campus,12382,f,Grants
+76,William,Miller,william.miller76@university.edu,Non-binary,2000-08-09,2024-03-12,2028-03-12,Physics,3.82,88,Doctoral Degree,on_campus,67301,f,Grants
+77,Patricia,Brown,patricia.brown77@university.edu,Female,1997-07-13,2023-11-07,2028-11-07,Physics,2.81,119,Doctoral Degree,on_campus,33004,t,None
+78,Aisha,Miller,aisha.miller78@university.edu,Male,2005-02-26,2024-03-16,2029-03-16,Economics,3.25,91,High School,off_campus,12329,f,Loans
+79,Sarah,Thomas,sarah.thomas79@university.edu,Non-binary,1996-04-29,2024-06-13,2027-06-13,Business,2.57,102,No High School,off_campus,12387,f,Loans
+80,Miguel,Lewis,miguel.lewis80@university.edu,Non-binary,2005-07-14,2024-06-21,2027-06-21,Sociology,2.15,102,Bachelor's Degree,on_campus,96307,f,None
+81,Patricia,Smith,patricia.smith81@university.edu,Male,2000-07-07,2024-08-24,2028-08-24,Political Science,3.40,6,Doctoral Degree,off_campus,12311,f,None
+82,Joseph,Chen,joseph.chen82@university.edu,Female,2006-09-30,2024-07-05,2028-07-05,Engineering,3.64,17,Bachelor's Degree,off_campus,45200,f,Work Study
+83,Abdul,Nelson,abdul.nelson83@university.edu,Female,2004-02-09,2024-11-14,2029-11-14,Mathematics,2.83,65,Master's Degree,off_campus,29245,f,None
+84,María,Anderson,maría.anderson84@university.edu,Non-binary,2007-04-04,2024-04-10,2029-04-10,Business,2.25,61,Doctoral Degree,on_campus,02089,f,Loans
+85,Linda,Robinson,linda.robinson85@university.edu,Female,1997-12-19,2023-08-26,2026-08-26,Art,2.00,85,Doctoral Degree,on_campus,71113,f,Loans
+86,Linda,Miller,linda.miller86@university.edu,Female,1996-12-25,2024-09-20,2029-09-20,Communications,3.28,69,No High School,off_campus,12302,f,Loans
+87,Lisa,Robinson,lisa.robinson87@university.edu,Non-binary,2002-08-02,2024-07-06,2027-07-06,Chemistry,3.68,57,Master's Degree,off_campus,12330,f,Grants
+88,Aisha,Taylor,aisha.taylor88@university.edu,Male,2003-01-06,2024-03-08,2029-03-08,Business,3.02,30,Doctoral Degree,on_campus,13180,f,None
+89,Lisa,Taylor,lisa.taylor89@university.edu,Male,2003-11-16,2023-08-25,2026-08-25,Biology,2.63,0,Doctoral Degree,on_campus,14141,f,Multiple
+90,Susan,Davis,susan.davis90@university.edu,Non-binary,2002-04-29,2024-06-07,2029-06-07,Business,3.27,61,Master's Degree,on_campus,21743,f,Scholarship
+91,Jessica,Moore,jessica.moore91@university.edu,Non-binary,2007-01-27,2024-11-29,2029-11-29,Art,3.39,9,Bachelor's Degree,on_campus,34132,f,Multiple
+92,Jessica,Ahmed,jessica.ahmed92@university.edu,Male,1999-02-23,2024-08-09,2028-08-09,Sociology,2.93,23,Master's Degree,off_campus,11677,f,Loans
+93,Robert,Wright,robert.wright93@university.edu,Non-binary,2001-10-26,2024-11-24,2028-11-24,Computer Science,3.37,59,Master's Degree,off_campus,77973,f,Scholarship
+94,Michael,Harris,michael.harris94@university.edu,Male,2001-01-18,2024-05-19,2029-05-19,Economics,2.55,21,Master's Degree,on_campus,27905,f,Loans
+95,Jennifer,Brown,jennifer.brown95@university.edu,Male,1997-04-09,2023-08-30,2027-08-30,Computer Science,3.84,0,No High School,off_campus,12305,f,None
+96,Linda,Jones,linda.jones96@university.edu,Non-binary,1997-06-13,2024-07-16,2027-07-16,Engineering,3.34,26,Associate's Degree,off_campus,12328,f,Grants
+97,Zhang,Walker,zhang.walker97@university.edu,Male,1999-09-06,2025-01-18,2028-01-18,Business,2.99,108,Master's Degree,off_campus,12301,f,Loans
+98,Robert,Wang,robert.wang98@university.edu,Non-binary,1997-12-28,2024-11-10,2027-11-10,Engineering,2.95,44,High School,on_campus,93113,f,Work Study
+99,Michael,Robinson,michael.robinson99@university.edu,Male,1998-03-03,2024-07-25,2028-07-25,Sociology,3.87,47,Master's Degree,on_campus,23043,f,Scholarship
+100,Omar,Khan,omar.khan100@university.edu,Male,2003-03-26,2024-07-28,2029-07-28,Biology,2.79,18,High School,on_campus,71529,f,Work Study
+101,Carlos,Singh,carlos.singh101@university.edu,Female,2004-01-24,2024-10-13,2029-10-13,Engineering,2.89,21,Master's Degree,off_campus,15022,f,Multiple
+102,James,Liu,james.liu102@university.edu,Non-binary,2004-03-19,2025-01-26,2029-01-26,Computer Science,2.82,108,Doctoral Degree,off_campus,12327,f,Multiple
+103,Linda,Miller,linda.miller103@university.edu,Non-binary,2002-07-12,2024-02-17,2027-02-17,Art,2.21,16,Master's Degree,off_campus,12350,f,Grants
+104,Lisa,Thomas,lisa.thomas104@university.edu,Non-binary,2006-08-16,2024-05-20,2029-05-20,Political Science,2.63,11,Master's Degree,off_campus,12389,f,Multiple
+105,Sarah,Martinez,sarah.martinez105@university.edu,Male,2006-10-11,2023-09-30,2027-09-30,Biology,2.41,42,Doctoral Degree,off_campus,67542,f,Grants
+106,Lisa,Young,lisa.young106@university.edu,Male,2005-12-03,2023-08-27,2026-08-27,Sociology,3.23,110,Doctoral Degree,off_campus,12333,f,Work Study
+107,Jennifer,Thomas,jennifer.thomas107@university.edu,Non-binary,1996-12-25,2023-12-11,2027-12-11,Art,3.76,50,Master's Degree,off_campus,97332,f,Work Study
+108,Carlos,Ahmed,carlos.ahmed108@university.edu,Female,2004-09-29,2024-03-19,2027-03-19,Physics,2.10,59,Master's Degree,on_campus,75649,f,Loans
+109,María,Wilson,maría.wilson109@university.edu,Male,2006-08-26,2024-03-20,2029-03-20,English,3.85,56,Bachelor's Degree,off_campus,25157,f,Grants
+110,Linda,King,linda.king110@university.edu,Non-binary,2003-07-20,2024-10-04,2029-10-04,History,3.43,24,Bachelor's Degree,off_campus,12342,f,Work Study
+111,Abdul,Liu,abdul.liu111@university.edu,Male,2000-12-29,2024-09-17,2027-09-17,Biology,3.01,90,Bachelor's Degree,on_campus,46187,f,None
+112,James,Adams,james.adams112@university.edu,Female,2000-12-05,2023-09-22,2026-09-22,Communications,2.76,100,Doctoral Degree,on_campus,20681,f,Grants
+113,Mohammad,Ali,mohammad.ali113@university.edu,Non-binary,2000-11-11,2024-08-04,2029-08-04,Sociology,2.16,56,Bachelor's Degree,off_campus,51690,f,Work Study
+114,Lisa,Carter,lisa.carter114@university.edu,Female,2002-04-14,2024-08-18,2028-08-18,Physics,2.79,10,Master's Degree,on_campus,68254,f,Grants
+115,Joseph,Anderson,joseph.anderson115@university.edu,Male,1997-01-28,2024-04-08,2027-04-08,Biology,2.91,52,High School,off_campus,19342,f,Work Study
+116,Juan,Young,juan.young116@university.edu,Female,2005-09-11,2024-03-19,2029-03-19,Biology,2.13,3,Bachelor's Degree,off_campus,12345,f,Multiple
+117,Lisa,Rodriguez,lisa.rodriguez117@university.edu,Male,2005-02-01,2024-05-28,2028-05-28,Engineering,2.10,107,Doctoral Degree,on_campus,04873,t,None
+118,Yan,Jackson,yan.jackson118@university.edu,Non-binary,2006-12-27,2024-01-03,2028-01-03,Physics,2.90,25,Doctoral Degree,off_campus,12330,f,Multiple
+119,Jennifer,Jones,jennifer.jones119@university.edu,Non-binary,1996-11-14,2023-11-25,2026-11-25,History,3.97,75,High School,off_campus,12362,f,Work Study
+120,Richard,Brown,richard.brown120@university.edu,Male,2003-05-23,2024-08-31,2028-08-31,Political Science,3.40,117,Master's Degree,off_campus,12376,f,None
+121,Richard,Williams,richard.williams121@university.edu,Non-binary,1999-08-24,2025-01-13,2030-01-13,Biology,2.85,117,Doctoral Degree,off_campus,12353,f,Work Study
+122,Susan,Miller,susan.miller122@university.edu,Male,2006-11-18,2024-07-02,2029-07-02,Economics,2.84,12,Bachelor's Degree,off_campus,47477,f,Loans
+123,Linda,Li,linda.li123@university.edu,Male,2006-12-31,2024-10-27,2027-10-27,Communications,3.05,88,Master's Degree,on_campus,99617,t,None
+124,Susan,Khan,susan.khan124@university.edu,Female,1998-08-06,2023-10-27,2027-10-27,Political Science,3.49,14,Master's Degree,on_campus,13645,f,Loans
+125,Thomas,Garcia,thomas.garcia125@university.edu,Male,1998-01-21,2024-11-28,2027-11-28,Engineering,2.75,47,Doctoral Degree,off_campus,12368,f,Scholarship
+126,Carlos,Robinson,carlos.robinson126@university.edu,Male,2001-11-09,2024-08-05,2027-08-05,English,3.69,55,Master's Degree,on_campus,48696,t,Scholarship
+127,José,Scott,josé.scott127@university.edu,Female,1999-02-01,2024-09-07,2027-09-07,Psychology,2.82,102,Bachelor's Degree,off_campus,13146,f,Loans
+128,Robert,Rodriguez,robert.rodriguez128@university.edu,Female,2002-10-14,2024-01-05,2029-01-05,Physics,2.50,38,Doctoral Degree,off_campus,12309,f,Grants
+129,Patricia,Baker,patricia.baker129@university.edu,Female,1996-02-23,2023-08-30,2028-08-30,Art,2.44,115,Some College,off_campus,12384,f,Work Study
+130,Carlos,Thomas,carlos.thomas130@university.edu,Non-binary,2005-07-26,2023-09-22,2028-09-22,Computer Science,3.41,73,Some College,off_campus,17101,f,Scholarship
+131,Susan,Johnson,susan.johnson131@university.edu,Male,2002-11-25,2024-05-01,2027-05-01,Sociology,3.95,111,Bachelor's Degree,on_campus,24703,f,Multiple
+132,Juan,Garcia,juan.garcia132@university.edu,Female,2001-11-28,2024-09-11,2029-09-11,Computer Science,3.25,37,Bachelor's Degree,off_campus,12975,f,Scholarship
+133,Yan,Clark,yan.clark133@university.edu,Female,1995-06-10,2024-03-04,2028-03-04,English,2.49,111,Doctoral Degree,off_campus,41234,f,Loans
+134,Patricia,Taylor,patricia.taylor134@university.edu,Female,1997-04-27,2024-11-20,2027-11-20,Political Science,2.65,16,Doctoral Degree,off_campus,12317,f,Multiple
+135,Lisa,Robinson,lisa.robinson135@university.edu,Non-binary,2003-04-17,2024-03-12,2029-03-12,Art,2.28,98,Some College,on_campus,93317,f,Work Study
+136,María,Smith,maría.smith136@university.edu,Non-binary,1999-08-02,2023-09-24,2027-09-24,English,3.06,19,Some College,on_campus,11857,f,Multiple
+137,Miguel,Moore,miguel.moore137@university.edu,Female,2001-03-05,2024-07-30,2029-07-30,Physics,3.18,26,Master's Degree,off_campus,12321,f,Loans
+138,José,Singh,josé.singh138@university.edu,Female,2000-01-24,2023-09-24,2028-09-24,Business,2.82,39,Some College,off_campus,12320,f,Work Study
+139,María,Smith,maría.smith139@university.edu,Female,2002-02-14,2023-08-17,2028-08-17,Psychology,3.02,4,Master's Degree,off_campus,12393,f,Loans
+140,Li,Khan,li.khan140@university.edu,Female,2004-08-15,2024-06-27,2027-06-27,Sociology,2.98,40,Master's Degree,on_campus,79044,t,Loans
+141,John,Zhang,john.zhang141@university.edu,Non-binary,1995-05-30,2024-07-11,2027-07-11,Economics,2.31,117,Master's Degree,off_campus,12364,t,Loans
+142,Robert,Lewis,robert.lewis142@university.edu,Female,2004-03-30,2024-08-31,2027-08-31,Chemistry,2.21,111,Master's Degree,off_campus,12391,f,Scholarship
+143,Elizabeth,Lee,elizabeth.lee143@university.edu,Female,2003-02-26,2024-07-16,2029-07-16,Sociology,3.06,80,Bachelor's Degree,off_campus,12335,f,Work Study
+144,Patricia,Allen,patricia.allen144@university.edu,Male,2006-05-04,2023-08-25,2028-08-25,Mathematics,2.79,6,Master's Degree,on_campus,61519,f,Grants
+145,Susan,Miller,susan.miller145@university.edu,Female,2005-01-28,2025-01-31,2028-01-31,Physics,3.75,1,No High School,on_campus,42330,f,Multiple
+146,Omar,Walker,omar.walker146@university.edu,Male,2005-12-27,2024-07-11,2027-07-11,English,3.40,24,Some College,on_campus,29512,f,Scholarship
+147,Jessica,Wang,jessica.wang147@university.edu,Female,2006-06-05,2024-01-07,2029-01-07,English,2.28,40,Bachelor's Degree,on_campus,95386,f,Loans
+148,Mary,Zhang,mary.zhang148@university.edu,Female,2002-12-11,2023-11-26,2028-11-26,Physics,3.23,20,Bachelor's Degree,off_campus,12315,f,Scholarship
+149,Juan,Rodriguez,juan.rodriguez149@university.edu,Male,1995-06-08,2024-08-16,2027-08-16,Art,2.65,4,No High School,off_campus,12383,f,Scholarship
+150,Barbara,Harris,barbara.harris150@university.edu,Female,2002-11-27,2024-03-06,2029-03-06,Political Science,3.82,28,Bachelor's Degree,off_campus,12372,f,Grants
+151,Robert,Johnson,robert.johnson151@university.edu,Non-binary,2007-02-03,2024-02-19,2028-02-19,Art,2.68,9,Some College,off_campus,12350,f,Loans
+152,Barbara,Williams,barbara.williams152@university.edu,Female,2003-08-13,2024-12-24,2027-12-24,Communications,2.80,46,Master's Degree,off_campus,12347,f,Loans
+153,Wei,Ali,wei.ali153@university.edu,Male,2002-09-06,2024-09-07,2028-09-07,Political Science,2.90,96,Bachelor's Degree,off_campus,68736,f,Multiple
+154,Patricia,Garcia,patricia.garcia154@university.edu,Female,1995-07-20,2024-11-06,2027-11-06,English,2.26,6,Doctoral Degree,on_campus,96762,f,Grants
+155,Robert,Baker,robert.baker155@university.edu,Non-binary,1997-05-07,2023-10-15,2026-10-15,Economics,3.15,3,Doctoral Degree,off_campus,12373,f,Scholarship
+156,Fatima,Khan,fatima.khan156@university.edu,Non-binary,2000-05-24,2025-01-01,2030-01-01,Sociology,3.13,85,Doctoral Degree,off_campus,12308,t,Grants
+157,Joseph,Scott,joseph.scott157@university.edu,Male,1995-08-01,2024-12-25,2027-12-25,Psychology,3.74,8,Doctoral Degree,off_campus,12322,f,Grants
+158,José,Davis,josé.davis158@university.edu,Female,2000-02-03,2023-10-09,2028-10-09,Art,3.29,32,Master's Degree,off_campus,12376,f,Loans
+159,William,Rahman,william.rahman159@university.edu,Female,2002-05-05,2023-09-14,2027-09-14,Psychology,2.59,102,Bachelor's Degree,on_campus,61919,t,Work Study
+160,Mohammad,Anderson,mohammad.anderson160@university.edu,Female,2000-05-17,2025-01-14,2028-01-14,Psychology,3.74,6,Bachelor's Degree,on_campus,70136,f,Grants
+161,Juan,Williams,juan.williams161@university.edu,Non-binary,2000-09-27,2024-10-30,2027-10-30,Engineering,2.52,2,Master's Degree,off_campus,12340,f,None
+162,David,Anderson,david.anderson162@university.edu,Female,1996-12-17,2024-10-26,2029-10-26,Mathematics,2.50,95,Master's Degree,on_campus,56727,f,Grants
+163,Lisa,Carter,lisa.carter163@university.edu,Non-binary,1998-09-29,2024-08-05,2027-08-05,Business,2.00,115,Master's Degree,on_campus,54555,f,None
+164,Abdul,Smith,abdul.smith164@university.edu,Male,1999-10-12,2024-12-22,2028-12-22,Computer Science,2.74,28,Bachelor's Degree,off_campus,12313,f,None
+165,Elizabeth,Anderson,elizabeth.anderson165@university.edu,Non-binary,2000-10-15,2024-11-28,2029-11-28,English,2.57,97,No High School,on_campus,64419,f,Loans
+166,Fatima,Jackson,fatima.jackson166@university.edu,Female,2005-07-19,2024-04-08,2029-04-08,Psychology,3.63,82,Some College,on_campus,11137,f,None
+167,Yan,Walker,yan.walker167@university.edu,Non-binary,2003-12-10,2023-12-02,2027-12-02,Engineering,3.30,94,Doctoral Degree,off_campus,18228,f,Grants
+168,Abdul,Wright,abdul.wright168@university.edu,Male,2002-12-16,2024-10-22,2028-10-22,English,2.12,83,Bachelor's Degree,on_campus,35218,f,Grants
+169,John,Khan,john.khan169@university.edu,Male,1996-08-12,2024-10-25,2029-10-25,Mathematics,2.03,87,Master's Degree,on_campus,68509,f,Work Study
+170,Juan,Clark,juan.clark170@university.edu,Female,2000-10-31,2024-01-05,2027-01-05,Economics,3.99,11,Doctoral Degree,off_campus,12368,f,Loans
+171,Barbara,Garcia,barbara.garcia171@university.edu,Female,2001-04-05,2024-06-04,2029-06-04,Economics,3.25,64,No High School,on_campus,46106,f,None
+172,María,Rahman,maría.rahman172@university.edu,Female,1995-09-06,2024-11-18,2029-11-18,Mathematics,2.14,60,Doctoral Degree,on_campus,17730,f,Scholarship
+173,Jessica,Ali,jessica.ali173@university.edu,Female,1998-11-24,2024-12-29,2029-12-29,English,3.93,74,Master's Degree,off_campus,12372,f,Grants
+174,Jennifer,Thomas,jennifer.thomas174@university.edu,Male,1997-08-18,2024-06-26,2028-06-26,History,3.33,2,Bachelor's Degree,on_campus,48593,t,None
+175,Patricia,Allen,patricia.allen175@university.edu,Female,1997-01-11,2024-03-01,2027-03-01,Chemistry,3.91,69,High School,off_campus,30594,f,Scholarship
+176,Abdul,Williams,abdul.williams176@university.edu,Male,2000-05-25,2023-11-14,2027-11-14,Political Science,2.69,57,Bachelor's Degree,on_campus,63180,f,Loans
+177,Elizabeth,Wilson,elizabeth.wilson177@university.edu,Non-binary,1998-08-15,2024-09-03,2029-09-03,Physics,2.17,78,Doctoral Degree,off_campus,12357,f,Scholarship
+178,Yan,White,yan.white178@university.edu,Female,1996-06-17,2023-12-27,2028-12-27,History,2.63,94,Associate's Degree,on_campus,02179,f,None
+179,Zhang,Rodriguez,zhang.rodriguez179@university.edu,Non-binary,2000-01-14,2024-10-15,2027-10-15,Engineering,3.15,24,Bachelor's Degree,on_campus,09906,f,None
+180,Michael,Carter,michael.carter180@university.edu,Non-binary,1999-06-14,2025-01-11,2030-01-11,Engineering,2.82,37,Doctoral Degree,on_campus,28967,f,Work Study
+181,Yan,Baker,yan.baker181@university.edu,Non-binary,1998-03-22,2024-07-08,2028-07-08,History,3.38,112,Associate's Degree,off_campus,12350,f,Scholarship
+182,Aisha,Robinson,aisha.robinson182@university.edu,Female,2005-12-29,2024-11-25,2028-11-25,Sociology,2.76,62,Some College,on_campus,37349,f,Grants
+183,Susan,Rahman,susan.rahman183@university.edu,Male,1995-06-10,2025-01-09,2029-01-09,Sociology,3.46,55,High School,on_campus,61816,f,Multiple
+184,José,Moore,josé.moore184@university.edu,Male,1996-05-19,2024-01-21,2027-01-21,Mathematics,2.24,94,Master's Degree,on_campus,56774,f,Grants
+185,Linda,Khan,linda.khan185@university.edu,Non-binary,2002-11-20,2023-08-28,2028-08-28,Communications,3.84,107,Associate's Degree,off_campus,12383,f,Work Study
+186,Robert,Taylor,robert.taylor186@university.edu,Non-binary,1999-07-12,2024-05-16,2027-05-16,English,2.99,39,Doctoral Degree,off_campus,12318,f,Grants
+187,Lisa,Zhang,lisa.zhang187@university.edu,Non-binary,2006-06-05,2023-12-11,2027-12-11,Chemistry,3.85,55,Bachelor's Degree,off_campus,12321,f,Work Study
+188,Elizabeth,Chen,elizabeth.chen188@university.edu,Female,1995-09-06,2024-07-16,2029-07-16,Physics,2.68,96,High School,on_campus,78447,f,Grants
+189,James,Lee,james.lee189@university.edu,Female,2000-06-26,2023-09-17,2028-09-17,Economics,2.30,67,Bachelor's Degree,off_campus,46780,f,Work Study
+190,James,Moore,james.moore190@university.edu,Female,1995-12-19,2024-09-04,2028-09-04,Business,3.09,63,High School,off_campus,12383,f,Grants
+191,Linda,Wang,linda.wang191@university.edu,Female,2005-04-20,2025-01-16,2028-01-16,Chemistry,2.19,8,Some College,off_campus,62596,f,Scholarship
+192,John,Taylor,john.taylor192@university.edu,Male,1999-11-06,2023-11-25,2028-11-25,Sociology,2.14,37,Associate's Degree,off_campus,20626,f,Multiple
+193,Wei,Jones,wei.jones193@university.edu,Male,1998-08-30,2024-01-29,2029-01-29,Communications,3.69,19,Bachelor's Degree,off_campus,80221,f,Multiple
+194,Susan,Allen,susan.allen194@university.edu,Male,2001-01-03,2024-12-13,2029-12-13,Physics,3.08,115,No High School,on_campus,34523,f,Grants
+195,James,Hall,james.hall195@university.edu,Female,2005-01-15,2025-02-02,2028-02-02,Political Science,2.53,43,High School,on_campus,99625,f,Multiple
+196,Omar,Li,omar.li196@university.edu,Male,2001-06-02,2024-09-22,2029-09-22,Psychology,2.73,52,Associate's Degree,off_campus,28064,f,Work Study
+197,Miguel,Nelson,miguel.nelson197@university.edu,Male,2006-06-26,2024-12-17,2027-12-17,Physics,3.66,42,Doctoral Degree,on_campus,59080,t,Work Study
+198,Lisa,Walker,lisa.walker198@university.edu,Female,2004-04-24,2025-01-16,2029-01-16,Mathematics,3.21,31,Some College,on_campus,32934,f,Scholarship
+199,Liu,Scott,liu.scott199@university.edu,Non-binary,1998-10-09,2024-12-25,2029-12-25,Political Science,2.04,0,Doctoral Degree,on_campus,03160,t,Work Study
+200,Zhang,Johnson,zhang.johnson200@university.edu,Male,1997-05-04,2024-09-20,2027-09-20,Political Science,2.06,55,Doctoral Degree,on_campus,95204,f,Scholarship
+201,David,Wang,david.wang201@university.edu,Non-binary,2003-12-07,2024-09-11,2028-09-11,Mathematics,2.88,46,Some College,on_campus,81540,f,Grants
+202,David,Green,david.green202@university.edu,Non-binary,2003-08-04,2024-09-18,2027-09-18,Psychology,3.46,94,No High School,off_campus,99477,f,Work Study
+203,John,Carter,john.carter203@university.edu,Male,2003-12-29,2024-10-13,2027-10-13,Economics,3.32,26,Bachelor's Degree,off_campus,12336,f,Grants
+204,Wei,Miller,wei.miller204@university.edu,Male,2001-08-22,2024-01-06,2027-01-06,Biology,3.77,97,Associate's Degree,off_campus,12316,f,Scholarship
+205,Carlos,Jones,carlos.jones205@university.edu,Male,2006-05-21,2023-12-31,2026-12-31,Physics,2.51,59,High School,on_campus,18131,f,Scholarship
+206,Miguel,Miller,miguel.miller206@university.edu,Female,2003-05-07,2023-10-27,2028-10-27,Mathematics,3.93,100,Master's Degree,off_campus,12367,f,None
+207,Michael,Rodriguez,michael.rodriguez207@university.edu,Female,1996-12-26,2024-07-17,2027-07-17,Art,2.99,114,No High School,on_campus,42093,f,Work Study
+208,Michael,Garcia,michael.garcia208@university.edu,Non-binary,2004-01-01,2024-10-04,2029-10-04,Economics,3.82,11,Doctoral Degree,on_campus,62911,t,Multiple
+209,Patricia,Moore,patricia.moore209@university.edu,Female,2002-12-21,2024-07-16,2027-07-16,Computer Science,3.99,29,Doctoral Degree,on_campus,63277,f,Multiple
+210,Richard,Harris,richard.harris210@university.edu,Male,2005-06-11,2024-06-22,2029-06-22,Physics,2.40,72,Associate's Degree,on_campus,56193,f,None
+211,Abdul,Wright,abdul.wright211@university.edu,Non-binary,1999-11-01,2024-05-06,2028-05-06,Physics,2.61,47,Master's Degree,on_campus,85834,f,Grants
+212,Omar,Chen,omar.chen212@university.edu,Non-binary,1999-01-18,2024-02-29,2027-02-28,Mathematics,2.95,61,Master's Degree,off_campus,12371,f,Multiple
+213,Susan,Wright,susan.wright213@university.edu,Non-binary,2005-10-07,2024-12-07,2027-12-07,Biology,3.76,96,Some College,off_campus,12320,f,Loans
+214,William,Clark,william.clark214@university.edu,Male,1997-08-12,2024-07-05,2028-07-05,Mathematics,3.19,117,Associate's Degree,off_campus,12379,f,Grants
+215,José,Young,josé.young215@university.edu,Female,1998-05-17,2023-12-21,2027-12-21,Economics,2.11,30,Bachelor's Degree,on_campus,08876,f,Multiple
+216,Susan,Lewis,susan.lewis216@university.edu,Male,1999-02-19,2024-05-10,2027-05-10,Business,3.08,14,Bachelor's Degree,off_campus,12317,f,Loans
+217,Yan,Zhang,yan.zhang217@university.edu,Male,2005-11-29,2023-12-14,2026-12-14,Sociology,3.41,85,Doctoral Degree,off_campus,12310,f,Multiple
+218,Linda,Rodriguez,linda.rodriguez218@university.edu,Female,2005-02-06,2024-11-24,2028-11-24,English,3.22,93,Master's Degree,on_campus,69768,f,Grants
+219,María,Martinez,maría.martinez219@university.edu,Male,1996-10-04,2024-11-08,2029-11-08,Mathematics,2.70,49,Bachelor's Degree,on_campus,91371,f,Grants
+220,John,Walker,john.walker220@university.edu,Male,1997-06-13,2024-08-11,2027-08-11,Physics,2.57,77,No High School,off_campus,12385,f,Multiple
+221,Karen,Taylor,karen.taylor221@university.edu,Non-binary,1999-05-02,2024-04-09,2029-04-09,Chemistry,2.92,77,Doctoral Degree,off_campus,22937,f,None
+222,Wei,Rahman,wei.rahman222@university.edu,Non-binary,2005-11-10,2024-05-31,2028-05-31,History,3.83,17,Doctoral Degree,off_campus,12344,t,Work Study
+223,John,Lee,john.lee223@university.edu,Non-binary,2000-12-06,2024-07-02,2029-07-02,Art,2.35,59,Master's Degree,off_campus,12336,f,Work Study
+224,Joseph,Clark,joseph.clark224@university.edu,Non-binary,2002-06-24,2023-12-27,2027-12-27,History,2.49,15,No High School,off_campus,41128,f,Loans
+225,Karen,Baker,karen.baker225@university.edu,Male,2001-06-18,2024-01-26,2028-01-26,Art,3.37,25,Bachelor's Degree,on_campus,45627,f,Multiple
+226,Wei,Singh,wei.singh226@university.edu,Non-binary,2001-05-17,2023-09-10,2028-09-10,Art,2.75,41,Doctoral Degree,off_campus,12399,f,Scholarship
+227,Robert,Jackson,robert.jackson227@university.edu,Female,2000-03-20,2024-12-10,2029-12-10,Political Science,2.88,97,Bachelor's Degree,off_campus,12394,f,Work Study
+228,Susan,Rodriguez,susan.rodriguez228@university.edu,Female,2006-02-07,2023-12-02,2026-12-02,Political Science,3.52,56,Master's Degree,off_campus,17328,f,Grants
+229,Miguel,Moore,miguel.moore229@university.edu,Female,2001-04-10,2025-01-27,2029-01-27,Communications,3.03,77,Master's Degree,off_campus,17520,t,Scholarship
+230,Abdul,Wright,abdul.wright230@university.edu,Male,2002-10-25,2024-04-02,2027-04-02,Physics,2.06,24,High School,off_campus,12334,f,Scholarship
+231,Li,Khan,li.khan231@university.edu,Non-binary,1999-12-31,2024-07-29,2029-07-29,Chemistry,2.78,35,Some College,off_campus,12350,f,Scholarship
+232,Zhang,Thomas,zhang.thomas232@university.edu,Non-binary,2002-12-04,2023-10-10,2027-10-10,Business,2.37,106,Some College,on_campus,14745,f,Scholarship
+233,Miguel,Green,miguel.green233@university.edu,Female,1999-07-16,2024-12-25,2027-12-25,Business,4.00,40,No High School,on_campus,51699,f,Multiple
+234,Thomas,Ahmed,thomas.ahmed234@university.edu,Male,2002-10-08,2024-07-01,2028-07-01,Engineering,2.83,15,Bachelor's Degree,on_campus,35406,f,Work Study
+235,Abdul,Garcia,abdul.garcia235@university.edu,Female,2005-08-11,2023-10-30,2027-10-30,Chemistry,3.83,59,Some College,on_campus,04609,f,Loans
+236,Liu,Ali,liu.ali236@university.edu,Non-binary,2002-01-20,2025-01-24,2029-01-24,Art,3.45,102,Doctoral Degree,on_campus,92433,f,Scholarship
+237,Mary,Jones,mary.jones237@university.edu,Male,2002-04-04,2024-11-21,2029-11-21,Art,2.25,22,High School,on_campus,82517,f,Loans
+238,Liu,Baker,liu.baker238@university.edu,Female,2001-06-07,2023-09-21,2026-09-21,Business,2.81,3,Doctoral Degree,off_campus,12308,f,Loans
+239,Fatima,Zhang,fatima.zhang239@university.edu,Female,1996-11-15,2024-03-22,2028-03-22,Physics,3.36,66,Bachelor's Degree,off_campus,79948,f,Multiple
+240,Aisha,Ali,aisha.ali240@university.edu,Male,1997-10-25,2023-10-30,2028-10-30,Economics,3.62,114,No High School,off_campus,12331,f,Loans
+241,Michael,Rodriguez,michael.rodriguez241@university.edu,Female,1998-05-14,2024-09-19,2028-09-19,Psychology,2.71,104,Master's Degree,off_campus,12383,f,Work Study
+242,Liu,Rodriguez,liu.rodriguez242@university.edu,Male,1999-12-11,2024-03-12,2027-03-12,Economics,2.70,59,Doctoral Degree,off_campus,12308,f,None
+243,Elizabeth,Chen,elizabeth.chen243@university.edu,Male,1997-03-20,2024-03-06,2027-03-06,Communications,3.42,91,Some College,off_campus,12364,f,None
+244,Karen,Rahman,karen.rahman244@university.edu,Non-binary,2006-07-18,2024-01-11,2029-01-11,Biology,2.84,109,Bachelor's Degree,off_campus,12397,f,Work Study
+245,Li,Baker,li.baker245@university.edu,Non-binary,1996-11-26,2024-10-02,2027-10-02,Political Science,2.82,13,No High School,off_campus,64734,f,None
+246,Mary,Ali,mary.ali246@university.edu,Non-binary,2005-05-15,2024-07-03,2029-07-03,Physics,3.97,115,Bachelor's Degree,off_campus,15397,f,Loans
+247,Omar,Singh,omar.singh247@university.edu,Male,2007-02-20,2024-09-25,2027-09-25,Chemistry,2.98,16,Doctoral Degree,on_campus,26592,f,None
+248,Michael,Wilson,michael.wilson248@university.edu,Female,2000-03-26,2024-12-01,2028-12-01,Political Science,2.81,1,Associate's Degree,on_campus,04469,f,Grants
+249,Zhang,Young,zhang.young249@university.edu,Male,2003-02-10,2024-08-06,2027-08-06,History,2.57,38,Doctoral Degree,off_campus,12387,t,Scholarship
+250,William,Rahman,william.rahman250@university.edu,Non-binary,2001-10-25,2024-04-09,2028-04-09,Psychology,3.95,40,Bachelor's Degree,on_campus,29707,f,Scholarship
+251,Michael,Moore,michael.moore251@university.edu,Male,1999-08-20,2024-06-20,2027-06-20,Sociology,2.76,0,Doctoral Degree,off_campus,12321,f,Multiple
+252,María,Smith,maría.smith252@university.edu,Female,1995-07-27,2024-10-31,2029-10-31,Political Science,3.70,68,Master's Degree,on_campus,75371,f,None
+253,Liu,Moore,liu.moore253@university.edu,Non-binary,1997-01-22,2023-09-30,2027-09-30,Communications,3.75,46,Some College,on_campus,48400,f,None
+254,Richard,Young,richard.young254@university.edu,Non-binary,1998-12-18,2023-09-13,2026-09-13,Communications,2.98,113,Doctoral Degree,off_campus,12377,f,Grants
+255,Elizabeth,Smith,elizabeth.smith255@university.edu,Female,2004-09-19,2024-12-04,2029-12-04,Economics,2.52,16,Master's Degree,on_campus,76759,f,Work Study
+256,James,Ahmed,james.ahmed256@university.edu,Non-binary,2007-03-02,2024-07-24,2027-07-24,Psychology,3.76,100,Master's Degree,on_campus,30698,f,Scholarship
+257,Richard,Lewis,richard.lewis257@university.edu,Male,2002-08-27,2023-12-31,2026-12-31,Political Science,3.28,47,Associate's Degree,on_campus,50645,f,Work Study
+258,María,Harris,maría.harris258@university.edu,Male,1996-08-19,2024-06-02,2028-06-02,Psychology,3.85,107,Associate's Degree,off_campus,12340,f,Loans
+259,David,Clark,david.clark259@university.edu,Male,1998-04-16,2023-11-18,2028-11-18,Art,2.98,31,Associate's Degree,on_campus,51684,t,Grants
+260,Elizabeth,Clark,elizabeth.clark260@university.edu,Non-binary,1999-08-23,2024-01-20,2027-01-20,Physics,3.43,74,Some College,off_campus,12318,f,Loans
+261,Yan,Mitchell,yan.mitchell261@university.edu,Male,2002-02-05,2024-03-25,2029-03-25,Engineering,3.02,0,Bachelor's Degree,on_campus,30758,f,Scholarship
+262,Linda,Thomas,linda.thomas262@university.edu,Male,2007-02-11,2025-01-10,2030-01-10,Mathematics,3.76,82,No High School,off_campus,12326,f,Work Study
+263,Linda,Walker,linda.walker263@university.edu,Non-binary,2005-03-16,2024-04-10,2029-04-10,Sociology,3.21,79,Master's Degree,off_campus,12352,f,None
+264,Thomas,Jones,thomas.jones264@university.edu,Non-binary,1997-02-25,2024-07-20,2029-07-20,History,3.15,20,Doctoral Degree,off_campus,12322,f,Grants
+265,Mohammad,Chen,mohammad.chen265@university.edu,Female,2006-07-04,2024-11-27,2027-11-27,Engineering,2.71,62,Master's Degree,on_campus,31621,f,Multiple
+266,Carlos,Jones,carlos.jones266@university.edu,Non-binary,2003-08-13,2024-09-03,2028-09-03,Mathematics,3.80,109,Bachelor's Degree,off_campus,12316,f,Scholarship
+267,José,Ali,josé.ali267@university.edu,Male,2001-02-03,2024-08-06,2029-08-06,Business,3.25,78,Bachelor's Degree,on_campus,76785,f,Loans
+268,Omar,Scott,omar.scott268@university.edu,Female,1995-08-21,2024-11-10,2029-11-10,Psychology,3.46,119,Master's Degree,on_campus,13971,f,Grants
+269,Lisa,Martinez,lisa.martinez269@university.edu,Male,1995-04-21,2023-12-30,2028-12-30,Art,2.03,72,Doctoral Degree,off_campus,12357,f,Loans
+270,Wei,Ali,wei.ali270@university.edu,Non-binary,1995-04-18,2023-11-08,2027-11-08,Art,2.30,73,Master's Degree,off_campus,12378,f,Scholarship
+271,Jessica,Liu,jessica.liu271@university.edu,Male,2005-09-16,2023-12-21,2028-12-21,Economics,2.81,4,High School,off_campus,12385,f,Multiple
+272,Juan,Robinson,juan.robinson272@university.edu,Non-binary,1997-01-20,2024-11-21,2027-11-21,Art,2.72,4,High School,off_campus,12358,f,Work Study
+273,Mary,Harris,mary.harris273@university.edu,Female,2005-09-19,2024-12-06,2029-12-06,Biology,3.42,100,Master's Degree,off_campus,12302,f,None
+274,Fatima,Walker,fatima.walker274@university.edu,Non-binary,2005-05-13,2024-02-07,2027-02-07,Biology,2.20,69,Master's Degree,on_campus,62029,f,Scholarship
+275,Linda,Allen,linda.allen275@university.edu,Male,1995-08-02,2024-11-01,2028-11-01,Political Science,2.38,75,Bachelor's Degree,off_campus,37109,f,Loans
+276,Karen,Smith,karen.smith276@university.edu,Non-binary,2004-06-26,2023-08-16,2026-08-16,Chemistry,3.97,8,Bachelor's Degree,off_campus,45161,f,Loans
+277,José,Nelson,josé.nelson277@university.edu,Female,2005-09-25,2024-10-02,2029-10-02,Psychology,3.38,38,High School,off_campus,65589,f,Multiple
+278,Susan,Khan,susan.khan278@university.edu,Female,1997-07-24,2024-04-21,2027-04-21,Business,3.60,79,Bachelor's Degree,on_campus,87324,f,Work Study
+279,Yan,Wilson,yan.wilson279@university.edu,Male,2003-01-12,2024-02-03,2027-02-03,Biology,2.73,104,Master's Degree,off_campus,12385,f,Multiple
+280,James,Clark,james.clark280@university.edu,Male,1997-12-06,2023-10-06,2027-10-06,History,3.93,55,High School,off_campus,12386,f,None
+281,Zhang,Green,zhang.green281@university.edu,Male,1999-03-24,2024-10-08,2028-10-08,Computer Science,2.30,2,High School,on_campus,08398,f,Loans
+282,Elizabeth,Anderson,elizabeth.anderson282@university.edu,Male,2006-08-25,2024-01-29,2028-01-29,Psychology,2.16,96,Associate's Degree,off_campus,12388,f,None
+283,Juan,Ahmed,juan.ahmed283@university.edu,Female,1995-08-14,2024-03-08,2027-03-08,Computer Science,2.79,104,Doctoral Degree,off_campus,12353,f,Grants
+284,Omar,Liu,omar.liu284@university.edu,Non-binary,2006-04-04,2024-06-05,2027-06-05,Computer Science,3.03,97,Associate's Degree,off_campus,12356,f,Work Study
+285,Susan,Wilson,susan.wilson285@university.edu,Male,1996-04-14,2023-08-23,2028-08-23,Mathematics,2.87,25,Bachelor's Degree,on_campus,22513,f,Grants
+286,John,Rahman,john.rahman286@university.edu,Non-binary,2004-09-19,2024-04-29,2029-04-29,Business,2.06,89,Bachelor's Degree,on_campus,24075,t,Loans
+287,Aisha,Thomas,aisha.thomas287@university.edu,Female,2000-04-16,2024-07-04,2029-07-04,History,3.54,69,Bachelor's Degree,off_campus,12356,f,Multiple
+288,Mary,Martinez,mary.martinez288@university.edu,Female,1995-08-01,2024-05-27,2029-05-27,Political Science,3.90,8,Some College,on_campus,75751,f,Scholarship
+289,Carlos,King,carlos.king289@university.edu,Non-binary,2002-02-09,2024-03-12,2027-03-12,History,2.22,55,Master's Degree,off_campus,12312,f,Multiple
+290,Fatima,Miller,fatima.miller290@university.edu,Female,2004-02-18,2024-12-21,2029-12-21,Economics,3.14,45,Master's Degree,on_campus,71816,f,Grants
+291,Miguel,Williams,miguel.williams291@university.edu,Male,1996-09-18,2024-12-14,2029-12-14,English,3.11,47,Master's Degree,off_campus,20821,f,Multiple
+292,Thomas,Williams,thomas.williams292@university.edu,Female,1998-10-17,2024-03-04,2029-03-04,Chemistry,2.20,9,Master's Degree,off_campus,12322,f,Loans
+293,Jessica,Martinez,jessica.martinez293@university.edu,Female,2006-09-22,2024-01-16,2028-01-16,History,2.03,14,No High School,off_campus,12307,t,Work Study
+294,Zhang,Martinez,zhang.martinez294@university.edu,Female,1999-05-25,2023-11-13,2026-11-13,Physics,2.51,94,Doctoral Degree,on_campus,87692,f,Multiple
+295,Jennifer,Martinez,jennifer.martinez295@university.edu,Female,2002-10-28,2024-09-21,2028-09-21,English,2.11,116,Master's Degree,off_campus,11041,t,Work Study
+296,Linda,Smith,linda.smith296@university.edu,Female,2005-03-14,2024-12-03,2027-12-03,Chemistry,3.48,115,High School,off_campus,12331,f,Loans
+297,Elizabeth,Smith,elizabeth.smith297@university.edu,Female,1997-10-24,2024-11-09,2029-11-09,Communications,3.82,62,Master's Degree,on_campus,40113,f,Work Study
+298,Jessica,Martinez,jessica.martinez298@university.edu,Non-binary,1998-01-24,2023-09-19,2026-09-19,Sociology,3.83,31,Doctoral Degree,off_campus,40379,f,None
+299,Patricia,Brown,patricia.brown299@university.edu,Female,2006-10-30,2025-02-04,2030-02-04,Communications,3.49,47,Doctoral Degree,off_campus,12304,f,None
+300,Fatima,Allen,fatima.allen300@university.edu,Male,2002-03-12,2025-01-17,2029-01-17,Political Science,3.39,110,Bachelor's Degree,on_campus,57039,t,Multiple
+301,Joseph,Baker,joseph.baker301@university.edu,Male,1997-04-27,2023-10-09,2026-10-09,Engineering,3.79,51,Doctoral Degree,on_campus,05726,f,Loans
+302,Miguel,Harris,miguel.harris302@university.edu,Male,1997-12-01,2024-03-10,2029-03-10,History,2.17,48,High School,on_campus,08581,f,Scholarship
+303,María,Walker,maría.walker303@university.edu,Non-binary,2001-10-23,2024-05-28,2029-05-28,Business,3.99,116,Bachelor's Degree,on_campus,52905,f,Work Study
+304,Jennifer,Wright,jennifer.wright304@university.edu,Female,2004-09-03,2025-01-16,2029-01-16,English,3.66,84,Bachelor's Degree,on_campus,04043,f,Work Study
+305,Liu,Li,liu.li305@university.edu,Male,1996-11-06,2024-12-11,2029-12-11,History,2.43,49,Doctoral Degree,on_campus,50736,t,Loans
+306,Joseph,Martinez,joseph.martinez306@university.edu,Non-binary,1997-12-27,2024-05-03,2028-05-03,Biology,2.03,103,Doctoral Degree,off_campus,12324,f,Work Study
+307,Lisa,Singh,lisa.singh307@university.edu,Female,1996-11-25,2023-08-27,2026-08-27,Biology,3.29,23,Master's Degree,off_campus,12320,f,Scholarship
+308,Abdul,Smith,abdul.smith308@university.edu,Non-binary,1998-10-20,2024-12-21,2027-12-21,Biology,2.72,118,Associate's Degree,on_campus,81056,t,Loans
+309,Sarah,Anderson,sarah.anderson309@university.edu,Non-binary,2001-12-22,2024-04-30,2027-04-30,English,2.63,51,No High School,on_campus,38089,f,Multiple
+310,Liu,Garcia,liu.garcia310@university.edu,Male,2003-06-18,2024-11-08,2029-11-08,Physics,2.55,43,Bachelor's Degree,on_campus,81032,f,Multiple
+311,Jennifer,Davis,jennifer.davis311@university.edu,Male,2003-01-17,2024-11-21,2028-11-21,Biology,3.88,99,Some College,off_campus,12365,f,None
+312,Carlos,Green,carlos.green312@university.edu,Male,1999-07-12,2024-04-07,2027-04-07,Chemistry,3.56,48,Bachelor's Degree,on_campus,19534,f,Loans
+313,Fatima,Ahmed,fatima.ahmed313@university.edu,Male,1997-08-12,2023-12-03,2028-12-03,Computer Science,2.76,66,Some College,off_campus,12394,f,None
+314,Yan,Young,yan.young314@university.edu,Non-binary,2006-05-11,2024-09-01,2028-09-01,Chemistry,2.87,104,Bachelor's Degree,on_campus,70134,f,Grants
+315,Li,Martinez,li.martinez315@university.edu,Non-binary,1997-02-10,2023-12-19,2027-12-19,English,3.58,48,No High School,off_campus,12363,f,Scholarship
+316,James,Brown,james.brown316@university.edu,Non-binary,2004-08-31,2024-10-05,2028-10-05,Computer Science,2.24,15,Doctoral Degree,off_campus,48425,t,Multiple
+317,José,Li,josé.li317@university.edu,Male,1996-07-20,2024-08-20,2029-08-20,History,3.14,13,Bachelor's Degree,on_campus,54635,f,None
+318,Linda,Zhang,linda.zhang318@university.edu,Male,1996-12-25,2024-03-27,2028-03-27,Communications,3.80,68,Doctoral Degree,off_campus,12380,f,None
+319,Miguel,Allen,miguel.allen319@university.edu,Male,2001-10-10,2024-10-01,2027-10-01,Computer Science,3.58,56,Bachelor's Degree,on_campus,50063,f,Work Study
+320,Liu,Hall,liu.hall320@university.edu,Non-binary,2006-10-05,2024-03-11,2028-03-11,Mathematics,2.66,81,No High School,off_campus,16628,f,Loans
+321,Wei,Rodriguez,wei.rodriguez321@university.edu,Non-binary,1995-08-28,2024-07-24,2027-07-24,Political Science,2.44,116,Doctoral Degree,off_campus,12338,t,Scholarship
+322,Mohammad,Thomas,mohammad.thomas322@university.edu,Female,2000-09-29,2024-12-03,2027-12-03,English,2.57,24,Associate's Degree,off_campus,12369,f,Work Study
+323,Richard,Scott,richard.scott323@university.edu,Non-binary,2004-04-08,2024-03-17,2028-03-17,Chemistry,2.89,61,Master's Degree,off_campus,12324,f,Grants
+324,Miguel,Robinson,miguel.robinson324@university.edu,Male,1997-03-04,2023-09-16,2027-09-16,Economics,2.21,32,Bachelor's Degree,off_campus,12357,f,Loans
+325,Aisha,Wilson,aisha.wilson325@university.edu,Non-binary,2006-05-08,2024-08-04,2027-08-04,Physics,3.14,82,Doctoral Degree,off_campus,12350,f,Grants
+326,Joseph,Rodriguez,joseph.rodriguez326@university.edu,Female,2006-10-29,2024-11-14,2028-11-14,Sociology,3.56,42,Doctoral Degree,on_campus,26621,f,Loans
+327,Karen,Carter,karen.carter327@university.edu,Male,1996-05-26,2024-12-19,2028-12-19,Biology,3.96,15,Doctoral Degree,off_campus,12334,f,Loans
+328,Fatima,Jackson,fatima.jackson328@university.edu,Male,2001-08-01,2024-03-26,2029-03-26,Business,2.93,58,Some College,off_campus,12385,f,Loans
+329,David,Jackson,david.jackson329@university.edu,Male,2003-11-25,2023-08-25,2027-08-25,Economics,3.00,42,Master's Degree,on_campus,30805,f,Scholarship
+330,Mohammad,Johnson,mohammad.johnson330@university.edu,Non-binary,2006-10-18,2024-06-19,2029-06-19,Sociology,3.65,75,Some College,off_campus,12354,f,Grants
+331,Wei,Liu,wei.liu331@university.edu,Non-binary,2003-03-07,2024-12-17,2028-12-17,Computer Science,2.20,94,Bachelor's Degree,on_campus,12843,f,Work Study
+332,José,Clark,josé.clark332@university.edu,Male,2003-01-03,2025-01-16,2028-01-16,Sociology,3.11,81,Associate's Degree,on_campus,17557,t,Multiple
+333,Abdul,Clark,abdul.clark333@university.edu,Non-binary,2003-02-23,2023-11-27,2028-11-27,Economics,3.27,31,Doctoral Degree,on_campus,37618,f,Scholarship
+334,José,Harris,josé.harris334@university.edu,Female,2006-08-11,2024-03-29,2028-03-29,Political Science,2.75,47,Master's Degree,off_campus,88569,f,None
+335,Aisha,Harris,aisha.harris335@university.edu,Female,2000-10-15,2024-08-31,2027-08-31,Business,3.65,115,Bachelor's Degree,off_campus,12357,f,Multiple
+336,David,Ali,david.ali336@university.edu,Non-binary,2004-09-26,2024-07-29,2029-07-29,Physics,3.02,67,Doctoral Degree,on_campus,69987,f,Grants
+337,Carlos,Garcia,carlos.garcia337@university.edu,Non-binary,2000-11-16,2024-02-16,2028-02-16,Business,3.89,42,Master's Degree,off_campus,12338,f,Grants
+338,Liu,Allen,liu.allen338@university.edu,Non-binary,2006-05-12,2024-07-04,2029-07-04,Economics,2.28,52,Doctoral Degree,off_campus,98757,t,Loans
+339,Mohammad,Davis,mohammad.davis339@university.edu,Female,1997-01-28,2024-05-16,2028-05-16,Economics,3.20,85,High School,off_campus,57197,f,Multiple
+340,Joseph,Clark,joseph.clark340@university.edu,Female,1996-09-10,2024-03-07,2027-03-07,Physics,2.35,99,Doctoral Degree,on_campus,18755,f,None
+341,David,Robinson,david.robinson341@university.edu,Female,1995-08-25,2024-09-05,2028-09-05,Psychology,3.50,49,No High School,on_campus,97824,f,None
+342,Patricia,King,patricia.king342@university.edu,Non-binary,2002-07-01,2025-01-14,2030-01-14,Psychology,2.38,13,Doctoral Degree,off_campus,74054,f,Loans
+343,Aisha,Young,aisha.young343@university.edu,Female,2000-05-05,2023-12-02,2026-12-02,History,3.45,102,Master's Degree,on_campus,22904,f,Work Study
+344,Patricia,Robinson,patricia.robinson344@university.edu,Female,2003-05-10,2024-01-13,2029-01-13,Engineering,3.74,40,Doctoral Degree,off_campus,12315,f,None
+345,David,Ahmed,david.ahmed345@university.edu,Non-binary,1995-07-18,2024-01-20,2029-01-20,Physics,3.76,39,Master's Degree,off_campus,12370,f,Loans
+346,Juan,Adams,juan.adams346@university.edu,Female,2001-10-04,2023-11-23,2026-11-23,Computer Science,3.40,116,No High School,off_campus,12379,t,Multiple
+347,José,King,josé.king347@university.edu,Male,1999-06-05,2025-01-19,2028-01-19,Physics,3.22,39,Master's Degree,off_campus,12398,f,Multiple
+348,Jennifer,Brown,jennifer.brown348@university.edu,Female,1997-08-22,2024-11-17,2027-11-17,Psychology,3.37,93,Associate's Degree,off_campus,12378,f,Scholarship
+349,María,Brown,maría.brown349@university.edu,Female,1996-08-01,2023-08-17,2028-08-17,History,2.50,4,Bachelor's Degree,off_campus,47849,f,Loans
+350,Aisha,Mitchell,aisha.mitchell350@university.edu,Male,2001-11-26,2023-10-22,2028-10-22,Chemistry,2.49,2,Master's Degree,off_campus,30391,f,None
+351,Miguel,Allen,miguel.allen351@university.edu,Male,2005-09-04,2024-04-02,2029-04-02,History,3.24,32,Bachelor's Degree,on_campus,58807,t,Multiple
+352,María,Rahman,maría.rahman352@university.edu,Female,1998-04-25,2024-04-19,2028-04-19,English,2.64,92,Bachelor's Degree,off_campus,12308,f,Loans
+353,Elizabeth,Harris,elizabeth.harris353@university.edu,Male,1997-10-30,2024-10-02,2027-10-02,Political Science,2.50,1,Master's Degree,off_campus,87767,f,Grants
+354,Barbara,Brown,barbara.brown354@university.edu,Female,2001-08-25,2024-09-14,2028-09-14,Sociology,2.85,46,No High School,on_campus,12927,f,Multiple
+355,Carlos,Wang,carlos.wang355@university.edu,Female,1999-12-09,2023-12-17,2027-12-17,Chemistry,3.44,95,Master's Degree,off_campus,12330,f,Loans
+356,Richard,Walker,richard.walker356@university.edu,Female,2002-02-15,2024-10-13,2029-10-13,Biology,2.61,85,Some College,off_campus,12342,f,Grants
+357,Joseph,Walker,joseph.walker357@university.edu,Non-binary,1998-06-07,2023-09-30,2028-09-30,Physics,3.88,64,Associate's Degree,off_campus,12399,f,Grants
+358,John,Mitchell,john.mitchell358@university.edu,Non-binary,2005-07-08,2024-07-31,2027-07-31,Business,2.90,62,Doctoral Degree,on_campus,55262,t,Multiple
+359,Linda,Miller,linda.miller359@university.edu,Non-binary,2001-12-04,2024-05-18,2029-05-18,Political Science,2.04,8,Master's Degree,on_campus,63166,f,Work Study
+360,Elizabeth,Adams,elizabeth.adams360@university.edu,Male,2002-07-04,2024-11-01,2029-11-01,Sociology,2.82,42,Master's Degree,off_campus,37467,f,Loans
+361,Liu,Garcia,liu.garcia361@university.edu,Non-binary,2007-04-05,2024-12-21,2029-12-21,Economics,2.74,14,Associate's Degree,off_campus,07623,f,Scholarship
+362,Elizabeth,Adams,elizabeth.adams362@university.edu,Non-binary,2004-02-03,2023-11-24,2026-11-24,Mathematics,3.50,22,Master's Degree,off_campus,23165,f,Work Study
+363,María,Martinez,maría.martinez363@university.edu,Female,2004-07-01,2023-11-30,2027-11-30,Sociology,3.75,118,Doctoral Degree,off_campus,12332,f,Scholarship
+364,Abdul,Liu,abdul.liu364@university.edu,Female,2004-04-05,2024-01-06,2029-01-06,Sociology,3.83,80,Doctoral Degree,on_campus,86995,f,Work Study
+365,Li,Johnson,li.johnson365@university.edu,Non-binary,2002-09-12,2024-04-17,2028-04-17,Sociology,3.14,50,Associate's Degree,off_campus,12360,f,Grants
+366,Thomas,Ali,thomas.ali366@university.edu,Non-binary,1997-08-08,2024-07-27,2028-07-27,Chemistry,3.77,87,Some College,on_campus,50826,t,Multiple
+367,Abdul,Jackson,abdul.jackson367@university.edu,Male,2003-03-11,2024-04-09,2029-04-09,Computer Science,2.19,15,High School,on_campus,30682,f,None
+368,María,Miller,maría.miller368@university.edu,Female,1999-11-01,2023-10-25,2028-10-25,Economics,2.16,98,Master's Degree,off_campus,12358,f,Scholarship
+369,Jessica,Zhang,jessica.zhang369@university.edu,Female,2004-11-27,2024-02-04,2029-02-04,Communications,2.56,117,Associate's Degree,on_campus,49053,t,Scholarship
+370,William,Carter,william.carter370@university.edu,Female,2005-01-07,2025-01-28,2030-01-28,Economics,2.01,104,Master's Degree,off_campus,12330,f,Multiple
+371,Patricia,Miller,patricia.miller371@university.edu,Female,1995-08-01,2024-12-20,2029-12-20,Art,2.50,25,Bachelor's Degree,off_campus,12378,f,Scholarship
+372,William,Liu,william.liu372@university.edu,Male,2002-01-27,2024-12-20,2027-12-20,Biology,3.81,71,Master's Degree,off_campus,12323,t,Scholarship
+373,Aisha,King,aisha.king373@university.edu,Female,2003-06-14,2025-01-28,2028-01-28,Art,3.58,49,High School,off_campus,12351,f,Loans
+374,Karen,Allen,karen.allen374@university.edu,Non-binary,2002-06-10,2024-02-28,2027-02-28,History,3.99,67,Doctoral Degree,on_campus,89667,f,None
+375,Juan,Wright,juan.wright375@university.edu,Female,2004-05-10,2024-01-14,2029-01-14,Computer Science,2.27,72,Bachelor's Degree,on_campus,73362,f,Work Study
+376,Karen,Anderson,karen.anderson376@university.edu,Male,1999-11-20,2024-07-30,2029-07-30,Economics,2.87,20,Doctoral Degree,on_campus,04812,f,Work Study
+377,Robert,Garcia,robert.garcia377@university.edu,Non-binary,2005-09-08,2024-05-27,2027-05-27,Art,2.05,61,Doctoral Degree,off_campus,12386,f,Scholarship
+378,Zhang,Ahmed,zhang.ahmed378@university.edu,Male,1997-02-06,2024-05-04,2028-05-04,Physics,3.93,3,Doctoral Degree,off_campus,12313,f,Grants
+379,James,Ahmed,james.ahmed379@university.edu,Female,1995-10-11,2024-08-10,2027-08-10,Sociology,2.88,73,Master's Degree,on_campus,89432,t,Loans
+380,Joseph,Mitchell,joseph.mitchell380@university.edu,Female,1996-11-13,2024-03-15,2028-03-15,Chemistry,3.99,18,Doctoral Degree,on_campus,02128,f,Loans
+381,Linda,Davis,linda.davis381@university.edu,Female,1998-07-13,2023-08-24,2028-08-24,English,3.08,16,Bachelor's Degree,on_campus,20492,f,Loans
+382,Sarah,Ahmed,sarah.ahmed382@university.edu,Female,2001-11-13,2024-08-06,2029-08-06,Engineering,3.11,21,Master's Degree,off_campus,33974,f,None
+383,Richard,Ahmed,richard.ahmed383@university.edu,Female,1996-05-08,2024-10-11,2029-10-11,Chemistry,2.48,104,Bachelor's Degree,off_campus,12399,f,None
+384,Lisa,Hall,lisa.hall384@university.edu,Male,1998-10-30,2024-07-05,2029-07-05,Chemistry,2.70,74,Doctoral Degree,on_campus,57148,f,Grants
+385,Zhang,Martinez,zhang.martinez385@university.edu,Female,2005-05-26,2024-07-05,2027-07-05,Mathematics,3.00,107,Bachelor's Degree,off_campus,12354,f,Loans
+386,Jennifer,Scott,jennifer.scott386@university.edu,Male,1999-06-18,2023-11-11,2026-11-11,Mathematics,3.62,87,Master's Degree,off_campus,12376,f,Multiple
+387,David,Jones,david.jones387@university.edu,Female,2004-10-04,2024-09-18,2027-09-18,Mathematics,2.48,44,No High School,on_campus,32108,f,Work Study
+388,Liu,Adams,liu.adams388@university.edu,Non-binary,1997-05-17,2023-12-29,2027-12-29,Economics,2.47,23,Doctoral Degree,on_campus,81903,f,Work Study
+389,Juan,Singh,juan.singh389@university.edu,Female,2000-02-26,2023-12-08,2028-12-08,Computer Science,3.41,115,Doctoral Degree,off_campus,74876,f,Multiple
+390,Li,Walker,li.walker390@university.edu,Male,1997-06-25,2024-12-09,2027-12-09,Sociology,3.72,75,Bachelor's Degree,off_campus,12381,f,Work Study
+391,Jessica,King,jessica.king391@university.edu,Female,2003-09-25,2024-12-25,2028-12-25,Biology,3.60,100,Doctoral Degree,off_campus,84126,f,Loans
+392,Jennifer,Thomas,jennifer.thomas392@university.edu,Female,1996-10-27,2024-04-16,2028-04-16,Engineering,2.83,41,Master's Degree,off_campus,12342,f,Scholarship
+393,Miguel,Scott,miguel.scott393@university.edu,Non-binary,2003-07-20,2023-09-19,2027-09-19,History,3.43,68,No High School,off_campus,12375,f,None
+394,Michael,Walker,michael.walker394@university.edu,Male,1996-07-15,2024-12-22,2029-12-22,Computer Science,2.14,97,Associate's Degree,off_campus,12357,t,Scholarship
+395,Mohammad,Li,mohammad.li395@university.edu,Male,2005-08-20,2023-10-27,2026-10-27,Physics,3.85,74,Associate's Degree,on_campus,43306,f,Work Study
+396,Fatima,Allen,fatima.allen396@university.edu,Female,1997-04-14,2024-06-08,2027-06-08,Economics,3.52,27,Doctoral Degree,off_campus,12336,f,Multiple
+397,William,Martinez,william.martinez397@university.edu,Male,2006-04-25,2023-12-07,2026-12-07,Political Science,3.45,58,Doctoral Degree,off_campus,12380,t,Multiple
+398,Jessica,Mitchell,jessica.mitchell398@university.edu,Female,2004-08-29,2024-03-01,2028-03-01,Psychology,3.22,46,Master's Degree,off_campus,85435,f,Loans
+399,Thomas,Wilson,thomas.wilson399@university.edu,Female,2004-07-04,2023-12-02,2026-12-02,Computer Science,3.67,29,Master's Degree,off_campus,12318,f,None
+400,William,Garcia,william.garcia400@university.edu,Male,2002-10-05,2024-09-21,2028-09-21,Political Science,2.71,114,High School,off_campus,58972,f,Loans
+401,John,Green,john.green401@university.edu,Male,2002-07-22,2024-07-31,2029-07-31,Communications,2.43,57,Doctoral Degree,off_campus,12315,f,Scholarship
+402,Jessica,Baker,jessica.baker402@university.edu,Female,1999-02-09,2025-01-03,2029-01-03,Political Science,2.42,17,Doctoral Degree,on_campus,92978,f,Work Study
+403,Abdul,Zhang,abdul.zhang403@university.edu,Non-binary,1999-09-08,2024-06-22,2028-06-22,Mathematics,2.27,29,Associate's Degree,off_campus,12340,f,Grants
+404,Richard,Jones,richard.jones404@university.edu,Female,2000-12-09,2024-03-12,2028-03-12,Political Science,2.90,14,Bachelor's Degree,on_campus,72681,f,None
+405,Susan,Wilson,susan.wilson405@university.edu,Non-binary,2006-11-23,2025-01-17,2030-01-17,Psychology,3.31,92,Bachelor's Degree,off_campus,60527,f,Work Study
+406,Michael,King,michael.king406@university.edu,Male,2001-08-24,2024-07-18,2028-07-18,Psychology,3.62,114,Some College,off_campus,12397,f,Grants
+407,Elizabeth,Smith,elizabeth.smith407@university.edu,Female,1998-03-15,2024-06-23,2028-06-23,Mathematics,3.05,84,Doctoral Degree,off_campus,13617,f,None
+408,Jennifer,Wilson,jennifer.wilson408@university.edu,Non-binary,2001-05-07,2024-08-30,2028-08-30,Sociology,3.65,101,Master's Degree,off_campus,12395,f,None
+409,Linda,Rahman,linda.rahman409@university.edu,Non-binary,1996-05-29,2024-07-14,2028-07-14,Engineering,2.26,33,Master's Degree,on_campus,26730,f,Loans
+410,Liu,Baker,liu.baker410@university.edu,Female,2003-06-12,2023-11-23,2026-11-23,Psychology,3.28,46,Doctoral Degree,off_campus,12301,f,Grants
+411,Jennifer,Anderson,jennifer.anderson411@university.edu,Male,2006-08-13,2023-11-15,2028-11-15,Communications,2.03,60,Some College,on_campus,14721,f,Work Study
+412,Abdul,Wright,abdul.wright412@university.edu,Male,1997-11-19,2024-09-14,2029-09-14,Sociology,3.82,87,Doctoral Degree,on_campus,58734,t,None
+413,Jessica,Rodriguez,jessica.rodriguez413@university.edu,Male,2003-01-18,2025-01-08,2028-01-08,Political Science,2.58,97,Some College,off_campus,16723,f,Scholarship
+414,Zhang,Singh,zhang.singh414@university.edu,Male,1998-08-05,2023-12-01,2028-12-01,Engineering,3.18,1,Master's Degree,off_campus,14531,f,Multiple
+415,Michael,Adams,michael.adams415@university.edu,Non-binary,2001-01-30,2024-10-10,2029-10-10,Computer Science,3.89,86,Some College,on_campus,13362,f,Grants
+416,James,Hall,james.hall416@university.edu,Female,2006-03-30,2023-12-25,2026-12-25,Business,2.02,59,Some College,off_campus,43447,f,Multiple
+417,Joseph,Hall,joseph.hall417@university.edu,Female,2002-08-03,2023-08-31,2028-08-31,English,3.33,51,Master's Degree,on_campus,72833,f,Grants
+418,Elizabeth,King,elizabeth.king418@university.edu,Male,2004-03-01,2023-10-30,2026-10-30,Art,2.77,49,Doctoral Degree,off_campus,12310,f,Loans
+419,Mary,Martinez,mary.martinez419@university.edu,Female,1995-08-01,2024-02-13,2027-02-13,Economics,2.24,45,Some College,on_campus,76239,f,Multiple
+420,Fatima,Rahman,fatima.rahman420@university.edu,Female,2000-10-23,2024-04-20,2029-04-20,Political Science,3.35,58,Bachelor's Degree,on_campus,67679,f,Grants
+421,Yan,Carter,yan.carter421@university.edu,Female,1995-10-09,2023-10-09,2028-10-09,History,2.20,93,Master's Degree,off_campus,46855,f,None
+422,James,Moore,james.moore422@university.edu,Non-binary,2003-04-19,2024-03-31,2029-03-31,Business,2.57,91,Associate's Degree,off_campus,12397,f,Work Study
+423,David,Ahmed,david.ahmed423@university.edu,Male,2005-02-14,2024-08-02,2028-08-02,Biology,3.64,10,Bachelor's Degree,off_campus,37371,f,Multiple
+424,Patricia,Liu,patricia.liu424@university.edu,Non-binary,2004-10-02,2024-10-26,2029-10-26,History,3.39,102,Master's Degree,off_campus,88120,f,None
+425,David,Moore,david.moore425@university.edu,Female,1998-02-13,2023-10-21,2026-10-21,Psychology,2.56,93,Bachelor's Degree,off_campus,12316,f,Work Study
+426,Barbara,Rodriguez,barbara.rodriguez426@university.edu,Non-binary,1999-10-25,2024-05-02,2027-05-02,Art,3.37,18,Associate's Degree,off_campus,12324,f,None
+427,Miguel,Wright,miguel.wright427@university.edu,Male,2003-06-14,2023-10-19,2028-10-19,Computer Science,2.69,89,Master's Degree,on_campus,55518,f,Scholarship
+428,Zhang,Carter,zhang.carter428@university.edu,Female,1995-10-24,2023-12-04,2028-12-04,Political Science,2.32,89,Associate's Degree,on_campus,23701,t,Grants
+429,Juan,Mitchell,juan.mitchell429@university.edu,Male,2006-05-04,2024-05-31,2028-05-31,Sociology,3.28,116,Bachelor's Degree,on_campus,65452,f,Grants
+430,Richard,Ali,richard.ali430@university.edu,Male,2004-11-04,2024-02-23,2029-02-23,Biology,3.33,49,Doctoral Degree,on_campus,58112,f,None
+431,Fatima,Harris,fatima.harris431@university.edu,Female,2001-06-09,2024-06-28,2028-06-28,Sociology,2.22,110,Master's Degree,off_campus,12348,f,Grants
+432,William,Ali,william.ali432@university.edu,Male,1997-06-05,2023-12-20,2028-12-20,Art,2.40,99,Doctoral Degree,on_campus,07837,f,Work Study
+433,Mohammad,Martinez,mohammad.martinez433@university.edu,Non-binary,1997-04-08,2024-02-17,2029-02-17,Engineering,3.43,29,Some College,on_campus,12177,f,Grants
+434,Sarah,Smith,sarah.smith434@university.edu,Female,1997-09-02,2024-03-21,2028-03-21,Mathematics,2.02,83,Master's Degree,off_campus,12304,f,None
+435,Li,Clark,li.clark435@university.edu,Male,2005-03-30,2025-01-08,2029-01-08,Communications,3.82,79,Bachelor's Degree,on_campus,43755,f,Work Study
+436,Robert,Lewis,robert.lewis436@university.edu,Non-binary,1996-08-07,2024-03-15,2027-03-15,Business,2.30,22,Doctoral Degree,on_campus,52191,f,None
+437,Joseph,Davis,joseph.davis437@university.edu,Male,1999-11-08,2024-02-12,2028-02-12,Sociology,3.42,38,Doctoral Degree,on_campus,14896,f,Grants
+438,Lisa,Wang,lisa.wang438@university.edu,Female,2002-11-03,2023-11-20,2028-11-20,English,3.07,109,Bachelor's Degree,off_campus,00270,f,None
+439,Richard,Li,richard.li439@university.edu,Non-binary,2001-06-12,2024-11-24,2028-11-24,Business,2.92,51,Bachelor's Degree,off_campus,12388,f,Grants
+440,Mohammad,King,mohammad.king440@university.edu,Male,1997-11-20,2024-12-07,2029-12-07,Chemistry,2.45,25,Bachelor's Degree,off_campus,03255,f,Loans
+441,Elizabeth,Smith,elizabeth.smith441@university.edu,Non-binary,2000-11-26,2024-05-08,2028-05-08,Political Science,3.99,81,Master's Degree,on_campus,81243,f,Multiple
+442,Robert,King,robert.king442@university.edu,Non-binary,2006-06-22,2025-01-06,2028-01-06,Communications,2.30,47,Bachelor's Degree,off_campus,12378,f,None
+443,Fatima,Zhang,fatima.zhang443@university.edu,Female,2005-12-07,2024-03-25,2029-03-25,Art,3.49,17,Doctoral Degree,off_campus,13622,f,None
+444,John,Green,john.green444@university.edu,Male,1998-11-28,2023-08-15,2028-08-15,Art,3.12,38,Associate's Degree,off_campus,12356,f,Scholarship
+445,Abdul,Johnson,abdul.johnson445@university.edu,Female,2000-02-27,2024-04-28,2028-04-28,Political Science,2.02,92,Master's Degree,on_campus,96361,f,Scholarship
+446,Miguel,Lewis,miguel.lewis446@university.edu,Non-binary,1996-07-29,2024-06-01,2028-06-01,English,2.28,10,Doctoral Degree,off_campus,12323,f,Scholarship
+447,Barbara,Chen,barbara.chen447@university.edu,Female,2006-04-13,2023-11-21,2028-11-21,Sociology,2.88,51,Some College,off_campus,12350,f,Work Study
+448,Fatima,Mitchell,fatima.mitchell448@university.edu,Non-binary,1999-11-22,2024-08-21,2027-08-21,Political Science,2.04,85,No High School,off_campus,12380,f,Multiple
+449,Linda,Jackson,linda.jackson449@university.edu,Male,2000-05-11,2024-04-07,2028-04-07,Biology,2.36,7,Bachelor's Degree,off_campus,82568,f,Grants
+450,Omar,Johnson,omar.johnson450@university.edu,Female,2003-10-22,2024-11-01,2027-11-01,Computer Science,3.38,65,Master's Degree,on_campus,91489,f,Loans
+451,Sarah,Anderson,sarah.anderson451@university.edu,Non-binary,2001-05-24,2025-01-08,2029-01-08,Engineering,2.95,23,Associate's Degree,off_campus,12395,f,None
+452,Sarah,Li,sarah.li452@university.edu,Non-binary,1996-04-15,2024-03-23,2029-03-23,Psychology,3.16,49,High School,off_campus,12358,f,Multiple
+453,Barbara,Jackson,barbara.jackson453@university.edu,Male,2000-02-08,2024-08-04,2029-08-04,Economics,3.78,45,Doctoral Degree,off_campus,12317,f,Grants
+454,Abdul,Ali,abdul.ali454@university.edu,Female,1996-08-02,2023-09-06,2027-09-06,Psychology,3.32,86,Bachelor's Degree,off_campus,12350,f,Loans
+455,Mary,Taylor,mary.taylor455@university.edu,Non-binary,1999-06-08,2024-12-26,2029-12-26,Business,2.41,83,Associate's Degree,on_campus,55461,f,Grants
+456,Wei,Johnson,wei.johnson456@university.edu,Male,2004-03-16,2024-02-03,2029-02-03,English,3.39,24,Bachelor's Degree,off_campus,12374,f,Scholarship
+457,Aisha,White,aisha.white457@university.edu,Female,2004-10-30,2024-01-11,2029-01-11,Sociology,3.32,78,Some College,off_campus,12351,f,Multiple
+458,Yan,Hall,yan.hall458@university.edu,Male,2006-08-06,2024-06-07,2029-06-07,History,2.95,91,No High School,on_campus,91044,f,Loans
+459,Joseph,Johnson,joseph.johnson459@university.edu,Female,2002-10-17,2024-10-29,2028-10-29,Psychology,3.06,81,Master's Degree,off_campus,11709,f,Loans
+460,David,Williams,david.williams460@university.edu,Male,2000-05-29,2024-03-08,2029-03-08,Physics,2.12,17,Some College,off_campus,12356,f,None
+461,Juan,Lewis,juan.lewis461@university.edu,Female,2004-05-01,2023-12-09,2027-12-09,History,3.96,104,Bachelor's Degree,on_campus,29368,f,Loans
+462,Liu,Chen,liu.chen462@university.edu,Male,2004-02-06,2024-12-12,2027-12-12,Art,2.37,44,Doctoral Degree,off_campus,12394,f,None
+463,Zhang,Rahman,zhang.rahman463@university.edu,Non-binary,1995-09-09,2024-05-05,2027-05-05,Economics,2.58,49,No High School,off_campus,27539,f,Scholarship
+464,Li,Liu,li.liu464@university.edu,Male,2000-01-26,2024-02-02,2028-02-02,Engineering,3.32,39,Associate's Degree,on_campus,39215,f,Scholarship
+465,Joseph,Moore,joseph.moore465@university.edu,Non-binary,2000-05-09,2024-07-07,2029-07-07,History,3.58,91,Bachelor's Degree,off_campus,71136,f,Loans
+466,Lisa,Miller,lisa.miller466@university.edu,Non-binary,2000-08-06,2024-05-18,2029-05-18,Sociology,2.81,77,Doctoral Degree,off_campus,12379,f,Multiple
+467,Mohammad,Brown,mohammad.brown467@university.edu,Male,2006-05-30,2024-05-27,2029-05-27,Biology,3.94,58,Associate's Degree,on_campus,64836,f,Loans
+468,Zhang,Smith,zhang.smith468@university.edu,Non-binary,1997-08-03,2024-10-24,2027-10-24,English,2.05,88,Some College,on_campus,87863,f,Grants
+469,Liu,White,liu.white469@university.edu,Male,1997-08-30,2023-09-15,2028-09-15,Computer Science,2.90,82,No High School,off_campus,12357,f,Scholarship
+470,Liu,Allen,liu.allen470@university.edu,Male,2004-12-11,2023-12-11,2026-12-11,Communications,3.44,66,High School,off_campus,12342,f,None
+471,Patricia,Miller,patricia.miller471@university.edu,Non-binary,2001-05-12,2024-07-06,2027-07-06,Chemistry,3.00,100,High School,off_campus,12383,f,Work Study
+472,Lisa,Rahman,lisa.rahman472@university.edu,Female,2005-05-16,2023-11-01,2028-11-01,Business,3.38,73,Doctoral Degree,off_campus,12349,f,None
+473,Karen,Chen,karen.chen473@university.edu,Non-binary,2005-12-13,2024-07-18,2027-07-18,Biology,2.67,79,No High School,off_campus,12314,f,Loans
+474,Karen,Jones,karen.jones474@university.edu,Male,1999-12-27,2024-02-15,2029-02-15,Political Science,3.42,107,Some College,off_campus,32152,t,Work Study
+475,Abdul,Scott,abdul.scott475@university.edu,Female,2002-12-21,2024-04-20,2027-04-20,Mathematics,3.97,47,Doctoral Degree,off_campus,12392,f,Scholarship
+476,Omar,Davis,omar.davis476@university.edu,Male,1998-10-07,2023-12-18,2028-12-18,Business,3.85,104,Bachelor's Degree,off_campus,12381,f,None
+477,Robert,Young,robert.young477@university.edu,Non-binary,1999-12-21,2023-10-17,2026-10-17,Business,2.90,55,No High School,on_campus,61653,t,None
+478,Thomas,Anderson,thomas.anderson478@university.edu,Female,1998-05-01,2023-09-23,2028-09-23,Communications,3.24,85,Doctoral Degree,off_campus,15183,f,Scholarship
+479,José,Wang,josé.wang479@university.edu,Female,1996-07-28,2024-01-23,2027-01-23,Biology,3.43,95,Associate's Degree,on_campus,40943,f,Grants
+480,José,Wright,josé.wright480@university.edu,Female,2002-03-30,2024-06-21,2028-06-21,English,3.48,73,Some College,on_campus,15568,f,Grants
+481,Mary,Adams,mary.adams481@university.edu,Non-binary,2002-07-16,2024-12-01,2029-12-01,Art,3.79,66,Some College,off_campus,12379,f,Scholarship
+482,Jennifer,Anderson,jennifer.anderson482@university.edu,Non-binary,1998-01-27,2023-10-07,2026-10-07,Psychology,2.64,50,Bachelor's Degree,off_campus,12304,t,Multiple
+483,Abdul,Clark,abdul.clark483@university.edu,Non-binary,2003-12-06,2024-01-31,2028-01-31,Sociology,3.74,11,Doctoral Degree,off_campus,12378,f,Grants
+484,Aisha,Zhang,aisha.zhang484@university.edu,Non-binary,2004-10-17,2023-09-15,2028-09-15,English,2.35,37,Doctoral Degree,off_campus,12390,f,Work Study
+485,John,Lee,john.lee485@university.edu,Non-binary,1996-04-11,2024-08-23,2029-08-23,History,2.28,47,Doctoral Degree,on_campus,65392,f,Multiple
+486,Patricia,Jackson,patricia.jackson486@university.edu,Female,1998-07-05,2024-08-03,2028-08-03,Mathematics,3.69,48,Doctoral Degree,off_campus,16312,f,Work Study
+487,Carlos,Garcia,carlos.garcia487@university.edu,Female,2007-03-22,2024-06-23,2027-06-23,Mathematics,2.29,68,Master's Degree,off_campus,12346,f,None
+488,Richard,Allen,richard.allen488@university.edu,Male,1997-04-08,2024-09-24,2027-09-24,Political Science,2.26,69,Bachelor's Degree,off_campus,12332,f,Work Study
+489,Elizabeth,Lewis,elizabeth.lewis489@university.edu,Male,2005-11-04,2023-10-06,2028-10-06,Mathematics,2.75,57,Doctoral Degree,on_campus,77559,f,None
+490,Abdul,Clark,abdul.clark490@university.edu,Female,2005-06-29,2024-07-03,2028-07-03,Physics,2.36,30,Some College,on_campus,09695,f,Grants
+491,Liu,Williams,liu.williams491@university.edu,Male,1995-12-04,2024-03-26,2027-03-26,Art,3.84,58,Doctoral Degree,on_campus,15714,f,Scholarship
+492,Mary,Davis,mary.davis492@university.edu,Female,2002-08-23,2024-04-22,2029-04-22,Computer Science,3.03,39,Doctoral Degree,off_campus,12351,f,None
+493,Susan,Khan,susan.khan493@university.edu,Non-binary,1995-06-12,2024-05-27,2027-05-27,English,2.60,40,Some College,on_campus,31924,f,None
+494,Linda,Smith,linda.smith494@university.edu,Female,2005-09-18,2023-12-19,2026-12-19,Chemistry,2.40,6,Associate's Degree,off_campus,62477,f,None
+495,Juan,Baker,juan.baker495@university.edu,Non-binary,1998-01-21,2024-05-03,2029-05-03,Communications,2.69,51,Doctoral Degree,off_campus,12391,f,Loans
+496,Michael,Hall,michael.hall496@university.edu,Female,2003-09-12,2024-11-22,2029-11-22,Economics,3.18,17,Doctoral Degree,off_campus,12346,f,Multiple
+497,James,Baker,james.baker497@university.edu,Non-binary,2003-05-18,2024-02-09,2027-02-09,English,3.43,89,Associate's Degree,off_campus,12339,f,Scholarship
+498,David,Chen,david.chen498@university.edu,Female,1997-05-20,2024-12-01,2027-12-01,Psychology,3.32,118,Master's Degree,on_campus,34248,f,Scholarship
+499,Karen,Mitchell,karen.mitchell499@university.edu,Female,2004-11-28,2024-01-17,2029-01-17,Psychology,3.43,81,No High School,off_campus,56944,t,None
+500,Thomas,Scott,thomas.scott500@university.edu,Male,2000-07-13,2024-11-21,2028-11-21,Economics,2.91,93,Master's Degree,on_campus,85149,f,None
+501,Juan,Ali,juan.ali501@university.edu,Female,1998-03-28,2024-04-15,2029-04-15,Mathematics,3.75,40,Bachelor's Degree,off_campus,12330,f,Loans
+502,Wei,Rahman,wei.rahman502@university.edu,Non-binary,2000-09-21,2024-04-14,2028-04-14,Art,3.78,110,Master's Degree,off_campus,12353,f,Work Study
+503,Susan,White,susan.white503@university.edu,Female,2002-12-04,2024-10-10,2028-10-10,Psychology,3.48,1,Bachelor's Degree,off_campus,12345,f,Multiple
+504,James,Mitchell,james.mitchell504@university.edu,Female,2003-07-19,2024-01-15,2027-01-15,Engineering,3.00,76,High School,off_campus,12357,f,Grants
+505,Jessica,Singh,jessica.singh505@university.edu,Female,2005-12-02,2024-01-03,2028-01-03,Physics,3.66,78,Master's Degree,off_campus,47202,f,Scholarship
+506,Karen,Allen,karen.allen506@university.edu,Male,1997-07-30,2024-09-28,2028-09-28,Psychology,3.57,52,Master's Degree,on_campus,86586,f,Multiple
+507,Miguel,Wilson,miguel.wilson507@university.edu,Female,1998-05-31,2023-09-06,2028-09-06,Art,3.77,51,Doctoral Degree,off_campus,21337,f,None
+508,Lisa,Khan,lisa.khan508@university.edu,Female,1997-01-29,2024-12-31,2027-12-31,Physics,2.59,50,Doctoral Degree,off_campus,81714,t,Work Study
+509,María,Walker,maría.walker509@university.edu,Male,1996-03-29,2024-09-09,2027-09-09,Physics,2.63,84,Bachelor's Degree,off_campus,12344,f,Multiple
+510,Jennifer,Thomas,jennifer.thomas510@university.edu,Female,2005-07-17,2025-01-15,2030-01-15,Biology,2.07,4,Doctoral Degree,off_campus,12367,f,Loans
+511,Patricia,Brown,patricia.brown511@university.edu,Female,2002-05-02,2025-01-05,2029-01-05,Physics,2.24,67,Some College,on_campus,25968,t,Multiple
+512,Zhang,Garcia,zhang.garcia512@university.edu,Male,2003-12-12,2024-06-08,2027-06-08,Biology,2.02,87,No High School,on_campus,95326,f,Work Study
+513,Patricia,Allen,patricia.allen513@university.edu,Female,2000-11-13,2024-12-30,2028-12-30,Computer Science,2.40,34,Doctoral Degree,on_campus,88978,f,None
+514,Carlos,Robinson,carlos.robinson514@university.edu,Male,1996-06-20,2024-02-21,2028-02-21,Economics,2.23,96,Master's Degree,off_campus,21550,f,Work Study
+515,William,Rahman,william.rahman515@university.edu,Non-binary,1996-04-28,2023-12-16,2027-12-16,Economics,2.81,32,No High School,off_campus,12376,f,Scholarship
+516,Jessica,Moore,jessica.moore516@university.edu,Female,2002-03-16,2024-08-16,2027-08-16,Mathematics,3.13,18,Bachelor's Degree,off_campus,86803,f,Grants
+517,Linda,White,linda.white517@university.edu,Non-binary,1999-06-05,2024-03-13,2027-03-13,Sociology,3.41,32,Doctoral Degree,on_campus,38897,f,None
+518,Juan,Adams,juan.adams518@university.edu,Female,2004-03-27,2023-09-03,2026-09-03,Art,2.69,33,Bachelor's Degree,on_campus,30170,f,Scholarship
+519,Miguel,Wilson,miguel.wilson519@university.edu,Male,1997-01-01,2024-09-12,2029-09-12,Engineering,2.20,30,No High School,off_campus,12392,f,Grants
+520,Aisha,Taylor,aisha.taylor520@university.edu,Male,1996-07-13,2024-11-14,2028-11-14,Art,2.49,70,Doctoral Degree,on_campus,18596,f,Grants
+521,Mary,Williams,mary.williams521@university.edu,Non-binary,2002-05-23,2024-07-25,2028-07-25,Economics,2.98,7,Bachelor's Degree,off_campus,12347,f,Work Study
+522,Susan,Miller,susan.miller522@university.edu,Female,2000-08-21,2024-06-13,2028-06-13,Art,2.37,106,Bachelor's Degree,off_campus,12377,f,Grants
+523,Jennifer,Mitchell,jennifer.mitchell523@university.edu,Female,1998-02-03,2024-02-25,2027-02-25,History,2.74,55,Doctoral Degree,off_campus,12347,f,Grants
+524,Karen,Mitchell,karen.mitchell524@university.edu,Non-binary,1998-02-12,2024-04-17,2027-04-17,Sociology,3.02,23,High School,off_campus,12380,f,Grants
+525,John,Anderson,john.anderson525@university.edu,Non-binary,1996-06-10,2024-01-11,2028-01-11,Mathematics,2.87,80,No High School,off_campus,12364,t,Scholarship
+526,Mohammad,Lee,mohammad.lee526@university.edu,Male,2003-12-23,2024-06-08,2029-06-08,English,2.03,32,Doctoral Degree,off_campus,12395,f,Scholarship
+527,James,Khan,james.khan527@university.edu,Non-binary,1995-10-11,2024-04-23,2028-04-23,Physics,2.01,106,Bachelor's Degree,off_campus,12312,f,Scholarship
+528,Fatima,Rodriguez,fatima.rodriguez528@university.edu,Non-binary,1996-07-07,2024-12-01,2027-12-01,History,3.73,106,Bachelor's Degree,off_campus,92634,f,Work Study
+529,Lisa,Carter,lisa.carter529@university.edu,Female,1998-09-04,2024-10-15,2029-10-15,Business,3.84,44,Doctoral Degree,off_campus,12368,f,None
+530,John,Harris,john.harris530@university.edu,Male,2003-08-12,2024-02-22,2027-02-22,Communications,2.96,67,High School,off_campus,12328,f,Grants
+531,Richard,Wilson,richard.wilson531@university.edu,Male,2003-07-10,2023-10-20,2026-10-20,English,3.12,49,Doctoral Degree,off_campus,81796,f,Scholarship
+532,Li,Zhang,li.zhang532@university.edu,Non-binary,2000-09-23,2024-08-08,2029-08-08,Engineering,3.52,55,Bachelor's Degree,off_campus,12350,f,Multiple
+533,Michael,Jones,michael.jones533@university.edu,Non-binary,1999-07-03,2023-12-13,2028-12-13,Engineering,3.62,98,Master's Degree,off_campus,12319,t,Grants
+534,Elizabeth,Garcia,elizabeth.garcia534@university.edu,Male,1999-12-27,2024-05-09,2029-05-09,Biology,3.22,118,Master's Degree,off_campus,99821,t,Multiple
+535,Sarah,Martinez,sarah.martinez535@university.edu,Non-binary,2005-11-27,2024-09-11,2028-09-11,Communications,3.61,31,High School,off_campus,79180,f,Loans
+536,Omar,Baker,omar.baker536@university.edu,Female,1996-11-26,2024-11-26,2027-11-26,Psychology,2.81,3,Doctoral Degree,off_campus,12307,f,Work Study
+537,Richard,Martinez,richard.martinez537@university.edu,Non-binary,2001-06-05,2024-06-03,2029-06-03,Political Science,2.52,25,Master's Degree,on_campus,61732,f,None
+538,Abdul,Clark,abdul.clark538@university.edu,Male,1997-07-29,2024-05-20,2029-05-20,Sociology,2.75,4,Bachelor's Degree,on_campus,79667,f,Work Study
+539,Mary,Clark,mary.clark539@university.edu,Non-binary,2004-09-08,2023-12-29,2026-12-29,History,2.89,18,Associate's Degree,off_campus,51486,f,Grants
+540,Abdul,Hall,abdul.hall540@university.edu,Male,1998-06-04,2025-01-08,2030-01-08,Mathematics,2.21,59,Bachelor's Degree,on_campus,91171,f,Work Study
+541,Jessica,Green,jessica.green541@university.edu,Male,1997-08-20,2024-09-28,2027-09-28,Psychology,2.28,71,Master's Degree,off_campus,12354,f,Grants
+542,John,Wilson,john.wilson542@university.edu,Female,1998-06-17,2024-02-05,2027-02-05,Chemistry,2.43,73,Doctoral Degree,off_campus,12327,t,Grants
+543,Joseph,Martinez,joseph.martinez543@university.edu,Female,2004-12-17,2024-08-27,2029-08-27,Business,3.94,98,Master's Degree,off_campus,12098,f,Loans
+544,Richard,Harris,richard.harris544@university.edu,Male,1999-04-10,2023-10-01,2027-10-01,Engineering,2.64,113,Associate's Degree,on_campus,63737,f,Loans
+545,Thomas,Rodriguez,thomas.rodriguez545@university.edu,Female,1995-06-24,2024-08-16,2027-08-16,Biology,3.58,116,Doctoral Degree,off_campus,12380,f,Grants
+546,Susan,Johnson,susan.johnson546@university.edu,Male,1999-09-17,2024-05-11,2029-05-11,Physics,2.17,116,Associate's Degree,on_campus,20017,t,Multiple
+547,Omar,Smith,omar.smith547@university.edu,Male,2001-04-10,2024-01-15,2028-01-15,History,3.67,108,Doctoral Degree,on_campus,63208,t,None
+548,William,Moore,william.moore548@university.edu,Non-binary,1995-07-07,2024-06-11,2028-06-11,Engineering,3.88,99,Master's Degree,on_campus,55772,f,Work Study
+549,Li,Baker,li.baker549@university.edu,Non-binary,2002-11-16,2024-09-22,2028-09-22,Communications,2.12,3,Doctoral Degree,on_campus,04099,f,Scholarship
+550,Richard,Ali,richard.ali550@university.edu,Male,2002-12-31,2024-08-15,2029-08-15,Political Science,2.05,64,High School,off_campus,12311,f,Loans
+551,Wei,Ali,wei.ali551@university.edu,Non-binary,2002-12-27,2025-01-02,2028-01-02,Chemistry,2.99,52,Doctoral Degree,on_campus,76008,f,Grants
+552,Sarah,Moore,sarah.moore552@university.edu,Female,2004-02-01,2024-05-30,2028-05-30,Biology,3.46,115,Bachelor's Degree,off_campus,12385,f,Loans
+553,Lisa,Mitchell,lisa.mitchell553@university.edu,Female,2002-02-13,2024-06-30,2029-06-30,Economics,3.76,59,Doctoral Degree,off_campus,12370,f,Work Study
+554,Barbara,Lee,barbara.lee554@university.edu,Non-binary,2001-03-14,2024-01-24,2027-01-24,Psychology,3.43,117,High School,off_campus,12328,f,Loans
+555,Juan,Green,juan.green555@university.edu,Female,2001-01-24,2024-06-13,2028-06-13,Mathematics,3.88,86,Master's Degree,off_campus,12334,f,Loans
+556,Juan,Thomas,juan.thomas556@university.edu,Male,2002-04-07,2024-07-23,2027-07-23,Psychology,3.18,12,Master's Degree,off_campus,12390,f,Scholarship
+557,Susan,Lewis,susan.lewis557@university.edu,Male,2002-03-18,2024-02-29,2029-02-28,History,3.16,3,Master's Degree,off_campus,12367,f,None
+558,Zhang,Rahman,zhang.rahman558@university.edu,Non-binary,1995-05-04,2024-11-06,2028-11-06,Art,3.39,94,Bachelor's Degree,on_campus,38421,f,Loans
+559,Linda,Harris,linda.harris559@university.edu,Male,1996-01-12,2024-04-27,2028-04-27,Mathematics,2.97,16,High School,off_campus,12399,f,Scholarship
+560,Susan,Lee,susan.lee560@university.edu,Male,2001-09-28,2024-03-21,2029-03-21,Computer Science,3.77,95,Master's Degree,off_campus,12335,f,None
+561,Juan,Smith,juan.smith561@university.edu,Male,2002-02-27,2024-10-04,2028-10-04,Computer Science,2.38,38,Associate's Degree,on_campus,69711,f,None
+562,David,Robinson,david.robinson562@university.edu,Female,1996-02-26,2024-10-10,2029-10-10,Physics,2.67,30,Master's Degree,off_campus,12300,t,None
+563,Aisha,Robinson,aisha.robinson563@university.edu,Female,1997-04-20,2023-10-04,2028-10-04,Business,2.86,64,Master's Degree,off_campus,12399,f,Grants
+564,Mohammad,Li,mohammad.li564@university.edu,Male,2001-02-18,2024-05-12,2028-05-12,Physics,2.88,94,Master's Degree,off_campus,12368,f,Grants
+565,Sarah,Scott,sarah.scott565@university.edu,Male,1999-10-22,2024-06-30,2027-06-30,Sociology,3.59,116,Master's Degree,on_campus,92869,f,None
+566,Jennifer,Wilson,jennifer.wilson566@university.edu,Female,1996-05-20,2024-02-11,2027-02-11,Economics,2.45,9,Bachelor's Degree,off_campus,12323,f,Multiple
+567,Elizabeth,Garcia,elizabeth.garcia567@university.edu,Female,1996-12-21,2025-01-09,2029-01-09,Economics,3.70,72,No High School,on_campus,28367,f,Scholarship
+568,Barbara,Singh,barbara.singh568@university.edu,Female,2004-04-30,2024-08-22,2027-08-22,Chemistry,3.02,20,No High School,off_campus,12382,f,Multiple
+569,Patricia,Lee,patricia.lee569@university.edu,Non-binary,2000-09-05,2024-06-28,2028-06-28,Engineering,3.44,60,Bachelor's Degree,off_campus,09110,f,Multiple
+570,Juan,Green,juan.green570@university.edu,Non-binary,2007-02-06,2023-10-01,2027-10-01,Engineering,2.46,44,Master's Degree,off_campus,51324,f,Scholarship
+571,Omar,Garcia,omar.garcia571@university.edu,Female,2001-04-12,2023-12-16,2028-12-16,Biology,3.62,90,Bachelor's Degree,off_campus,12364,f,Scholarship
+572,Abdul,Wright,abdul.wright572@university.edu,Female,1997-06-18,2024-09-10,2029-09-10,Political Science,3.84,47,Doctoral Degree,on_campus,89841,f,Multiple
+573,Abdul,Walker,abdul.walker573@university.edu,Non-binary,1999-09-15,2024-10-27,2027-10-27,History,3.79,47,Bachelor's Degree,on_campus,95949,f,Scholarship
+574,Karen,Khan,karen.khan574@university.edu,Male,2000-08-19,2024-08-08,2028-08-08,Computer Science,3.01,65,High School,off_campus,12309,f,None
+575,Carlos,Allen,carlos.allen575@university.edu,Male,2006-06-25,2024-09-19,2028-09-19,Communications,2.53,40,Doctoral Degree,off_campus,12376,f,Grants
+576,Joseph,Smith,joseph.smith576@university.edu,Male,2007-01-11,2024-10-28,2028-10-28,Business,2.92,55,Bachelor's Degree,on_campus,37818,f,None
+577,Sarah,Jones,sarah.jones577@university.edu,Male,1996-11-02,2024-11-15,2029-11-15,Business,2.21,60,Some College,off_campus,12372,t,None
+578,Juan,Adams,juan.adams578@university.edu,Non-binary,1995-05-10,2024-06-04,2028-06-04,Mathematics,3.77,94,Bachelor's Degree,off_campus,12301,f,Work Study
+579,William,Chen,william.chen579@university.edu,Non-binary,1996-11-12,2024-06-07,2029-06-07,Economics,3.24,41,Doctoral Degree,on_campus,17348,f,None
+580,María,Lee,maría.lee580@university.edu,Male,2003-04-29,2023-12-10,2026-12-10,Communications,2.61,45,Doctoral Degree,on_campus,64430,f,None
+581,Liu,Jackson,liu.jackson581@university.edu,Female,2005-06-12,2024-12-12,2029-12-12,Computer Science,3.49,47,Associate's Degree,off_campus,12372,f,Work Study
+582,David,Moore,david.moore582@university.edu,Female,1996-06-13,2023-09-15,2027-09-15,Psychology,3.05,111,Master's Degree,on_campus,29964,f,Work Study
+583,Elizabeth,Scott,elizabeth.scott583@university.edu,Non-binary,1995-07-28,2023-11-13,2027-11-13,History,2.91,94,Master's Degree,off_campus,12300,f,None
+584,Linda,Chen,linda.chen584@university.edu,Female,1997-05-04,2024-02-03,2029-02-03,Physics,2.39,86,Associate's Degree,on_campus,44253,f,None
+585,Carlos,Thomas,carlos.thomas585@university.edu,Female,2004-10-17,2023-09-05,2028-09-05,English,3.72,63,Doctoral Degree,off_campus,12395,f,Work Study
+586,Aisha,Baker,aisha.baker586@university.edu,Male,1996-10-02,2024-11-05,2029-11-05,Engineering,3.03,39,Doctoral Degree,on_campus,31279,f,Multiple
+587,Mary,Nelson,mary.nelson587@university.edu,Female,2003-08-14,2024-11-02,2027-11-02,Business,3.38,85,Bachelor's Degree,off_campus,59901,f,Multiple
+588,Linda,Walker,linda.walker588@university.edu,Male,2002-11-05,2023-10-08,2026-10-08,Psychology,3.47,6,Master's Degree,off_campus,12374,f,Loans
+589,Lisa,Brown,lisa.brown589@university.edu,Non-binary,2006-12-29,2024-07-09,2029-07-09,English,3.13,35,Bachelor's Degree,off_campus,10517,f,Multiple
+590,Richard,Chen,richard.chen590@university.edu,Male,2001-09-13,2023-09-12,2027-09-12,Sociology,2.09,28,Master's Degree,on_campus,94141,f,Work Study
+591,John,Davis,john.davis591@university.edu,Male,1998-10-30,2024-09-03,2028-09-03,Chemistry,3.51,43,Doctoral Degree,off_campus,29337,f,Loans
+592,Jessica,Johnson,jessica.johnson592@university.edu,Non-binary,1999-02-11,2023-11-13,2028-11-13,Business,4.00,101,Bachelor's Degree,off_campus,12345,f,Multiple
+593,Barbara,Ahmed,barbara.ahmed593@university.edu,Male,1999-12-17,2023-12-13,2026-12-13,Psychology,3.31,45,Doctoral Degree,on_campus,95602,f,None
+594,Yan,Carter,yan.carter594@university.edu,Female,1995-09-20,2024-08-03,2028-08-03,Mathematics,2.93,10,Doctoral Degree,off_campus,12385,f,Scholarship
+595,Elizabeth,Lee,elizabeth.lee595@university.edu,Female,2000-09-21,2023-10-04,2026-10-04,Physics,3.02,57,Associate's Degree,on_campus,20313,f,Grants
+596,Aisha,Miller,aisha.miller596@university.edu,Male,2003-03-16,2024-07-17,2029-07-17,English,3.46,96,No High School,off_campus,12344,f,Multiple
+597,Linda,Anderson,linda.anderson597@university.edu,Male,1996-07-16,2024-09-05,2029-09-05,Computer Science,2.31,40,Master's Degree,off_campus,12362,f,None
+598,Mary,Lee,mary.lee598@university.edu,Male,1996-08-26,2025-01-08,2030-01-08,Art,2.47,14,Some College,off_campus,12362,f,Scholarship
+599,Sarah,Walker,sarah.walker599@university.edu,Male,2006-08-02,2024-03-09,2028-03-09,Biology,2.29,111,Master's Degree,on_campus,34771,t,Scholarship
+600,Susan,Rahman,susan.rahman600@university.edu,Male,2004-07-20,2024-06-02,2027-06-02,Computer Science,3.01,115,Bachelor's Degree,off_campus,68145,f,Work Study
+601,David,King,david.king601@university.edu,Female,2001-10-08,2024-11-11,2027-11-11,Mathematics,2.57,116,Some College,off_campus,02732,f,None
+602,Elizabeth,Lewis,elizabeth.lewis602@university.edu,Male,1995-12-16,2024-12-08,2029-12-08,Psychology,2.67,34,Doctoral Degree,off_campus,12383,f,Multiple
+603,Linda,Harris,linda.harris603@university.edu,Male,1998-06-24,2023-09-04,2026-09-04,Physics,3.04,10,Doctoral Degree,off_campus,12341,f,Work Study
+604,Aisha,Thomas,aisha.thomas604@university.edu,Male,1997-05-09,2024-10-12,2029-10-12,Mathematics,3.90,40,Doctoral Degree,off_campus,66602,f,None
+605,Mary,Hall,mary.hall605@university.edu,Female,2001-06-25,2024-12-31,2029-12-31,Physics,3.40,101,Master's Degree,off_campus,94193,f,Multiple
+606,Juan,Williams,juan.williams606@university.edu,Male,1995-12-05,2024-04-20,2029-04-20,Sociology,2.73,84,Master's Degree,on_campus,09611,f,Scholarship
+607,Jessica,Ahmed,jessica.ahmed607@university.edu,Female,1996-02-17,2023-08-19,2026-08-19,English,2.74,117,Associate's Degree,off_campus,60137,f,Scholarship
+608,Carlos,King,carlos.king608@university.edu,Male,2003-11-12,2024-03-12,2027-03-12,Sociology,2.11,9,High School,on_campus,30536,f,None
+609,James,King,james.king609@university.edu,Non-binary,1997-08-21,2024-12-10,2029-12-10,Communications,3.63,78,Master's Degree,off_campus,12372,t,Multiple
+610,Robert,Carter,robert.carter610@university.edu,Male,2003-04-02,2024-07-19,2028-07-19,Chemistry,2.13,34,Associate's Degree,off_campus,12374,f,Work Study
+611,Richard,White,richard.white611@university.edu,Female,2004-06-17,2023-08-24,2027-08-24,Business,3.53,20,Bachelor's Degree,off_campus,57657,t,None
+612,James,Adams,james.adams612@university.edu,Female,2003-01-20,2023-12-26,2028-12-26,Political Science,2.46,35,Master's Degree,off_campus,12388,f,None
+613,Karen,Liu,karen.liu613@university.edu,Non-binary,2000-04-19,2024-01-28,2029-01-28,Economics,2.84,57,Bachelor's Degree,off_campus,37319,f,Loans
+614,Li,Taylor,li.taylor614@university.edu,Non-binary,2002-08-04,2024-02-23,2029-02-23,Physics,2.07,2,Doctoral Degree,on_campus,84464,f,Loans
+615,John,Martinez,john.martinez615@university.edu,Male,1998-01-23,2024-02-13,2029-02-13,Chemistry,3.43,69,Bachelor's Degree,off_campus,12370,f,None
+616,Elizabeth,Allen,elizabeth.allen616@university.edu,Non-binary,2006-04-16,2024-01-25,2029-01-25,Biology,3.10,81,Master's Degree,off_campus,60128,t,Work Study
+617,Omar,Rodriguez,omar.rodriguez617@university.edu,Non-binary,2006-08-08,2023-08-20,2027-08-20,Chemistry,2.11,99,Associate's Degree,off_campus,12360,f,Scholarship
+618,Barbara,Davis,barbara.davis618@university.edu,Non-binary,2005-04-06,2024-05-10,2027-05-10,Psychology,2.63,6,Associate's Degree,on_campus,70611,f,Multiple
+619,Jennifer,Carter,jennifer.carter619@university.edu,Male,2004-08-27,2024-07-16,2028-07-16,History,2.96,104,Master's Degree,off_campus,12384,f,Grants
+620,Wei,Chen,wei.chen620@university.edu,Female,2005-05-26,2024-12-01,2027-12-01,Sociology,2.55,111,Master's Degree,on_campus,15354,f,Loans
+621,Richard,Liu,richard.liu621@university.edu,Female,2000-04-16,2023-12-23,2026-12-23,Business,2.81,111,Doctoral Degree,off_campus,12355,f,Scholarship
+622,María,Harris,maría.harris622@university.edu,Non-binary,1999-03-12,2024-09-14,2028-09-14,Mathematics,3.81,91,Doctoral Degree,off_campus,12391,f,Work Study
+623,Susan,Wang,susan.wang623@university.edu,Female,2004-11-24,2024-07-08,2027-07-08,Political Science,3.62,6,Associate's Degree,on_campus,12982,f,None
+624,Patricia,Smith,patricia.smith624@university.edu,Female,2003-10-12,2024-10-11,2028-10-11,Economics,3.18,37,Doctoral Degree,on_campus,92390,f,Grants
+625,Aisha,Smith,aisha.smith625@university.edu,Female,1999-12-23,2023-10-27,2027-10-27,English,3.31,44,Master's Degree,off_campus,05117,f,Multiple
+626,Aisha,Baker,aisha.baker626@university.edu,Female,2002-07-18,2024-10-27,2029-10-27,History,2.23,116,Doctoral Degree,off_campus,12382,f,Grants
+627,Fatima,White,fatima.white627@university.edu,Male,2003-06-15,2024-01-29,2027-01-29,Engineering,2.01,34,Bachelor's Degree,off_campus,38394,f,Multiple
+628,Thomas,Baker,thomas.baker628@university.edu,Male,2000-01-08,2024-12-15,2029-12-15,Biology,3.18,22,Bachelor's Degree,off_campus,12300,f,Multiple
+629,Elizabeth,Chen,elizabeth.chen629@university.edu,Male,2002-06-21,2024-02-11,2029-02-11,Biology,2.26,38,Bachelor's Degree,off_campus,12375,t,Loans
+630,John,Wang,john.wang630@university.edu,Female,2005-10-15,2024-04-23,2029-04-23,English,3.14,74,Master's Degree,off_campus,12311,f,Loans
+631,Carlos,Williams,carlos.williams631@university.edu,Non-binary,1997-05-18,2024-06-06,2028-06-06,Sociology,2.66,1,High School,off_campus,70091,f,Grants
+632,Mary,Baker,mary.baker632@university.edu,Female,1996-06-18,2024-07-10,2028-07-10,Psychology,3.19,71,Doctoral Degree,off_campus,66626,t,Scholarship
+633,Robert,Johnson,robert.johnson633@university.edu,Female,2005-03-10,2024-01-18,2027-01-18,History,2.35,54,Doctoral Degree,off_campus,12332,f,None
+634,Barbara,Chen,barbara.chen634@university.edu,Non-binary,2006-01-28,2024-01-21,2029-01-21,Communications,2.11,43,Doctoral Degree,off_campus,12363,f,Scholarship
+635,Miguel,Green,miguel.green635@university.edu,Non-binary,1997-02-08,2024-10-14,2028-10-14,Business,2.65,71,Master's Degree,off_campus,12359,f,None
+636,William,Mitchell,william.mitchell636@university.edu,Male,1999-04-26,2024-08-30,2028-08-30,Political Science,3.96,86,Master's Degree,on_campus,68506,f,Scholarship
+637,Linda,Wang,linda.wang637@university.edu,Female,2006-10-10,2024-10-30,2029-10-30,Physics,2.69,37,Master's Degree,off_campus,56492,f,None
+638,Li,Clark,li.clark638@university.edu,Male,2004-01-25,2024-10-13,2028-10-13,Political Science,2.13,37,Master's Degree,off_campus,12347,f,Scholarship
+639,José,Young,josé.young639@university.edu,Non-binary,2004-05-27,2023-12-21,2028-12-21,Chemistry,2.93,32,Master's Degree,on_campus,27740,f,Multiple
+640,Lisa,Ali,lisa.ali640@university.edu,Male,1997-01-07,2024-01-09,2027-01-09,Chemistry,3.43,79,Bachelor's Degree,off_campus,12387,t,None
+641,Sarah,Walker,sarah.walker641@university.edu,Male,1998-07-15,2024-02-06,2027-02-06,Computer Science,3.19,4,Bachelor's Degree,off_campus,93719,f,Grants
+642,Li,Singh,li.singh642@university.edu,Male,2006-11-12,2023-12-29,2027-12-29,Biology,3.82,85,No High School,off_campus,12321,t,Grants
+643,Lisa,Zhang,lisa.zhang643@university.edu,Non-binary,1997-08-22,2024-12-26,2027-12-26,Physics,2.16,22,High School,off_campus,12397,t,Work Study
+644,Li,Robinson,li.robinson644@university.edu,Non-binary,2000-12-02,2024-05-09,2028-05-09,Communications,2.35,68,Master's Degree,off_campus,12315,f,Loans
+645,Richard,Anderson,richard.anderson645@university.edu,Female,2001-03-01,2024-11-28,2029-11-28,Economics,3.41,16,Bachelor's Degree,off_campus,76107,f,Grants
+646,Juan,Smith,juan.smith646@university.edu,Male,2002-11-22,2023-10-05,2026-10-05,Computer Science,2.23,116,Bachelor's Degree,on_campus,34919,f,Scholarship
+647,William,Jackson,william.jackson647@university.edu,Non-binary,1996-10-28,2024-08-21,2028-08-21,Political Science,2.82,84,Some College,on_campus,17359,f,Scholarship
+648,Jessica,Ali,jessica.ali648@university.edu,Male,2004-02-23,2024-02-09,2027-02-09,Biology,2.47,114,Some College,off_campus,12364,f,Loans
+649,Wei,Davis,wei.davis649@university.edu,Male,2003-07-17,2024-07-09,2028-07-09,Art,2.02,101,Some College,off_campus,12360,f,Work Study
+650,Miguel,Harris,miguel.harris650@university.edu,Male,2004-09-20,2024-01-01,2029-01-01,Art,2.24,73,Master's Degree,on_campus,63973,f,Loans
+651,Abdul,Wilson,abdul.wilson651@university.edu,Female,2003-12-23,2024-10-03,2028-10-03,Art,2.62,58,Master's Degree,off_campus,11349,f,Scholarship
+652,Barbara,Taylor,barbara.taylor652@university.edu,Male,1996-08-06,2024-12-24,2029-12-24,Political Science,3.00,117,Master's Degree,off_campus,12330,f,None
+653,William,Martinez,william.martinez653@university.edu,Male,2002-01-12,2024-12-20,2029-12-20,Computer Science,2.86,29,Doctoral Degree,off_campus,80508,f,Work Study
+654,Mohammad,Ali,mohammad.ali654@university.edu,Male,2004-12-30,2023-10-18,2027-10-18,Economics,3.33,8,No High School,off_campus,12373,f,Scholarship
+655,Michael,Harris,michael.harris655@university.edu,Female,2003-02-24,2024-01-11,2028-01-11,Chemistry,2.00,46,Bachelor's Degree,off_campus,22691,f,Scholarship
+656,Omar,Nelson,omar.nelson656@university.edu,Non-binary,1996-09-19,2024-04-05,2028-04-05,Communications,2.90,98,Bachelor's Degree,on_campus,30801,f,Grants
+657,José,Ali,josé.ali657@university.edu,Non-binary,2005-11-23,2024-08-10,2027-08-10,Sociology,3.02,27,High School,off_campus,85065,f,Grants
+658,John,Rodriguez,john.rodriguez658@university.edu,Female,2000-11-09,2024-03-05,2028-03-05,English,2.04,94,Doctoral Degree,off_campus,12312,f,Work Study
+659,Michael,Wright,michael.wright659@university.edu,Non-binary,1995-12-04,2023-10-21,2027-10-21,Computer Science,2.41,54,Master's Degree,off_campus,12388,f,Multiple
+660,Linda,Adams,linda.adams660@university.edu,Female,1996-07-09,2024-09-22,2027-09-22,Art,2.68,5,Bachelor's Degree,off_campus,12325,f,None
+661,Carlos,Liu,carlos.liu661@university.edu,Non-binary,1999-09-24,2025-01-01,2028-01-01,English,3.71,35,Doctoral Degree,on_campus,60966,f,Scholarship
+662,Linda,Li,linda.li662@university.edu,Female,1998-04-26,2023-09-12,2027-09-12,Political Science,2.36,59,Bachelor's Degree,on_campus,97180,f,Multiple
+663,Barbara,Garcia,barbara.garcia663@university.edu,Female,2000-03-28,2024-06-27,2027-06-27,Political Science,3.22,4,Some College,on_campus,37352,f,Work Study
+664,David,Young,david.young664@university.edu,Non-binary,2004-08-19,2024-06-13,2029-06-13,Economics,2.47,16,Bachelor's Degree,off_campus,12329,t,Work Study
+665,Mary,Johnson,mary.johnson665@university.edu,Female,2006-04-26,2023-10-20,2026-10-20,Business,3.94,74,Bachelor's Degree,off_campus,57077,f,Multiple
+666,Carlos,Brown,carlos.brown666@university.edu,Non-binary,2007-03-07,2025-01-10,2029-01-10,Business,3.23,33,Doctoral Degree,off_campus,12323,f,Scholarship
+667,Fatima,Khan,fatima.khan667@university.edu,Non-binary,2006-04-12,2024-02-20,2028-02-20,Chemistry,2.74,119,No High School,off_campus,12362,f,Work Study
+668,Mohammad,Martinez,mohammad.martinez668@university.edu,Non-binary,2000-02-27,2024-03-12,2029-03-12,Chemistry,3.31,65,Master's Degree,off_campus,12365,f,None
+669,Wei,Young,wei.young669@university.edu,Non-binary,1997-09-04,2024-07-25,2029-07-25,Mathematics,3.13,47,Associate's Degree,off_campus,12322,f,Scholarship
+670,Joseph,Singh,joseph.singh670@university.edu,Male,1995-12-11,2025-01-05,2028-01-05,Computer Science,3.01,42,Some College,on_campus,85144,f,Grants
+671,Sarah,Walker,sarah.walker671@university.edu,Male,1998-10-30,2024-02-23,2029-02-23,Biology,2.56,62,Bachelor's Degree,off_campus,12374,f,Grants
+672,María,Ali,maría.ali672@university.edu,Non-binary,2001-03-20,2024-07-28,2028-07-28,Political Science,2.68,102,Doctoral Degree,off_campus,12348,f,None
+673,Sarah,Ali,sarah.ali673@university.edu,Non-binary,2005-02-26,2023-12-10,2028-12-10,Computer Science,3.33,108,Master's Degree,off_campus,12306,f,Work Study
+674,Thomas,Green,thomas.green674@university.edu,Non-binary,2004-04-08,2024-09-04,2028-09-04,Psychology,2.70,54,Bachelor's Degree,off_campus,12304,f,None
+675,Lisa,Scott,lisa.scott675@university.edu,Male,2005-12-04,2025-01-06,2029-01-06,Art,2.67,105,No High School,on_campus,14427,f,Loans
+676,Lisa,Young,lisa.young676@university.edu,Female,1995-10-21,2025-01-03,2030-01-03,Business,3.00,83,Bachelor's Degree,off_campus,12395,f,Multiple
+677,Wei,Khan,wei.khan677@university.edu,Non-binary,1995-07-27,2024-05-16,2027-05-16,Art,2.94,87,Bachelor's Degree,on_campus,69189,t,Scholarship
+678,Fatima,Carter,fatima.carter678@university.edu,Female,2004-03-14,2024-01-02,2029-01-02,Economics,2.34,69,Bachelor's Degree,on_campus,18896,f,Multiple
+679,Wei,Young,wei.young679@university.edu,Male,1999-11-12,2024-03-21,2027-03-21,English,3.78,75,Doctoral Degree,off_campus,78322,f,Loans
+680,Wei,Brown,wei.brown680@university.edu,Male,2004-06-01,2024-04-24,2029-04-24,Communications,3.99,27,No High School,on_campus,11034,f,Scholarship
+681,Omar,Miller,omar.miller681@university.edu,Male,2004-08-27,2023-10-21,2026-10-21,Physics,3.14,92,Bachelor's Degree,on_campus,70247,f,Multiple
+682,Liu,King,liu.king682@university.edu,Female,2001-12-31,2023-12-20,2028-12-20,Engineering,2.33,22,High School,on_campus,75379,f,Multiple
+683,Patricia,Adams,patricia.adams683@university.edu,Female,2005-10-20,2024-04-08,2028-04-08,Physics,3.33,67,Doctoral Degree,on_campus,44418,f,Multiple
+684,Mohammad,Lewis,mohammad.lewis684@university.edu,Non-binary,1995-09-02,2024-06-16,2029-06-16,Engineering,3.74,25,Master's Degree,on_campus,00215,t,Grants
+685,Abdul,Moore,abdul.moore685@university.edu,Non-binary,1995-04-30,2023-08-26,2027-08-26,Biology,2.04,40,Doctoral Degree,on_campus,12344,f,Loans
+686,John,Liu,john.liu686@university.edu,Female,2005-04-17,2024-01-20,2027-01-20,Business,2.65,117,Master's Degree,off_campus,12375,f,Scholarship
+687,Barbara,Scott,barbara.scott687@university.edu,Male,1999-07-15,2024-01-29,2029-01-29,Chemistry,3.54,110,Master's Degree,off_campus,12306,f,Work Study
+688,Miguel,Young,miguel.young688@university.edu,Male,2001-02-04,2024-11-14,2029-11-14,History,2.39,8,Bachelor's Degree,off_campus,12352,f,None
+689,Lisa,Ali,lisa.ali689@university.edu,Non-binary,1997-06-22,2024-08-01,2029-08-01,Physics,2.69,33,Doctoral Degree,off_campus,48239,f,Loans
+690,Abdul,Young,abdul.young690@university.edu,Female,2002-10-28,2024-02-04,2027-02-04,Business,2.86,70,Associate's Degree,on_campus,79100,t,Loans
+691,Mohammad,Taylor,mohammad.taylor691@university.edu,Non-binary,1997-05-22,2024-02-22,2029-02-22,English,3.39,51,Associate's Degree,off_campus,12339,f,Work Study
+692,Miguel,White,miguel.white692@university.edu,Female,1999-05-23,2024-08-14,2027-08-14,Psychology,3.30,44,Master's Degree,off_campus,12338,f,Work Study
+693,John,Williams,john.williams693@university.edu,Female,2006-10-03,2024-04-07,2028-04-07,Communications,3.55,94,Master's Degree,off_campus,09787,f,Loans
+694,José,Adams,josé.adams694@university.edu,Male,2001-09-26,2024-02-05,2029-02-05,Psychology,2.37,66,Master's Degree,off_campus,12362,f,Loans
+695,Zhang,Mitchell,zhang.mitchell695@university.edu,Male,1997-07-22,2024-03-13,2027-03-13,Business,2.72,34,Master's Degree,off_campus,89469,f,Scholarship
+696,Susan,Carter,susan.carter696@university.edu,Female,2002-11-08,2023-09-12,2027-09-12,English,3.92,44,Master's Degree,off_campus,76295,f,Loans
+697,Liu,Moore,liu.moore697@university.edu,Male,2006-11-11,2024-01-09,2028-01-09,Physics,2.58,65,Bachelor's Degree,off_campus,99584,f,Work Study
+698,David,Adams,david.adams698@university.edu,Female,2005-08-23,2024-01-21,2029-01-21,Business,3.06,84,Master's Degree,off_campus,56321,f,None
+699,John,Nelson,john.nelson699@university.edu,Male,2004-02-08,2025-01-15,2028-01-15,Engineering,2.39,31,Bachelor's Degree,on_campus,09579,f,Grants
+700,Fatima,Singh,fatima.singh700@university.edu,Non-binary,2001-08-08,2023-08-30,2028-08-30,Communications,2.94,69,Doctoral Degree,off_campus,31174,f,Grants
+701,Mary,Robinson,mary.robinson701@university.edu,Male,1997-12-14,2024-05-20,2029-05-20,Art,2.04,12,Bachelor's Degree,on_campus,54008,f,Work Study
+702,Yan,Jones,yan.jones702@university.edu,Male,2001-12-19,2024-07-03,2029-07-03,Art,2.85,7,Master's Degree,on_campus,71371,f,None
+703,Lisa,Brown,lisa.brown703@university.edu,Female,1999-05-03,2024-07-01,2028-07-01,Communications,3.92,73,Doctoral Degree,off_campus,68964,t,None
+704,Lisa,Ahmed,lisa.ahmed704@university.edu,Female,1997-07-08,2023-09-22,2028-09-22,Chemistry,2.63,13,Bachelor's Degree,off_campus,31809,f,Multiple
+705,Miguel,Brown,miguel.brown705@university.edu,Non-binary,2005-11-05,2024-04-29,2028-04-29,Computer Science,3.17,5,Doctoral Degree,on_campus,56777,f,Scholarship
+706,Juan,Garcia,juan.garcia706@university.edu,Female,1998-05-27,2024-09-27,2027-09-27,Sociology,3.03,0,Bachelor's Degree,on_campus,88582,f,Work Study
+707,Thomas,Ahmed,thomas.ahmed707@university.edu,Non-binary,2004-01-06,2024-10-05,2028-10-05,Economics,2.44,30,High School,off_campus,12359,f,Work Study
+708,Carlos,Li,carlos.li708@university.edu,Non-binary,1995-12-27,2024-01-19,2028-01-19,Business,3.31,72,High School,off_campus,12331,f,Grants
+709,Linda,Carter,linda.carter709@university.edu,Female,2006-08-29,2024-06-22,2028-06-22,Chemistry,3.33,72,Bachelor's Degree,off_campus,12310,t,Multiple
+710,Yan,Young,yan.young710@university.edu,Female,1997-10-18,2024-12-17,2029-12-17,English,2.05,55,Associate's Degree,off_campus,12378,f,Loans
+711,Mohammad,Brown,mohammad.brown711@university.edu,Male,1996-06-23,2024-09-12,2029-09-12,Physics,2.69,62,High School,on_campus,14399,f,None
+712,Yan,Li,yan.li712@university.edu,Female,1997-09-12,2024-06-24,2029-06-24,Physics,2.10,22,Bachelor's Degree,off_campus,12359,f,None
+713,Li,Green,li.green713@university.edu,Non-binary,2006-04-22,2024-12-01,2029-12-01,Physics,3.93,98,Master's Degree,on_campus,96063,f,Work Study
+714,Carlos,Walker,carlos.walker714@university.edu,Non-binary,1999-10-18,2024-04-22,2027-04-22,Political Science,2.72,37,Doctoral Degree,on_campus,98620,f,Multiple
+715,Elizabeth,Clark,elizabeth.clark715@university.edu,Non-binary,2001-05-08,2025-01-26,2029-01-26,Biology,2.29,46,Master's Degree,off_campus,12310,f,Grants
+716,James,Williams,james.williams716@university.edu,Non-binary,2005-03-26,2024-10-14,2028-10-14,Art,2.39,119,Doctoral Degree,off_campus,12332,f,Loans
+717,William,Liu,william.liu717@university.edu,Female,2005-08-29,2024-09-06,2027-09-06,Biology,3.61,111,Bachelor's Degree,off_campus,12369,f,Loans
+718,Fatima,Carter,fatima.carter718@university.edu,Male,2000-07-25,2024-03-09,2027-03-09,Engineering,2.32,25,Master's Degree,off_campus,12350,f,Work Study
+719,William,Rahman,william.rahman719@university.edu,Non-binary,2005-04-29,2024-11-30,2027-11-30,History,2.58,102,High School,on_campus,62247,f,None
+720,Elizabeth,Li,elizabeth.li720@university.edu,Male,2002-01-23,2023-11-30,2028-11-30,Communications,2.07,20,Doctoral Degree,off_campus,12339,f,Loans
+721,Linda,Rodriguez,linda.rodriguez721@university.edu,Non-binary,1997-05-24,2023-08-21,2026-08-21,Communications,2.56,14,Bachelor's Degree,on_campus,29072,f,Scholarship
+722,María,Chen,maría.chen722@university.edu,Female,1996-03-15,2024-11-26,2029-11-26,Political Science,3.67,10,Some College,off_campus,12317,f,Work Study
+723,Lisa,Hall,lisa.hall723@university.edu,Non-binary,1999-05-05,2023-09-07,2026-09-07,Mathematics,2.52,1,Master's Degree,off_campus,12372,f,None
+724,Lisa,Nelson,lisa.nelson724@university.edu,Female,1995-09-30,2024-06-25,2027-06-25,Computer Science,3.72,15,Doctoral Degree,on_campus,97116,f,Multiple
+725,Robert,Smith,robert.smith725@university.edu,Male,2002-04-17,2024-09-25,2028-09-25,Business,3.38,111,High School,on_campus,37006,t,None
+726,Fatima,Baker,fatima.baker726@university.edu,Female,1997-11-22,2024-01-02,2027-01-02,Computer Science,3.68,78,Bachelor's Degree,on_campus,75444,f,Work Study
+727,Barbara,Walker,barbara.walker727@university.edu,Male,2007-02-02,2025-01-08,2028-01-08,Economics,2.18,0,Bachelor's Degree,off_campus,12339,f,Scholarship
+728,Patricia,Allen,patricia.allen728@university.edu,Female,1996-12-04,2024-05-14,2028-05-14,Chemistry,3.64,74,No High School,off_campus,12396,f,Loans
+729,William,Allen,william.allen729@university.edu,Non-binary,2006-02-14,2024-02-04,2028-02-04,Physics,3.69,19,Doctoral Degree,off_campus,12394,f,Work Study
+730,Li,Zhang,li.zhang730@university.edu,Non-binary,1998-12-06,2023-11-27,2027-11-27,Chemistry,3.02,64,Doctoral Degree,off_campus,33530,f,Work Study
+731,John,Zhang,john.zhang731@university.edu,Male,2000-07-13,2024-10-02,2027-10-02,Sociology,3.86,17,Bachelor's Degree,off_campus,37725,f,None
+732,Mary,Lewis,mary.lewis732@university.edu,Male,1996-04-03,2024-02-25,2028-02-25,Communications,2.88,85,Master's Degree,on_campus,26079,f,None
+733,James,White,james.white733@university.edu,Non-binary,2005-02-18,2024-08-25,2029-08-25,Political Science,3.98,39,Associate's Degree,off_campus,36775,f,Grants
+734,Sarah,Liu,sarah.liu734@university.edu,Male,1998-03-17,2023-09-11,2027-09-11,Chemistry,3.29,89,Doctoral Degree,on_campus,20464,f,Work Study
+735,John,Robinson,john.robinson735@university.edu,Female,1997-12-09,2023-11-27,2027-11-27,Physics,2.94,17,Bachelor's Degree,on_campus,23230,f,Grants
+736,Patricia,Wang,patricia.wang736@university.edu,Female,1999-09-22,2024-02-11,2027-02-11,Business,3.09,99,Master's Degree,off_campus,12359,f,Multiple
+737,Li,Ahmed,li.ahmed737@university.edu,Male,2004-11-20,2024-08-03,2029-08-03,Political Science,2.59,100,High School,on_campus,24231,f,Loans
+738,Linda,Rodriguez,linda.rodriguez738@university.edu,Male,1995-12-08,2024-01-28,2029-01-28,Art,2.61,38,Doctoral Degree,on_campus,76199,f,Work Study
+739,Sarah,Jones,sarah.jones739@university.edu,Male,2002-04-02,2024-08-12,2029-08-12,English,3.30,67,Master's Degree,on_campus,09967,t,Multiple
+740,Sarah,Anderson,sarah.anderson740@university.edu,Non-binary,1998-05-10,2024-03-11,2029-03-11,Physics,3.48,43,Doctoral Degree,off_campus,33462,t,Multiple
+741,Fatima,Hall,fatima.hall741@university.edu,Non-binary,1996-12-20,2024-04-01,2029-04-01,Physics,2.71,65,Master's Degree,off_campus,12334,f,Loans
+742,Aisha,Young,aisha.young742@university.edu,Male,2000-10-06,2023-10-09,2026-10-09,Psychology,3.09,102,Master's Degree,on_campus,18913,f,Grants
+743,Lisa,Li,lisa.li743@university.edu,Male,2006-10-18,2023-11-25,2026-11-25,Engineering,2.38,116,Master's Degree,on_campus,78821,f,Scholarship
+744,Carlos,Lee,carlos.lee744@university.edu,Male,1998-05-26,2024-07-10,2027-07-10,Chemistry,2.48,42,No High School,off_campus,12391,f,Scholarship
+745,William,Martinez,william.martinez745@university.edu,Non-binary,2001-02-04,2023-10-09,2026-10-09,Psychology,3.40,13,Bachelor's Degree,on_campus,78891,t,Scholarship
+746,Sarah,Anderson,sarah.anderson746@university.edu,Female,2001-02-27,2025-01-05,2029-01-05,Computer Science,2.97,26,Bachelor's Degree,off_campus,84432,f,Work Study
+747,Lisa,Thomas,lisa.thomas747@university.edu,Male,1998-03-14,2024-03-07,2027-03-07,Physics,3.09,108,Bachelor's Degree,on_campus,83148,f,Scholarship
+748,Zhang,Jackson,zhang.jackson748@university.edu,Male,2003-04-10,2024-10-21,2028-10-21,Business,3.72,21,Associate's Degree,off_campus,12369,f,None
+749,Lisa,Young,lisa.young749@university.edu,Non-binary,2004-11-29,2024-11-21,2027-11-21,Computer Science,2.97,78,Doctoral Degree,on_campus,02529,f,Grants
+750,María,Walker,maría.walker750@university.edu,Non-binary,2005-02-12,2024-09-09,2029-09-09,Economics,3.91,89,Bachelor's Degree,off_campus,88851,t,Multiple
+751,Juan,Davis,juan.davis751@university.edu,Male,1998-02-01,2024-08-22,2028-08-22,Physics,3.28,66,Associate's Degree,on_campus,82911,f,Grants
+752,William,Walker,william.walker752@university.edu,Non-binary,2005-07-20,2024-08-02,2028-08-02,Communications,3.52,106,Doctoral Degree,off_campus,12328,f,Multiple
+753,Jessica,Mitchell,jessica.mitchell753@university.edu,Female,1995-09-06,2024-10-13,2029-10-13,Communications,2.54,114,Bachelor's Degree,off_campus,12304,f,Grants
+754,Elizabeth,Ali,elizabeth.ali754@university.edu,Male,2002-05-11,2024-11-23,2029-11-23,Chemistry,3.40,14,Doctoral Degree,off_campus,12325,f,Scholarship
+755,Thomas,Hall,thomas.hall755@university.edu,Non-binary,1995-08-19,2024-05-21,2028-05-21,History,2.47,37,Some College,on_campus,07834,f,None
+756,Patricia,Taylor,patricia.taylor756@university.edu,Male,1999-04-02,2025-01-21,2029-01-21,Psychology,2.27,6,High School,on_campus,76658,f,Scholarship
+757,Liu,Thomas,liu.thomas757@university.edu,Male,2003-03-13,2024-10-13,2027-10-13,Physics,2.51,107,Bachelor's Degree,on_campus,10785,f,Grants
+758,Omar,Carter,omar.carter758@university.edu,Male,2001-10-27,2025-01-22,2029-01-22,Art,2.26,10,Doctoral Degree,off_campus,12390,f,Work Study
+759,Sarah,Miller,sarah.miller759@university.edu,Female,2004-05-23,2023-12-08,2028-12-08,Sociology,3.06,116,Some College,off_campus,12363,f,Grants
+760,María,Brown,maría.brown760@university.edu,Female,1999-02-04,2024-09-16,2029-09-16,Engineering,2.45,71,Some College,on_campus,83340,f,None
+761,Liu,Scott,liu.scott761@university.edu,Non-binary,1997-11-03,2024-07-03,2029-07-03,Engineering,3.28,82,Some College,off_campus,12397,f,Loans
+762,Karen,Wilson,karen.wilson762@university.edu,Male,1996-01-27,2023-11-09,2027-11-09,Psychology,2.75,115,Bachelor's Degree,off_campus,04777,f,Scholarship
+763,Zhang,Jones,zhang.jones763@university.edu,Female,1996-07-25,2023-10-19,2026-10-19,History,2.39,44,Doctoral Degree,on_campus,70709,f,Multiple
+764,Fatima,Lee,fatima.lee764@university.edu,Non-binary,1997-07-24,2024-03-20,2028-03-20,Economics,2.02,69,Doctoral Degree,off_campus,12332,f,Grants
+765,William,Chen,william.chen765@university.edu,Male,2001-08-14,2024-03-16,2029-03-16,English,3.63,71,Doctoral Degree,off_campus,58198,f,None
+766,Thomas,Davis,thomas.davis766@university.edu,Non-binary,2001-05-24,2024-11-09,2029-11-09,Business,2.20,116,Master's Degree,on_campus,61559,f,Work Study
+767,Michael,Baker,michael.baker767@university.edu,Female,2004-08-04,2024-08-30,2027-08-30,English,3.03,51,Doctoral Degree,off_campus,12335,f,Loans
+768,Jennifer,Garcia,jennifer.garcia768@university.edu,Non-binary,1999-01-03,2024-09-21,2028-09-21,Sociology,2.71,9,Doctoral Degree,off_campus,34761,f,Scholarship
+769,David,Allen,david.allen769@university.edu,Female,2001-04-28,2023-11-02,2027-11-02,Chemistry,2.60,19,Bachelor's Degree,off_campus,06193,f,Work Study
+770,David,Zhang,david.zhang770@university.edu,Female,2005-08-23,2024-06-23,2028-06-23,Art,2.51,73,Associate's Degree,on_campus,61564,f,Multiple
+771,Elizabeth,Garcia,elizabeth.garcia771@university.edu,Non-binary,2000-09-28,2024-02-22,2027-02-22,Computer Science,2.15,1,Bachelor's Degree,off_campus,12310,f,None
+772,Robert,Khan,robert.khan772@university.edu,Male,2002-12-03,2024-07-19,2029-07-19,Communications,2.69,81,Bachelor's Degree,off_campus,00969,f,Loans
+773,Liu,Brown,liu.brown773@university.edu,Non-binary,2005-05-29,2024-09-27,2029-09-27,History,2.78,48,Doctoral Degree,on_campus,59967,f,None
+774,John,Zhang,john.zhang774@university.edu,Non-binary,2005-02-05,2024-08-10,2029-08-10,English,2.01,37,Associate's Degree,off_campus,12355,f,Multiple
+775,Aisha,Miller,aisha.miller775@university.edu,Male,1997-02-15,2023-08-31,2027-08-31,Art,3.37,107,High School,off_campus,99620,f,Work Study
+776,Abdul,Scott,abdul.scott776@university.edu,Female,2005-04-09,2024-03-16,2029-03-16,Psychology,3.98,20,Associate's Degree,off_campus,12376,f,Work Study
+777,Juan,Lee,juan.lee777@university.edu,Female,2003-06-12,2024-04-10,2028-04-10,Economics,3.26,107,Master's Degree,on_campus,26498,f,Grants
+778,Lisa,Carter,lisa.carter778@university.edu,Male,1995-08-18,2023-09-20,2026-09-20,Art,2.44,111,Master's Degree,off_campus,57474,f,Scholarship
+779,Robert,Jones,robert.jones779@university.edu,Non-binary,2003-01-04,2024-04-10,2027-04-10,Business,3.18,38,Bachelor's Degree,on_campus,83956,f,Grants
+780,Carlos,Li,carlos.li780@university.edu,Male,1995-07-17,2024-07-05,2027-07-05,Art,2.11,28,Associate's Degree,off_campus,50220,f,Grants
+781,Richard,Brown,richard.brown781@university.edu,Female,1997-02-04,2024-12-21,2029-12-21,English,3.69,71,Bachelor's Degree,off_campus,12349,f,None
+782,Thomas,Ali,thomas.ali782@university.edu,Male,1995-10-10,2023-11-10,2027-11-10,History,3.56,79,Doctoral Degree,on_campus,95163,f,Grants
+783,Yan,Johnson,yan.johnson783@university.edu,Male,1998-09-03,2023-08-31,2027-08-31,Psychology,2.27,0,Master's Degree,on_campus,50336,f,Work Study
+784,Aisha,Williams,aisha.williams784@university.edu,Male,1995-10-19,2023-08-28,2028-08-28,Computer Science,3.09,41,Bachelor's Degree,off_campus,12313,t,Grants
+785,Joseph,Green,joseph.green785@university.edu,Non-binary,2006-07-16,2024-07-10,2028-07-10,Chemistry,3.53,55,Bachelor's Degree,on_campus,41410,f,Loans
+786,Abdul,Baker,abdul.baker786@university.edu,Non-binary,1998-08-17,2024-12-01,2028-12-01,Economics,3.35,56,Bachelor's Degree,on_campus,45909,f,Multiple
+787,David,Wilson,david.wilson787@university.edu,Male,1999-09-26,2023-12-06,2027-12-06,History,2.72,44,High School,off_campus,12355,f,Loans
+788,Susan,Adams,susan.adams788@university.edu,Female,1996-10-13,2024-01-07,2027-01-07,Psychology,2.33,1,Master's Degree,on_campus,43127,f,Scholarship
+789,Abdul,Li,abdul.li789@university.edu,Female,2006-09-18,2024-09-28,2027-09-28,Psychology,3.79,2,Bachelor's Degree,on_campus,05127,t,Loans
+790,Lisa,Zhang,lisa.zhang790@university.edu,Female,2004-03-24,2024-01-14,2028-01-14,Business,2.82,71,Associate's Degree,on_campus,24398,f,Work Study
+791,Miguel,Lee,miguel.lee791@university.edu,Non-binary,2002-04-24,2023-11-05,2026-11-05,Economics,2.50,44,Some College,on_campus,93766,f,Work Study
+792,Aisha,Anderson,aisha.anderson792@university.edu,Male,1998-06-08,2024-03-04,2028-03-04,Art,2.09,27,Doctoral Degree,on_campus,76479,t,None
+793,Linda,Robinson,linda.robinson793@university.edu,Male,2000-03-16,2024-11-24,2028-11-24,Biology,3.45,8,Master's Degree,off_campus,67144,f,Grants
+794,Liu,Young,liu.young794@university.edu,Male,2001-08-24,2023-09-30,2028-09-30,Computer Science,2.12,36,Associate's Degree,on_campus,28398,f,Multiple
+795,Michael,Liu,michael.liu795@university.edu,Male,2005-08-05,2024-05-01,2028-05-01,Sociology,2.45,89,Doctoral Degree,on_campus,47449,t,Scholarship
+796,Fatima,White,fatima.white796@university.edu,Male,2004-12-09,2024-09-09,2027-09-09,Sociology,3.95,37,Doctoral Degree,off_campus,29715,f,None
+797,Thomas,Liu,thomas.liu797@university.edu,Female,2002-09-04,2023-12-09,2027-12-09,Sociology,3.46,76,Master's Degree,off_campus,12365,f,Grants
+798,Barbara,Taylor,barbara.taylor798@university.edu,Female,1996-05-17,2024-05-19,2028-05-19,Economics,2.34,85,Some College,off_campus,36824,f,Loans
+799,Sarah,Garcia,sarah.garcia799@university.edu,Male,2006-08-11,2023-11-28,2027-11-28,Physics,2.57,41,Bachelor's Degree,on_campus,83217,f,Grants
+800,Barbara,White,barbara.white800@university.edu,Male,2001-03-02,2024-06-18,2029-06-18,Psychology,2.70,5,Bachelor's Degree,off_campus,12369,f,Scholarship
+801,Jennifer,Garcia,jennifer.garcia801@university.edu,Male,2000-05-14,2024-12-10,2029-12-10,Computer Science,3.85,116,Doctoral Degree,off_campus,12395,f,Loans
+802,Yan,Miller,yan.miller802@university.edu,Male,1996-10-16,2024-02-01,2028-02-01,Art,3.67,4,Bachelor's Degree,off_campus,12323,f,Loans
+803,Miguel,Li,miguel.li803@university.edu,Female,2005-11-07,2024-11-01,2027-11-01,Art,2.42,88,Associate's Degree,off_campus,12381,f,Loans
+804,Mary,Johnson,mary.johnson804@university.edu,Non-binary,2007-03-13,2023-12-18,2026-12-18,Biology,3.43,46,Associate's Degree,off_campus,12358,f,Scholarship
+805,Jessica,Khan,jessica.khan805@university.edu,Non-binary,2001-05-05,2023-11-01,2026-11-01,Mathematics,2.39,33,Bachelor's Degree,on_campus,26931,t,Multiple
+806,Mary,Nelson,mary.nelson806@university.edu,Non-binary,1998-11-11,2024-08-09,2027-08-09,Biology,3.52,17,Doctoral Degree,off_campus,35153,f,Multiple
+807,James,Liu,james.liu807@university.edu,Male,2004-02-24,2024-01-28,2029-01-28,Computer Science,3.16,90,Associate's Degree,on_campus,62428,f,Work Study
+808,Liu,Liu,liu.liu808@university.edu,Male,2005-03-22,2024-06-30,2028-06-30,Communications,2.80,66,Master's Degree,off_campus,12385,f,Grants
+809,Carlos,Ali,carlos.ali809@university.edu,Non-binary,1998-07-30,2024-11-30,2028-11-30,Physics,3.29,44,Master's Degree,off_campus,73544,f,Work Study
+810,David,Wright,david.wright810@university.edu,Non-binary,2003-09-05,2024-09-03,2027-09-03,Political Science,2.66,116,Master's Degree,off_campus,12378,f,Grants
+811,Abdul,Johnson,abdul.johnson811@university.edu,Non-binary,1999-06-24,2024-10-24,2027-10-24,Biology,2.26,104,Master's Degree,off_campus,93829,f,Scholarship
+812,Omar,Lee,omar.lee812@university.edu,Male,1996-11-15,2024-09-01,2029-09-01,Psychology,3.25,3,Doctoral Degree,on_campus,72969,f,Work Study
+813,Patricia,Miller,patricia.miller813@university.edu,Female,2002-02-05,2024-01-23,2028-01-23,Chemistry,3.11,13,No High School,on_campus,61381,f,Grants
+814,Liu,Chen,liu.chen814@university.edu,Female,2003-05-30,2025-02-01,2029-02-01,Art,3.72,3,Some College,on_campus,88693,f,Work Study
+815,Fatima,Johnson,fatima.johnson815@university.edu,Non-binary,2002-08-16,2024-09-26,2029-09-26,Business,2.73,114,Bachelor's Degree,on_campus,08651,t,Scholarship
+816,María,Thomas,maría.thomas816@university.edu,Male,2000-09-05,2024-04-26,2027-04-26,English,3.57,71,Associate's Degree,on_campus,55595,t,Grants
+817,Barbara,Allen,barbara.allen817@university.edu,Male,2001-05-17,2024-08-30,2029-08-30,Chemistry,3.12,21,No High School,off_campus,12335,f,Grants
+818,William,Carter,william.carter818@university.edu,Non-binary,1998-10-17,2024-02-19,2028-02-19,English,2.13,5,Doctoral Degree,on_campus,10890,f,Loans
+819,José,Martinez,josé.martinez819@university.edu,Female,2005-03-27,2023-11-02,2027-11-02,Physics,2.83,45,Master's Degree,on_campus,77338,f,Loans
+820,Linda,Khan,linda.khan820@university.edu,Non-binary,1997-09-20,2024-09-29,2027-09-29,Physics,2.67,29,No High School,off_campus,18277,f,Grants
+821,Mohammad,Zhang,mohammad.zhang821@university.edu,Female,2004-09-11,2023-10-28,2026-10-28,Political Science,3.95,76,Associate's Degree,off_campus,12338,f,Scholarship
+822,Elizabeth,Miller,elizabeth.miller822@university.edu,Female,2002-08-19,2024-09-03,2029-09-03,Chemistry,2.60,51,Associate's Degree,off_campus,12309,f,Work Study
+823,Richard,Clark,richard.clark823@university.edu,Female,2006-09-05,2024-02-09,2027-02-09,History,3.39,27,Master's Degree,off_campus,12360,f,Grants
+824,Patricia,Martinez,patricia.martinez824@university.edu,Male,2006-10-21,2024-04-03,2028-04-03,History,3.73,62,Bachelor's Degree,off_campus,12324,f,None
+825,Richard,Anderson,richard.anderson825@university.edu,Female,2005-10-16,2024-12-11,2028-12-11,Engineering,3.28,116,Some College,on_campus,12509,f,Work Study
+826,Linda,Zhang,linda.zhang826@university.edu,Non-binary,2002-03-05,2023-10-10,2026-10-10,Political Science,2.52,107,Some College,on_campus,81948,f,Loans
+827,Juan,Singh,juan.singh827@university.edu,Non-binary,2003-02-03,2024-12-01,2028-12-01,Political Science,2.64,26,Bachelor's Degree,off_campus,12381,f,Grants
+828,Wei,Liu,wei.liu828@university.edu,Non-binary,1997-08-03,2024-07-10,2029-07-10,History,2.90,113,Doctoral Degree,on_campus,43925,t,Scholarship
+829,Zhang,Mitchell,zhang.mitchell829@university.edu,Non-binary,1997-01-17,2024-06-09,2027-06-09,History,3.42,88,Some College,off_campus,01767,f,Grants
+830,James,Clark,james.clark830@university.edu,Non-binary,1998-12-02,2023-09-21,2027-09-21,Sociology,3.20,5,Doctoral Degree,off_campus,12333,f,Grants
+831,Robert,Miller,robert.miller831@university.edu,Male,2002-09-23,2023-10-28,2028-10-28,Business,2.58,36,Master's Degree,off_campus,12356,f,Scholarship
+832,Carlos,Jones,carlos.jones832@university.edu,Non-binary,1997-07-04,2024-01-31,2028-01-31,English,3.36,1,Doctoral Degree,off_campus,12315,f,Loans
+833,Carlos,Adams,carlos.adams833@university.edu,Male,1999-03-10,2023-11-18,2027-11-18,History,3.74,102,Doctoral Degree,off_campus,12399,f,Work Study
+834,James,Li,james.li834@university.edu,Male,2003-12-21,2024-11-02,2028-11-02,Economics,2.56,97,Doctoral Degree,off_campus,12379,f,Grants
+835,Jennifer,Young,jennifer.young835@university.edu,Female,2003-04-01,2024-11-28,2028-11-28,English,3.15,80,Doctoral Degree,off_campus,51615,f,Grants
+836,José,Young,josé.young836@university.edu,Non-binary,2003-10-20,2024-06-22,2029-06-22,History,2.08,21,Bachelor's Degree,off_campus,12363,f,Scholarship
+837,Juan,King,juan.king837@university.edu,Non-binary,2002-11-15,2025-01-23,2028-01-23,Biology,3.88,101,Doctoral Degree,off_campus,27001,f,Scholarship
+838,Barbara,Jackson,barbara.jackson838@university.edu,Male,2000-11-11,2025-01-28,2028-01-28,Communications,2.29,54,Master's Degree,on_campus,27184,f,Multiple
+839,María,Liu,maría.liu839@university.edu,Female,1998-11-23,2024-05-10,2027-05-10,Communications,2.03,12,Bachelor's Degree,off_campus,12321,f,Work Study
+840,Lisa,Smith,lisa.smith840@university.edu,Male,1996-12-18,2024-12-03,2027-12-03,Sociology,2.76,52,Doctoral Degree,on_campus,96991,f,Scholarship
+841,John,Liu,john.liu841@university.edu,Female,1996-03-29,2023-12-31,2026-12-31,Chemistry,2.39,52,Doctoral Degree,off_campus,09441,f,Work Study
+842,Mary,Liu,mary.liu842@university.edu,Non-binary,1997-06-08,2024-01-10,2028-01-10,Mathematics,3.11,74,Doctoral Degree,on_campus,23109,f,Work Study
+843,David,Khan,david.khan843@university.edu,Non-binary,2006-07-02,2024-07-25,2029-07-25,Economics,2.68,67,Bachelor's Degree,off_campus,12329,t,Scholarship
+844,Linda,Hall,linda.hall844@university.edu,Male,1996-10-15,2024-10-05,2027-10-05,Economics,3.69,90,Doctoral Degree,on_campus,71104,f,Work Study
+845,Yan,Liu,yan.liu845@university.edu,Male,1996-06-11,2024-03-08,2029-03-08,Economics,2.08,117,Doctoral Degree,on_campus,40189,f,Work Study
+846,Omar,Brown,omar.brown846@university.edu,Female,2006-08-25,2024-01-20,2027-01-20,Economics,3.45,107,Master's Degree,on_campus,63983,t,Scholarship
+847,Richard,Clark,richard.clark847@university.edu,Female,2001-12-10,2024-04-24,2028-04-24,Art,3.15,101,High School,off_campus,12348,f,None
+848,Jessica,Singh,jessica.singh848@university.edu,Non-binary,2002-08-04,2024-07-01,2027-07-01,Computer Science,3.23,75,Associate's Degree,on_campus,32362,t,Work Study
+849,Zhang,Davis,zhang.davis849@university.edu,Non-binary,2004-03-25,2025-01-18,2029-01-18,Computer Science,3.46,50,Doctoral Degree,on_campus,57795,f,Grants
+850,Thomas,King,thomas.king850@university.edu,Non-binary,2000-08-31,2024-03-30,2027-03-30,English,3.25,109,Bachelor's Degree,off_campus,12390,t,Loans
+851,Jessica,Mitchell,jessica.mitchell851@university.edu,Non-binary,2005-09-23,2024-12-31,2029-12-31,Chemistry,2.86,45,Associate's Degree,on_campus,50530,f,Scholarship
+852,James,Rahman,james.rahman852@university.edu,Female,2002-08-08,2024-12-28,2029-12-28,Biology,3.08,41,Associate's Degree,off_campus,12374,f,Loans
+853,Jennifer,Rodriguez,jennifer.rodriguez853@university.edu,Male,2005-07-19,2024-06-22,2028-06-22,Mathematics,3.58,18,Some College,off_campus,12363,f,None
+854,Robert,Zhang,robert.zhang854@university.edu,Male,1995-12-29,2024-06-10,2028-06-10,English,3.76,117,Doctoral Degree,off_campus,12347,f,Scholarship
+855,Elizabeth,Lewis,elizabeth.lewis855@university.edu,Male,2001-12-23,2024-09-09,2028-09-09,English,3.84,10,Master's Degree,on_campus,90520,f,Grants
+856,Zhang,Davis,zhang.davis856@university.edu,Non-binary,2004-01-22,2024-01-03,2027-01-03,Communications,3.34,78,Bachelor's Degree,on_campus,72708,f,Multiple
+857,Michael,Walker,michael.walker857@university.edu,Non-binary,1997-09-20,2023-12-05,2027-12-05,Psychology,3.30,10,Master's Degree,off_campus,12383,f,Work Study
+858,Fatima,Robinson,fatima.robinson858@university.edu,Non-binary,2004-05-16,2025-01-24,2029-01-24,Physics,2.69,53,Bachelor's Degree,on_campus,28879,f,Loans
+859,Joseph,Singh,joseph.singh859@university.edu,Male,2006-07-22,2024-11-30,2028-11-30,Business,3.33,44,Some College,on_campus,48417,f,Work Study
+860,John,Ali,john.ali860@university.edu,Male,2002-12-28,2023-08-17,2027-08-17,Political Science,2.84,45,High School,on_campus,42318,f,None
+861,Zhang,Jackson,zhang.jackson861@university.edu,Male,1996-06-15,2025-01-17,2029-01-17,Sociology,2.89,77,Master's Degree,on_campus,16847,f,None
+862,Aisha,Taylor,aisha.taylor862@university.edu,Male,2002-01-23,2024-07-14,2028-07-14,History,3.26,107,Some College,on_campus,33071,f,Scholarship
+863,Robert,Ahmed,robert.ahmed863@university.edu,Non-binary,2003-06-17,2024-11-21,2029-11-21,Mathematics,3.10,83,High School,on_campus,79581,f,Grants
+864,Jessica,Moore,jessica.moore864@university.edu,Non-binary,2004-06-20,2024-02-14,2028-02-14,History,3.75,67,Bachelor's Degree,off_campus,10137,f,Loans
+865,William,Brown,william.brown865@university.edu,Female,2006-01-28,2024-03-30,2029-03-30,Art,3.59,5,Doctoral Degree,off_campus,12331,f,Loans
+866,Sarah,Jones,sarah.jones866@university.edu,Male,2001-08-07,2024-11-03,2028-11-03,Communications,2.40,13,Master's Degree,off_campus,37342,t,Work Study
+867,Omar,Lee,omar.lee867@university.edu,Non-binary,2007-03-26,2023-09-25,2026-09-25,Art,3.08,84,Associate's Degree,on_campus,18466,f,Work Study
+868,Mohammad,Carter,mohammad.carter868@university.edu,Non-binary,2001-11-14,2024-11-12,2029-11-12,Art,2.63,110,Master's Degree,off_campus,12309,f,Loans
+869,Jessica,Wang,jessica.wang869@university.edu,Male,1997-06-13,2024-05-24,2029-05-24,Biology,3.62,24,Master's Degree,on_campus,36245,f,None
+870,Juan,Williams,juan.williams870@university.edu,Male,1999-01-21,2024-04-25,2028-04-25,Computer Science,2.80,106,Master's Degree,off_campus,12383,f,None
+871,Jessica,Khan,jessica.khan871@university.edu,Female,1996-01-30,2024-07-29,2029-07-29,Communications,2.43,59,Bachelor's Degree,on_campus,82555,f,None
+872,Sarah,Baker,sarah.baker872@university.edu,Non-binary,1995-09-13,2025-01-18,2028-01-18,English,3.17,14,Bachelor's Degree,off_campus,12383,f,Multiple
+873,José,Robinson,josé.robinson873@university.edu,Male,1997-08-15,2024-08-10,2027-08-10,Computer Science,2.19,95,Master's Degree,off_campus,12312,f,Scholarship
+874,Michael,Liu,michael.liu874@university.edu,Male,1997-06-20,2024-09-10,2029-09-10,Psychology,2.61,63,Bachelor's Degree,on_campus,92761,f,Work Study
+875,Carlos,Thomas,carlos.thomas875@university.edu,Female,2007-03-13,2024-04-25,2029-04-25,Engineering,2.28,77,Bachelor's Degree,on_campus,47281,f,None
+876,Li,Martinez,li.martinez876@university.edu,Male,1997-07-03,2024-08-30,2027-08-30,Sociology,3.55,94,Doctoral Degree,on_campus,25151,f,Grants
+877,Thomas,Robinson,thomas.robinson877@university.edu,Male,1997-11-07,2024-12-14,2027-12-14,Communications,3.61,14,High School,off_campus,76464,f,Grants
+878,Juan,Baker,juan.baker878@university.edu,Non-binary,1998-01-03,2024-12-05,2027-12-05,Computer Science,3.42,64,Bachelor's Degree,on_campus,14790,f,Work Study
+879,Lisa,Wang,lisa.wang879@university.edu,Male,2005-02-03,2023-09-08,2028-09-08,Computer Science,2.19,33,Master's Degree,off_campus,43041,f,None
+880,Liu,Wright,liu.wright880@university.edu,Non-binary,1998-10-22,2024-02-05,2029-02-05,Engineering,3.15,41,Doctoral Degree,off_campus,06373,f,Grants
+881,Joseph,Rahman,joseph.rahman881@university.edu,Non-binary,1998-05-04,2024-08-21,2029-08-21,Sociology,3.18,13,Bachelor's Degree,off_campus,93019,f,Multiple
+882,Thomas,Li,thomas.li882@university.edu,Male,2001-11-12,2024-12-06,2027-12-06,Economics,3.83,66,Bachelor's Degree,off_campus,91861,f,Scholarship
+883,Michael,Singh,michael.singh883@university.edu,Female,1999-01-10,2024-12-02,2028-12-02,English,3.08,116,Master's Degree,off_campus,12381,f,Loans
+884,William,Jones,william.jones884@university.edu,Female,2000-01-22,2024-02-25,2028-02-25,Art,2.93,17,Associate's Degree,on_campus,28626,f,Work Study
+885,James,Harris,james.harris885@university.edu,Male,2004-12-02,2024-04-28,2028-04-28,Political Science,3.19,76,No High School,on_campus,56904,f,Grants
+886,Lisa,Lee,lisa.lee886@university.edu,Non-binary,2000-01-29,2024-07-16,2027-07-16,Economics,3.38,119,Master's Degree,on_campus,06574,f,Grants
+887,Li,Jackson,li.jackson887@university.edu,Female,2002-03-04,2023-12-26,2027-12-26,Political Science,2.25,44,Doctoral Degree,on_campus,39743,t,Scholarship
+888,Linda,Martinez,linda.martinez888@university.edu,Non-binary,2005-11-17,2023-12-04,2027-12-04,Biology,2.64,37,Bachelor's Degree,on_campus,80166,f,Multiple
+889,José,Brown,josé.brown889@university.edu,Female,2006-07-29,2023-09-03,2026-09-03,Chemistry,2.18,73,Master's Degree,off_campus,12304,f,Multiple
+890,Patricia,Ali,patricia.ali890@university.edu,Non-binary,1999-10-08,2024-10-17,2028-10-17,English,2.29,107,Bachelor's Degree,off_campus,12388,f,Loans
+891,Lisa,Baker,lisa.baker891@university.edu,Non-binary,2001-06-08,2023-10-22,2026-10-22,Business,2.80,80,Bachelor's Degree,off_campus,12362,f,None
+892,Juan,Hall,juan.hall892@university.edu,Male,2001-07-28,2024-08-26,2028-08-26,Economics,2.32,37,Master's Degree,off_campus,12312,f,Multiple
+893,Robert,Ahmed,robert.ahmed893@university.edu,Male,1997-12-30,2025-01-05,2029-01-05,Chemistry,2.06,115,Bachelor's Degree,on_campus,76749,f,None
+894,William,Clark,william.clark894@university.edu,Female,1995-10-03,2024-03-12,2029-03-12,Biology,2.83,3,Bachelor's Degree,off_campus,53647,f,None
+895,Fatima,Anderson,fatima.anderson895@university.edu,Female,1996-08-31,2023-11-19,2028-11-19,Sociology,3.71,17,Some College,off_campus,12314,f,Multiple
+896,Richard,Wilson,richard.wilson896@university.edu,Female,2001-12-05,2024-07-31,2029-07-31,Psychology,2.41,0,Bachelor's Degree,off_campus,12300,f,Scholarship
+897,Liu,King,liu.king897@university.edu,Male,1996-05-20,2024-01-01,2029-01-01,Biology,3.53,114,Master's Degree,on_campus,34645,f,None
+898,David,Jones,david.jones898@university.edu,Non-binary,1997-08-15,2024-08-03,2027-08-03,Psychology,2.68,24,Doctoral Degree,on_campus,73280,f,Work Study
+899,Jessica,Green,jessica.green899@university.edu,Female,1999-10-30,2023-11-21,2026-11-21,Biology,2.77,71,Associate's Degree,on_campus,52899,f,Grants
+900,Miguel,Liu,miguel.liu900@university.edu,Male,2002-11-26,2023-12-31,2027-12-31,Psychology,2.83,58,Master's Degree,on_campus,87961,f,Loans
+901,Aisha,Rodriguez,aisha.rodriguez901@university.edu,Male,1999-10-12,2023-10-05,2026-10-05,History,3.51,88,Master's Degree,on_campus,99799,f,Loans
+902,Sarah,Green,sarah.green902@university.edu,Female,1996-11-21,2023-12-06,2027-12-06,Physics,2.01,79,Doctoral Degree,off_campus,12369,f,Multiple
+903,James,Jones,james.jones903@university.edu,Non-binary,2006-06-20,2023-12-26,2027-12-26,Art,2.88,65,Bachelor's Degree,off_campus,12332,f,Multiple
+904,Robert,Taylor,robert.taylor904@university.edu,Non-binary,1996-01-19,2023-11-02,2028-11-02,Mathematics,3.21,45,Master's Degree,off_campus,95865,f,None
+905,Yan,Lewis,yan.lewis905@university.edu,Male,1999-03-24,2025-01-03,2028-01-03,Physics,3.56,112,Bachelor's Degree,off_campus,00728,f,None
+906,Juan,Wang,juan.wang906@university.edu,Female,2004-02-03,2024-10-27,2027-10-27,History,3.93,85,Some College,off_campus,12380,f,None
+907,Richard,Smith,richard.smith907@university.edu,Female,2005-11-23,2024-12-05,2029-12-05,Physics,3.19,10,Doctoral Degree,off_campus,12352,f,Multiple
+908,Aisha,Davis,aisha.davis908@university.edu,Non-binary,2001-04-14,2023-12-18,2026-12-18,Communications,2.48,58,Master's Degree,off_campus,61581,f,Loans
+909,Jennifer,Miller,jennifer.miller909@university.edu,Non-binary,2004-12-01,2024-03-24,2028-03-24,Art,2.92,15,No High School,off_campus,12393,f,Loans
+910,Wei,Ali,wei.ali910@university.edu,Male,1996-11-05,2024-11-25,2027-11-25,Computer Science,3.56,75,Some College,off_campus,12336,f,Multiple
+911,Li,Wang,li.wang911@university.edu,Male,2004-06-04,2024-09-15,2027-09-15,Computer Science,3.09,63,No High School,on_campus,26163,f,Multiple
+912,Omar,Harris,omar.harris912@university.edu,Male,2002-10-13,2024-01-17,2028-01-17,Economics,3.34,83,High School,on_campus,83231,t,Scholarship
+913,John,Davis,john.davis913@university.edu,Non-binary,1998-07-08,2024-05-24,2029-05-24,Biology,2.85,87,No High School,on_campus,15153,f,Loans
+914,Robert,Green,robert.green914@university.edu,Non-binary,2006-08-22,2023-12-14,2026-12-14,Business,2.49,108,Doctoral Degree,off_campus,12338,t,Grants
+915,Miguel,Scott,miguel.scott915@university.edu,Male,2004-04-14,2023-12-23,2027-12-23,Sociology,3.63,53,Associate's Degree,off_campus,12356,f,None
+916,Linda,Brown,linda.brown916@university.edu,Male,2006-05-02,2024-12-02,2028-12-02,Sociology,3.87,96,Doctoral Degree,off_campus,07474,f,Work Study
+917,Richard,Allen,richard.allen917@university.edu,Female,1999-09-28,2024-09-12,2029-09-12,Business,2.96,62,Master's Degree,off_campus,12359,f,Multiple
+918,Carlos,Martinez,carlos.martinez918@university.edu,Male,1996-07-05,2024-02-13,2027-02-13,Computer Science,2.46,78,Bachelor's Degree,off_campus,03396,f,Grants
+919,Li,Wright,li.wright919@university.edu,Male,1999-03-03,2025-01-08,2030-01-08,Psychology,2.38,19,High School,off_campus,12329,f,Loans
+920,Miguel,Davis,miguel.davis920@university.edu,Female,2001-07-01,2024-07-12,2029-07-12,Psychology,3.61,63,Doctoral Degree,on_campus,05116,t,Multiple
+921,Michael,Wang,michael.wang921@university.edu,Non-binary,1995-12-21,2023-11-10,2027-11-10,Physics,3.67,99,Doctoral Degree,off_campus,12349,t,None
+922,Joseph,Garcia,joseph.garcia922@university.edu,Non-binary,2005-01-12,2024-11-12,2027-11-12,Physics,3.63,76,Bachelor's Degree,off_campus,12346,t,Grants
+923,Jessica,Ahmed,jessica.ahmed923@university.edu,Male,2003-03-18,2024-12-22,2029-12-22,Political Science,2.75,102,Bachelor's Degree,on_campus,98363,f,Loans
+924,John,Davis,john.davis924@university.edu,Male,1996-01-30,2025-01-25,2028-01-25,Chemistry,2.32,72,High School,off_campus,12303,f,Grants
+925,Lisa,Rodriguez,lisa.rodriguez925@university.edu,Non-binary,1996-06-13,2024-02-27,2028-02-27,Political Science,3.59,89,Master's Degree,off_campus,90887,t,Scholarship
+926,María,Taylor,maría.taylor926@university.edu,Female,1998-03-22,2023-12-20,2026-12-20,English,2.05,83,Doctoral Degree,off_campus,12388,f,Grants
+927,Fatima,White,fatima.white927@university.edu,Female,2002-04-08,2024-05-27,2027-05-27,Chemistry,3.30,57,Master's Degree,off_campus,12353,f,Loans
+928,Thomas,Wilson,thomas.wilson928@university.edu,Non-binary,2004-06-21,2023-08-20,2027-08-20,Sociology,3.04,4,Bachelor's Degree,off_campus,12307,f,Multiple
+929,Karen,Ali,karen.ali929@university.edu,Non-binary,2000-07-18,2024-11-27,2027-11-27,Computer Science,3.31,63,Bachelor's Degree,on_campus,17163,t,Scholarship
+930,Omar,Mitchell,omar.mitchell930@university.edu,Male,2003-05-04,2023-11-20,2028-11-20,History,2.97,96,Bachelor's Degree,off_campus,12352,f,Scholarship
+931,Wei,Thomas,wei.thomas931@university.edu,Male,1995-07-07,2023-11-17,2026-11-17,Sociology,3.58,50,Master's Degree,off_campus,12320,f,None
+932,John,Rodriguez,john.rodriguez932@university.edu,Male,2001-06-29,2023-08-20,2026-08-20,Business,2.74,102,Associate's Degree,off_campus,12323,t,Work Study
+933,Jessica,Wilson,jessica.wilson933@university.edu,Male,2003-01-19,2024-06-20,2028-06-20,Economics,2.18,23,Master's Degree,off_campus,12325,f,Multiple
+934,John,Khan,john.khan934@university.edu,Male,2002-01-15,2024-09-22,2027-09-22,Communications,3.53,51,Bachelor's Degree,off_campus,18845,f,Loans
+935,Linda,Chen,linda.chen935@university.edu,Non-binary,2003-08-29,2023-10-10,2026-10-10,Engineering,2.42,92,Bachelor's Degree,on_campus,71832,f,Multiple
+936,Omar,Miller,omar.miller936@university.edu,Non-binary,1999-03-28,2024-06-01,2028-06-01,Biology,2.43,66,Doctoral Degree,off_campus,75978,f,None
+937,Mary,Li,mary.li937@university.edu,Male,2007-01-25,2023-12-06,2026-12-06,Art,3.19,44,Master's Degree,off_campus,12300,f,Multiple
+938,José,Miller,josé.miller938@university.edu,Male,2002-01-20,2024-11-11,2028-11-11,Economics,2.51,85,High School,off_campus,12330,f,Work Study
+939,Yan,White,yan.white939@university.edu,Female,1997-02-13,2024-12-30,2027-12-30,Communications,3.07,3,Bachelor's Degree,on_campus,48071,f,Grants
+940,Elizabeth,Lewis,elizabeth.lewis940@university.edu,Non-binary,1996-11-18,2023-09-10,2026-09-10,Art,3.57,4,No High School,off_campus,12349,f,Work Study
+941,Robert,Nelson,robert.nelson941@university.edu,Female,2006-04-09,2023-11-12,2028-11-12,Business,3.85,118,Associate's Degree,on_campus,32211,f,Grants
+942,Omar,Young,omar.young942@university.edu,Male,2002-06-21,2024-08-25,2027-08-25,Chemistry,3.34,4,Bachelor's Degree,on_campus,68028,t,Multiple
+943,Mohammad,Williams,mohammad.williams943@university.edu,Female,1999-11-10,2023-09-06,2028-09-06,Communications,3.10,24,Bachelor's Degree,on_campus,62323,f,None
+944,Liu,Brown,liu.brown944@university.edu,Non-binary,1998-08-04,2024-08-09,2028-08-09,History,2.96,92,Master's Degree,on_campus,07826,f,Scholarship
+945,Jennifer,Baker,jennifer.baker945@university.edu,Female,2000-03-19,2023-12-27,2026-12-27,Biology,3.72,79,Some College,on_campus,23646,f,Multiple
+946,David,Miller,david.miller946@university.edu,Non-binary,1996-03-23,2024-07-19,2029-07-19,Psychology,3.59,74,Master's Degree,off_campus,12362,f,Loans
+947,Michael,Thomas,michael.thomas947@university.edu,Non-binary,2001-07-11,2024-01-04,2029-01-04,Business,2.67,100,Associate's Degree,on_campus,47243,f,None
+948,Juan,Lee,juan.lee948@university.edu,Male,1997-12-02,2024-04-13,2028-04-13,Physics,3.12,67,Doctoral Degree,off_campus,12321,f,None
+949,John,Clark,john.clark949@university.edu,Non-binary,2001-01-15,2025-01-17,2030-01-17,Political Science,2.46,42,No High School,off_campus,12353,f,None
+950,Joseph,Ali,joseph.ali950@university.edu,Female,1997-07-13,2024-11-03,2029-11-03,Communications,2.17,20,Some College,off_campus,12395,f,None
+951,Aisha,Scott,aisha.scott951@university.edu,Male,2003-06-15,2024-11-23,2029-11-23,Chemistry,2.50,50,Some College,on_campus,33183,f,Loans
+952,David,Smith,david.smith952@university.edu,Female,2004-09-22,2023-11-06,2027-11-06,Political Science,2.80,20,Master's Degree,on_campus,70920,f,Work Study
+953,Juan,Johnson,juan.johnson953@university.edu,Non-binary,1997-11-05,2023-08-27,2026-08-27,Sociology,2.84,92,Master's Degree,off_campus,62569,f,Loans
+954,Lisa,Brown,lisa.brown954@university.edu,Non-binary,2003-03-15,2024-07-06,2027-07-06,History,3.17,79,Master's Degree,on_campus,44362,f,None
+955,Miguel,Jackson,miguel.jackson955@university.edu,Female,2003-08-11,2023-09-15,2026-09-15,Engineering,3.94,41,Master's Degree,on_campus,59458,f,Work Study
+956,Liu,Lewis,liu.lewis956@university.edu,Non-binary,1996-03-05,2023-09-30,2026-09-30,Economics,2.96,57,Associate's Degree,on_campus,23990,f,Grants
+957,Carlos,Williams,carlos.williams957@university.edu,Female,2000-04-29,2024-05-19,2029-05-19,Psychology,3.59,90,Bachelor's Degree,on_campus,99031,f,Work Study
+958,María,Robinson,maría.robinson958@university.edu,Female,1997-05-29,2023-12-29,2026-12-29,Chemistry,2.10,93,Master's Degree,on_campus,04024,f,Scholarship
+959,Robert,Moore,robert.moore959@university.edu,Male,1997-09-10,2024-01-11,2027-01-11,Physics,3.99,96,Some College,off_campus,12394,f,Scholarship
+960,Linda,Allen,linda.allen960@university.edu,Male,2004-07-02,2023-09-21,2028-09-21,Physics,3.41,111,Bachelor's Degree,off_campus,12364,f,None
+961,Wei,Brown,wei.brown961@university.edu,Female,2001-05-03,2024-06-24,2029-06-24,History,2.25,76,Some College,off_campus,74596,t,None
+962,Omar,Moore,omar.moore962@university.edu,Male,2001-08-16,2024-05-20,2027-05-20,Sociology,3.75,39,Associate's Degree,on_campus,64711,t,Work Study
+963,Mohammad,Anderson,mohammad.anderson963@university.edu,Male,2006-09-14,2024-06-21,2027-06-21,Chemistry,3.29,90,Bachelor's Degree,off_campus,12345,f,Scholarship
+964,Juan,Smith,juan.smith964@university.edu,Male,2002-03-22,2023-10-05,2027-10-05,Mathematics,2.87,19,Master's Degree,off_campus,66212,f,Grants
+965,Mohammad,Wang,mohammad.wang965@university.edu,Female,1999-04-09,2024-12-22,2028-12-22,Sociology,3.62,66,High School,off_campus,40850,f,None
+966,Susan,Martinez,susan.martinez966@university.edu,Female,1996-05-31,2024-05-14,2027-05-14,Engineering,3.58,2,Doctoral Degree,off_campus,12342,f,Grants
+967,Jennifer,Zhang,jennifer.zhang967@university.edu,Non-binary,2000-02-23,2023-11-25,2026-11-25,Political Science,3.52,42,High School,off_campus,12376,f,None
+968,Omar,Zhang,omar.zhang968@university.edu,Non-binary,2003-11-20,2024-10-10,2028-10-10,Engineering,3.78,26,Bachelor's Degree,on_campus,68870,f,Loans
+969,Miguel,Ahmed,miguel.ahmed969@university.edu,Female,1996-11-12,2025-01-16,2028-01-16,Physics,2.48,74,High School,off_campus,12338,f,Grants
+970,John,Jones,john.jones970@university.edu,Female,1999-11-16,2023-11-24,2028-11-24,Psychology,3.23,85,Bachelor's Degree,off_campus,12305,f,Loans
+971,Aisha,Clark,aisha.clark971@university.edu,Non-binary,2004-10-10,2023-09-19,2028-09-19,Psychology,2.86,75,Bachelor's Degree,off_campus,63306,f,None
+972,Jessica,Ali,jessica.ali972@university.edu,Female,1996-01-19,2024-12-29,2027-12-29,Communications,2.15,105,Some College,off_campus,25865,t,None
+973,Yan,Chen,yan.chen973@university.edu,Non-binary,1996-10-10,2024-04-18,2029-04-18,Biology,2.04,114,Doctoral Degree,on_campus,02991,f,None
+974,Joseph,Ahmed,joseph.ahmed974@university.edu,Male,2007-03-28,2024-03-02,2029-03-02,History,2.92,42,Doctoral Degree,off_campus,12358,f,Work Study
+975,Aisha,Scott,aisha.scott975@university.edu,Male,2002-03-16,2023-10-20,2028-10-20,Business,2.99,93,Bachelor's Degree,off_campus,12375,f,Multiple
+976,Mohammad,Green,mohammad.green976@university.edu,Female,2003-02-06,2024-02-05,2027-02-05,Biology,3.68,67,Master's Degree,off_campus,12313,f,None
+977,William,Green,william.green977@university.edu,Male,2007-03-21,2024-06-15,2027-06-15,Art,2.08,36,Bachelor's Degree,on_campus,54701,f,Work Study
+978,Fatima,Brown,fatima.brown978@university.edu,Female,2004-12-18,2024-04-06,2027-04-06,Biology,3.38,110,Master's Degree,off_campus,12336,f,Multiple
+979,Karen,Liu,karen.liu979@university.edu,Male,1997-06-09,2024-11-02,2028-11-02,Art,2.69,63,Doctoral Degree,on_campus,43661,f,Multiple
+980,Li,Moore,li.moore980@university.edu,Non-binary,1999-08-20,2025-01-03,2030-01-03,Physics,2.39,51,Master's Degree,off_campus,12364,f,Multiple
+981,Sarah,Hall,sarah.hall981@university.edu,Male,2005-08-23,2023-10-20,2026-10-20,Sociology,3.15,66,Doctoral Degree,off_campus,08792,f,Multiple
+982,Zhang,Wright,zhang.wright982@university.edu,Non-binary,2006-02-25,2023-12-28,2026-12-28,History,3.08,8,Master's Degree,off_campus,74633,f,None
+983,Linda,Mitchell,linda.mitchell983@university.edu,Male,1998-08-19,2023-11-08,2028-11-08,Physics,2.62,80,Bachelor's Degree,on_campus,83554,f,Work Study
+984,Mary,Rahman,mary.rahman984@university.edu,Non-binary,1999-10-28,2025-01-07,2029-01-07,Biology,2.88,104,Master's Degree,off_campus,12372,f,Grants
+985,Patricia,Ahmed,patricia.ahmed985@university.edu,Male,1998-03-19,2024-12-21,2029-12-21,English,2.69,24,High School,off_campus,12370,f,None
+986,Li,Khan,li.khan986@university.edu,Male,2003-02-27,2024-10-21,2029-10-21,Mathematics,2.82,113,Bachelor's Degree,off_campus,41217,f,Work Study
+987,Juan,Wilson,juan.wilson987@university.edu,Male,1998-03-13,2024-02-29,2029-02-28,Mathematics,2.51,13,Bachelor's Degree,on_campus,47104,f,Grants
+988,Elizabeth,Davis,elizabeth.davis988@university.edu,Non-binary,2001-03-20,2024-05-01,2028-05-01,History,3.65,93,Master's Degree,off_campus,94047,f,Multiple
+989,Zhang,Taylor,zhang.taylor989@university.edu,Non-binary,2004-06-27,2024-05-21,2027-05-21,Engineering,3.46,106,Some College,on_campus,47396,f,Scholarship
+990,Lisa,Martinez,lisa.martinez990@university.edu,Male,2003-01-23,2023-08-20,2028-08-20,Sociology,3.28,58,No High School,off_campus,12383,f,Work Study
+991,Miguel,White,miguel.white991@university.edu,Female,2004-08-01,2024-08-16,2029-08-16,Computer Science,3.64,36,Master's Degree,on_campus,20008,f,Loans
+992,Miguel,Miller,miguel.miller992@university.edu,Non-binary,2007-03-02,2024-05-18,2029-05-18,Mathematics,3.03,20,Doctoral Degree,off_campus,08297,f,None
+993,Robert,Martinez,robert.martinez993@university.edu,Non-binary,1996-11-29,2023-12-28,2027-12-28,English,2.48,8,Some College,off_campus,12354,t,Grants
+994,Karen,Thomas,karen.thomas994@university.edu,Male,1996-01-17,2024-12-30,2027-12-30,Physics,3.96,14,Doctoral Degree,off_campus,12319,t,Work Study
+995,Robert,Moore,robert.moore995@university.edu,Male,2006-10-21,2024-07-03,2028-07-03,Communications,2.01,91,Doctoral Degree,off_campus,12290,t,Grants
+996,María,Garcia,maría.garcia996@university.edu,Male,2006-12-14,2024-07-12,2028-07-12,Chemistry,2.01,58,Master's Degree,on_campus,69772,f,Scholarship
+997,Abdul,Rodriguez,abdul.rodriguez997@university.edu,Male,2002-07-20,2023-11-07,2028-11-07,Physics,2.23,59,Bachelor's Degree,off_campus,12367,f,Multiple
+998,Liu,King,liu.king998@university.edu,Female,2004-05-11,2023-11-02,2027-11-02,Sociology,3.05,103,Associate's Degree,off_campus,12321,f,Multiple
+999,Omar,Wright,omar.wright999@university.edu,Female,1998-10-09,2024-09-30,2027-09-30,Business,2.84,0,High School,off_campus,12343,f,Loans
+1000,Jessica,Hall,jessica.hall1000@university.edu,Male,1998-11-10,2024-02-21,2028-02-21,Chemistry,2.42,68,Master's Degree,on_campus,43505,f,Grants

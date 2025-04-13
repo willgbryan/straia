@@ -7,6 +7,7 @@ import {
   PlusIcon,
   ChevronDownIcon,
   ArrowUpTrayIcon,
+  BriefcaseIcon,
 } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { useCallback, useEffect, useRef } from 'react'
@@ -147,6 +148,9 @@ function BlockList(props: BlockListProps) {
   const onAddDateInput = useCallback(() => {
     props.onAddBlock(BlockType.DateInput)
   }, [props.onAddBlock])
+  const onAddAnalyst = useCallback(() => {
+    props.onAddBlock(BlockType.Analyst)
+  }, [props.onAddBlock])
 
   return (
     <div className="w-full absolute z-30 -translate-y-2">
@@ -183,6 +187,12 @@ function BlockList(props: BlockListProps) {
           icon={<Table2Icon className="w-4 h-4" />}
           onAdd={onAddPivotTable}
           text="Pivot"
+        />
+        <BlockSuggestion
+          id="add-block-analyst"
+          icon={<BriefcaseIcon className="w-4 h-4" />}
+          onAdd={onAddAnalyst}
+          text="Analyst"
         />
         {props.writebackEnabled && (
           <BlockSuggestion

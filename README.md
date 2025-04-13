@@ -293,3 +293,48 @@ We personally read and respond to every message we receive, so don't hesitate to
 If you need a demo or want to learn more about how Briefer could help, you can book some time [here](https://calendly.com/lucasfcosta/briefer-intro-call).
 
 </details>
+
+# Straia
+
+## Analyst Feature
+
+The Analyst block is a powerful natural language interface that allows users to ask questions about their data and receive AI-generated insights and visualizations.
+
+### Key Components
+
+1. **Frontend Components**:
+   - Analyst Block UI (`apps/web/src/components/v2Editor/customBlocks/analyst/index.tsx`)
+   - API utilities (`apps/web/src/utils/analystApi.ts`)
+   - Mock data for development (`apps/web/src/components/v2Editor/customBlocks/analyst/mockData.ts`)
+
+2. **Backend Components**:
+   - Analyst router (`apps/api/src/v1/workspaces/workspace/analyst.js`)
+   - AI API integration (`apps/api/src/ai-api.ts`)
+
+3. **LLM Integration**:
+   - LLM chain implementations in AI API service:
+     - Clarifications chain (`ai/api/chains/stream/analyst_clarifications.py`)
+     - Analysis chain (`ai/api/chains/stream/analyst_analysis.py`)
+   - FastAPI endpoints (`ai/api/app.py`)
+
+### Workflow
+
+1. **User Input**: 
+   - The user enters a natural language question about their data
+   - They can provide additional context and goals for their query
+
+2. **Clarification Stage**: 
+   - The LLM generates clarification questions to refine the query
+   - The user selects options to specify their intent
+
+3. **Analysis Stage**:
+   - Based on the clarified query, the LLM analyzes the database schema
+   - The model generates textual insights and visualization suggestions
+   - Results are displayed with explanations and supporting visualizations
+
+### Implementation Notes
+
+- The system uses streaming responses to handle LLM output efficiently
+- Database schema is automatically retrieved from the workspace's datasources
+- Fallback mock data is provided when real data sources are unavailable
+- The feature integrates with the existing block system in the editor

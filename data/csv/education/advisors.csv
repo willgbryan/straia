@@ -1,0 +1,11 @@
+advisor_id,first_name,last_name,department,students_assigned
+1,Sarah,Johnson,Computer Science,45
+2,Michael,Rodriguez,Business,52
+3,David,Chen,Engineering,38
+4,Emily,Williams,Arts & Humanities,40
+5,Robert,Martinez,Sciences,35
+34,Sarah,Johnson,Computer Science,45
+35,Michael,Rodriguez,Business,52
+36,David,Chen,Engineering,38
+37,Emily,Williams,Arts & Humanities,40
+38,Robert,Martinez,Sciences,35

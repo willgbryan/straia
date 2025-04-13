@@ -73,6 +73,11 @@ import {
   getVisualizationV2BlockResultStatus,
   VisualizationV2Block,
 } from './visualization-v2.js'
+import {
+  AnalystBlock,
+  getAnalystBlockResultStatus,
+  getAnalystBlockErrorMessage,
+} from './analyst.js'
 
 export enum BlockType {
   RichText = 'RICH_TEXT',
@@ -87,6 +92,7 @@ export enum BlockType {
   DashboardHeader = 'DASHBOARD_HEADER',
   Writeback = 'WRITEBACK',
   PivotTable = 'PIVOT_TABLE',
+  Analyst = 'ANALYST',
 }
 
 export type ResultStatus = 'idle' | 'error' | 'success'
@@ -111,6 +117,7 @@ export type Block =
   | WritebackBlock
   | PivotTableBlock
   | VisualizationV2Block
+  | AnalystBlock
 
 export type YBlock = Y.XmlElement<Block>
 
@@ -149,6 +156,7 @@ export const getResultStatus = (
     onDashboardHeader: () => 'idle',
     onWriteback: getWritebackBlockResultStatus,
     onPivotTable: getPivotTableBlockResultStatus,
+    onAnalyst: getAnalystBlockResultStatus,
   })
 
 export const getPrettyTitle = (type: BlockType): string => {
@@ -176,6 +184,8 @@ export const getPrettyTitle = (type: BlockType): string => {
       return 'Writeback'
     case BlockType.PivotTable:
       return 'Pivot Table'
+    case BlockType.Analyst:
+      return 'Analyst'
   }
 }
 
@@ -252,6 +262,7 @@ export function isExecutableBlock(block: YBlock): boolean {
     onFileUpload: () => false,
     onDashboardHeader: () => false,
     onPivotTable: () => true,
+    onAnalyst: () => true,
   })
 }
 
@@ -269,6 +280,7 @@ export function isInputBlock(block: YBlock): boolean {
     onFileUpload: () => false,
     onDashboardHeader: () => false,
     onPivotTable: () => false,
+    onAnalyst: () => false,
   })
 }
 
@@ -312,6 +324,17 @@ export function duplicateBlock(
     onWriteback: (block) => duplicateWritebackBlock(newBlockId, block, options),
     onPivotTable: (block) =>
       duplicatePivotTableBlock(newBlockId, block, blocks, !duplicatingDocument),
+    onAnalyst: (block) => {
+      const newBlock = new Y.XmlElement('block')
+      const attributes = block.getAttributes()
+      for (const key in attributes) {
+        if (key === 'id' || key === 'index') continue
+        newBlock.setAttribute(key, attributes[key])
+      }
+      newBlock.setAttribute('id', newBlockId)
+      newBlock.setAttribute('index', null)
+      return newBlock
+    },
   })
 }
 
@@ -329,6 +352,7 @@ function getExecutedAt(block: YBlock, blocks: Y.Map<YBlock>): Date | null {
     onFileUpload: () => null,
     onDashboardHeader: () => null,
     onPivotTable: (block) => getPivotTableBlockExecutedAt(block, blocks),
+    onAnalyst: () => null,
   })
 }
 
@@ -342,8 +366,6 @@ function mustExecute(
     return false
   }
 
-  // We should always run input blocks if they have not been run yet
-  // even if skipDependencyCheck is true
   if (skipDependencyCheck) {
     const lastExecutedAt = getExecutedAt(block, blocks)
     const environmentStartedAtIsAfterLastExecutedAt =
@@ -414,6 +436,7 @@ export function getErrorMessage(block: YBlock): string | null {
     onFileUpload: () => null,
     onDashboardHeader: () => null,
     onPivotTable: getPivotTableBlockErrorMessage,
+    onAnalyst: getAnalystBlockErrorMessage,
   })
 }
 
@@ -431,6 +454,7 @@ export const isRunnableBlock = <B extends YBlock>(block: B): boolean => {
     onFileUpload: () => false,
     onDashboardHeader: () => false,
     onPivotTable: () => true,
+    onAnalyst: () => true,
   })
 }
 
@@ -459,3 +483,4 @@ export * from './dateInput.js'
 export * from './fileUpload.js'
 export * from './writeback.js'
 export * from './pivotTable.js'
+export * from './analyst.js'
