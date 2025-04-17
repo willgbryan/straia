@@ -40,6 +40,8 @@ model Document {
   runUnexecutedBlocks      Boolean @default(false)
   runSQLSelection          Boolean @default(true)
   shareLinksWithoutSidebar Boolean @default(true)
+
+  agentConversations AgentConversation[]
 }
 
 model YjsDocument {
@@ -439,6 +441,7 @@ model User {
   comments             Comment[]
   Favorite             Favorite[]
   UserYjsAppDocument   UserYjsAppDocument[]
+  agentConversations   AgentConversation[]
 }
 
 model Comment {
@@ -701,4 +704,64 @@ model EmbeddingCache {
   updatedAt DateTime @default(now()) @updatedAt
 
   @@unique([inputChecksum, model], map: "unique_inputChecksum_model")
+}
+
+// Agent-related models
+model AgentConversation {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  documentId String    @db.Uuid
+  userId     String    @db.Uuid
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now()) @updatedAt
+  metadata   Json?     @default("{}")
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages AgentMessage[]
+}
+
+enum AgentRole {
+  user
+  assistant
+}
+
+model AgentMessage {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  conversationId String    @db.Uuid
+  role           AgentRole
+  content        String
+  createdAt      DateTime  @default(now())
+  metadata       Json?     @default("{}")
+
+  conversation AgentConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  actions      AgentAction[]
+}
+
+enum AgentActionType {
+  sql_query
+  python_code
+  visualization
+  markdown
+  execute_block
+  update_block
+}
+
+enum AgentActionStatus {
+  pending
+  in_progress
+  completed
+  failed
+}
+
+model AgentAction {
+  id          String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  messageId   String            @db.Uuid
+  actionType  AgentActionType
+  status      AgentActionStatus @default(pending)
+  details     Json              @default("{}")
+  result      Json?
+  createdAt   DateTime          @default(now())
+  completedAt DateTime?
+
+  message AgentMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
 }

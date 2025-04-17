@@ -35,6 +35,7 @@ import PageSettingsPanel from './PageSettingsPanel'
 import { AITasks, ExecutionQueue } from '@briefer/editor'
 import { SessionUser } from '@/hooks/useAuth'
 import { useHotkeys } from 'react-hotkeys-hook'
+import AgentSidebarToggle from './agent/AgentSidebarToggle'
 
 // this is needed because this component only works with the browser
 const V2Editor = dynamic(() => import('@/components/v2Editor'), {
@@ -325,6 +326,12 @@ function PrivateDocumentPageInner(
             </Tooltip>
           </>
         )}
+
+        {/* Add Agent Sidebar Toggle */}
+        <AgentSidebarToggle
+          documentId={props.documentId}
+          workspaceId={props.workspaceId}
+        />
 
         <EllipsisDropdown
           onToggleSchedules={onToggleSchedules}

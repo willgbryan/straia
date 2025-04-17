@@ -1,0 +1,6 @@
+# This is the migration.toml file for the add_agent_models migration
+# This is a manually created migration that doesn't use the Prisma migrate command
+
+# Migration
+migration_name = "add_agent_models"
+migration_description = "Add tables for agent conversations, messages, and actions" 

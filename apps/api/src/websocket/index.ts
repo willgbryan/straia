@@ -31,6 +31,12 @@ import {
   refreshDataSources,
 } from './workspace/data-sources.js'
 import { fetchDocumentComments } from './workspace/comments.js'
+import {
+  handleAgentMessage,
+  handleCreateAgentConversation,
+  handleGetAgentConversation,
+  handleGetDocumentAgentConversations
+} from './agent/index.js'
 
 interface EmitEvents {
   'environment-status-update': (msg: {
@@ -110,6 +116,28 @@ interface EmitEvents {
     workspaceId: string
     tutorialType: 'onboarding'
     tutorialState: TutorialState
+  }) => void
+  
+  'agent:message': (msg: {
+    conversationId: string
+    message: any
+  }) => void
+  'agent:stream': (msg: {
+    conversationId: string
+    message: any
+  }) => void
+  'agent:action': (msg: {
+    conversationId: string
+    messageId: string
+    action: any
+  }) => void
+  'agent:error': (msg: {
+    conversationId: string
+    error: string
+  }) => void
+  'agent:response:complete': (msg: {
+    conversationId: string
+    messageId: string
   }) => void
 }
 
@@ -222,6 +250,23 @@ export async function createSocketServer(server: http.Server): Promise<Server> {
     socket.on(
       'fetch-document-comments',
       trackWork(fetchDocumentComments(socket, session))
+    )
+
+    socket.on(
+      'agent:create-conversation',
+      trackWork(handleCreateAgentConversation(io, socket, session))
+    )
+    socket.on(
+      'agent:get-conversation',
+      trackWork(handleGetAgentConversation(socket, session))
+    )
+    socket.on(
+      'agent:get-document-conversations',
+      trackWork(handleGetDocumentAgentConversations(socket, session))
+    )
+    socket.on(
+      'agent:send-message',
+      trackWork(handleAgentMessage(io, socket, session))
     )
 
     socket.on('disconnect', (reason) => {

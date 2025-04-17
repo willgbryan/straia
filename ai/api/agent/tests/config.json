@@ -1,0 +1,11 @@
+{
+    "api_base_url": "http://localhost:8000",
+    "username": "admin",
+    "password": "password",
+    "test_document_id": "00000000-0000-0000-0000-000000000000",
+    "test_questions": {
+        "query": "What are the key tables in the database and how are they related?",
+        "stream": "Show me a simple SQL query to analyze sales data.",
+        "legacy": "Give me a simple data analysis example."
+    }
+} 
