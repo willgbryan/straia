@@ -334,8 +334,7 @@ export const handleCreateAgentConversation = (
         const conversation = await prisma().agentConversation.create({
           data: {
             documentId,
-            title: title || 'New Conversation',
-            createdBy: session.user.id,
+            userId: session.user.id,
           },
         })
 

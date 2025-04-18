@@ -1,2 +1,0 @@
-onSQL: () => null,
-onPython: () => null, 
