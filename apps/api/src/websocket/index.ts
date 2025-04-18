@@ -126,11 +126,12 @@ interface EmitEvents {
     conversationId: string
     message: any
   }) => void
-  'agent:action': (msg: {
-    conversationId: string
-    messageId: string
-    action: any
-  }) => void
+  'agent:action': (
+    msg: (
+      | { conversationId: string; messageId: string; action: any }
+      | { action: any }
+    )
+  ) => void
   'agent:error': (msg: {
     conversationId: string
     error: string

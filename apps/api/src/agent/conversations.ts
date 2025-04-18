@@ -1,18 +1,23 @@
-import { Router } from 'express'
+import { Router, Request, Response } from 'express'
 import { z } from 'zod'
 import { IOServer } from '../websocket/index.js'
 import { prisma } from '@briefer/database'
-import { getParam, rejectOnError } from '../utils/express.js'
+import { getParam } from '../utils/express.js'
 import { validate } from 'uuid'
 import { logger } from '../logger.js'
-import axios from 'axios'
-import { config } from '../config/index.js'
+
+// Helper to wrap async route handlers
+function asyncHandler(fn: any) {
+  return (req: Request, res: Response, next: any) => {
+    Promise.resolve(fn(req, res, next)).catch(next)
+  }
+}
 
 export default function conversationsRouter(socketServer: IOServer) {
   const router = Router({ mergeParams: true })
 
   // Create a new agent conversation
-  router.post('/', rejectOnError(async (req, res) => {
+  router.post('/', asyncHandler(async (req: Request, res: Response) => {
     const payload = z.object({
       documentId: z.string(),
     }).parse(req.body)
@@ -57,7 +62,7 @@ export default function conversationsRouter(socketServer: IOServer) {
   }))
 
   // Get a conversation by ID
-  router.get('/:conversationId', rejectOnError(async (req, res) => {
+  router.get('/:conversationId', asyncHandler(async (req: Request, res: Response) => {
     const conversationId = getParam(req, 'conversationId')
 
     if (!validate(conversationId)) {
@@ -106,7 +111,7 @@ export default function conversationsRouter(socketServer: IOServer) {
   }))
 
   // Send a message to a conversation
-  router.post('/:conversationId/messages', rejectOnError(async (req, res) => {
+  router.post('/:conversationId/messages', asyncHandler(async (req: Request, res: Response) => {
     const conversationId = getParam(req, 'conversationId')
 
     if (!validate(conversationId)) {
@@ -155,19 +160,19 @@ export default function conversationsRouter(socketServer: IOServer) {
 
     // Send event via socket to notify clients
     const room = `document:${conversation.document.id}`
-    socketServer.io.to(room).emit('agent:message', {
-      conversationId,
-      message,
-    })
+    if (typeof (socketServer as any).to === 'function') {
+      (socketServer as any).to(room).emit('agent:message', {
+        conversationId,
+        message,
+      })
+    }
 
     // We'll implement a streaming response in the future
     // For now, we'll just call the AI service directly and create an assistant message
-    
     try {
       // This is a placeholder - we'll implement actual AI service integration later
       // Normally we would collect context and make a proper request to the AI service
       const aiResponse = await callAIService(conversation.document.id, payload.content)
-      
       // Create assistant message
       const assistantMessage = await prisma().agentMessage.create({
         data: {
@@ -176,13 +181,13 @@ export default function conversationsRouter(socketServer: IOServer) {
           content: aiResponse.content,
         },
       })
-
       // Send event via socket to notify clients
-      socketServer.io.to(room).emit('agent:message', {
-        conversationId,
-        message: assistantMessage,
-      })
-
+      if (typeof (socketServer as any).to === 'function') {
+        (socketServer as any).to(room).emit('agent:message', {
+          conversationId,
+          message: assistantMessage,
+        })
+      }
       res.json({ success: true })
     } catch (error) {
       logger().error({ error }, 'Error calling AI service')

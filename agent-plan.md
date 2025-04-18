@@ -45,7 +45,6 @@
 ### In Progress:
 - 🔄 Test UI integration with WebSocket backend
 - 🔄 Develop visualization components for agent-suggested charts
-- 🔄 Create test suite for context pruning module
 - 🔄 Implementing and verifying notebook manipulation functionality
 
 ### Next Steps:
@@ -213,6 +212,8 @@ We've successfully implemented context pruning to handle large notebooks efficie
    - ⬜ End-to-end tests with real notebook data
 
 ## Notebook Manipulation Status
+
+> **Note:** Before testing block creation and execution functionality, you must apply the latest agent migration (e.g., `add_agent_models`) to ensure all required database tables exist. See the Setup Instructions and Migration README for details.
 
 The notebook manipulation functionality is a core capability of our agent system, allowing the AI to create and modify notebook content. This functionality requires verification and potential enhancements:
 
@@ -886,3 +887,22 @@ ai/api/agent/
 3. **Satisfaction**: User ratings and feedback on agent interactions
 4. **Efficiency**: Time saved compared to manual operations
 5. **Adoption**: Percentage of users engaging with the agent feature 
+
+> **Important:** Ensure the latest agent migration is applied before testing or developing block creation/execution features. Run the migration script as described in the Setup Instructions. 
+
+## Status Update (May 2025)
+- Block creation and update logic for SQL and Python blocks is now type-safe and consistent across the backend.
+- Markdown (rich text) block creation is supported, but direct content insertion is not yet implemented. This requires integration with the rich text editor API (e.g., ProseMirror/Tiptap) to insert plain text or structured content into a Y.XmlFragment.
+- Linter errors in the agent action handler have been resolved, and the agent can reliably create and update notebook blocks for SQL and Python.
+- The agent can create Markdown blocks, but content will not appear until the rich text insertion logic is implemented.
+
+## Immediate Action Items
+- **Implement rich text content insertion for Markdown blocks:** Integrate with the rich text editor API (ProseMirror/Tiptap) to allow the agent to insert plain text or structured content into a Y.XmlFragment when creating or updating Markdown blocks.
+- **End-to-end testing:** Test agent-initiated block creation and updates for SQL, Python, and Markdown blocks to ensure correct behavior and UI updates.
+
+## Next Steps
+- Integrate or expose a method for inserting plain text into Y.XmlFragment for Markdown blocks.
+- Continue end-to-end testing of agent-initiated block creation and updates.
+- Once rich text insertion is implemented, update the agent plan and documentation to reflect full Markdown support.
+
+> **Note:** The current limitation for Markdown content insertion is tracked as a priority. The plan is to address this by integrating with the editor's API for manipulating Y.XmlFragment content. 

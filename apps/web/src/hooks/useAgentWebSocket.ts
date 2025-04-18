@@ -69,8 +69,10 @@ export function useAgentWebSocket(documentId: string) {
    * Fetch conversations for the current document
    */
   const fetchConversations = useCallback(() => {
+    console.log('[AgentWS] fetchConversations called', { connected, socket, documentId });
     if (!connected || !socket || !documentId) {
       setIsLoading(false); // Ensure loading is false if we can't fetch
+      console.warn('[AgentWS] Not connected or missing socket/documentId', { connected, socket, documentId });
       return;
     }
     
@@ -82,21 +84,26 @@ export function useAgentWebSocket(documentId: string) {
       setIsLoading(false);
       setError('Request timed out. Please try again.');
       toast.error('Request timed out while loading conversations');
+      console.error('[AgentWS] Request timed out while loading conversations');
     }, 10000); // 10 seconds timeout
     
+    console.log('[AgentWS] Emitting agent:get-document-conversations', { documentId });
     socket.emit('agent:get-document-conversations', { documentId }, (response: any) => {
       clearTimeout(timeoutId); // Clear the timeout
+      console.log('[AgentWS] Received response for agent:get-document-conversations', response);
       
       if (response?.success) {
         setConversations(response.conversations || []);
         setIsLoading(false);
+        console.log('[AgentWS] Conversations loaded', response.conversations);
       } else if (response?.error && response.error.includes('Feature not available')) {
         // Special case for missing database tables
         setError('Feature not available. Agent database tables have not been created yet.');
         setConversations([]);
         setIsLoading(false);
+        console.warn('[AgentWS] Feature not available error', response.error);
       } else {
-        console.error('Failed to fetch conversations:', response?.error);
+        console.error('[AgentWS] Failed to fetch conversations:', response?.error);
         setError('Failed to load conversations. Please try again.');
         toast.error('Failed to load conversations');
         setIsLoading(false);
@@ -518,6 +525,20 @@ export function useAgentWebSocket(documentId: string) {
   const refreshConversations = useCallback(() => {
     fetchConversations()
   }, [fetchConversations])
+  
+  // Add connection state logging
+  useEffect(() => {
+    if (socket) {
+      const onConnect = () => console.log('[AgentWS] Socket connected');
+      const onDisconnect = () => console.log('[AgentWS] Socket disconnected');
+      socket.on('connect', onConnect);
+      socket.on('disconnect', onDisconnect);
+      return () => {
+        socket.off('connect', onConnect);
+        socket.off('disconnect', onDisconnect);
+      };
+    }
+  }, [socket]);
   
   return {
     connected,

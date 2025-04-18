@@ -50,7 +50,7 @@ export const init = (initOptions: InitOptions) => {
   singleton = new PrismaClient({ datasourceUrl: dbOptions.connectionString })
 }
 
-export const prisma = () => {
+export const prisma = (): PrismaClient => {
   if (!singleton) {
     throw new Error(`Access prisma before calling init()`)
   }
