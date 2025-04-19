@@ -69,4 +69,8 @@ except Exception:
     pass
 
 # Create a singleton instance
-settings = Settings() 
+settings = Settings()
+print(f"[DEBUG] NODE_API_URL loaded as: {settings.node_api_url}")
+print(f"[DEBUG] Loaded NODE_API_USERNAME: {settings.node_api_username}")
+masked_pw = settings.node_api_password[:2] + '***' + settings.node_api_password[-2:] if len(settings.node_api_password) > 4 else '***'
+print(f"[DEBUG] Loaded NODE_API_PASSWORD: {masked_pw}") 

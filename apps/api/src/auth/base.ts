@@ -188,6 +188,9 @@ export default function getRouter<H extends ApiUser>(
         return
       }
 
+      // Set the session cookie!
+      res.cookie('token', createAuthToken(user.id), cookieOptions)
+
       const redirect = callback
         ? joinURL(config.FRONTEND_URL, callback)
         : config.FRONTEND_URL

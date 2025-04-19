@@ -124,7 +124,7 @@ interface EmitEvents {
   }) => void
   'agent:stream': (msg: {
     conversationId: string
-    message: any
+    chunk: any
   }) => void
   'agent:action': (
     msg: (
@@ -266,7 +266,7 @@ export async function createSocketServer(server: http.Server): Promise<Server> {
       trackWork(handleGetDocumentAgentConversations(socket, session))
     )
     socket.on(
-      'agent:send-message',
+      'agent:message',
       trackWork(handleAgentMessage(io, socket, session))
     )
 

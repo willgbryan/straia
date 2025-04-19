@@ -35,6 +35,7 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
     # Get credentials from config with fallbacks for testing
     expected_username = config("BASIC_AUTH_USERNAME", default="admin")
     expected_password = config("BASIC_AUTH_PASSWORD", default="password")
+    print(f"[DEBUG] FastAPI expected_username={expected_username} expected_password={expected_password}")
     
     # Log auth attempt (without passwords)
     logger.debug(f"Auth attempt with username: {credentials.username}")
@@ -116,10 +117,11 @@ async def process_agent_request(request: AgentRequest, _ = Depends(get_current_u
     
     # Extract context from request or fetch it if not provided
     context = request.get("context")
+    workspace_id = request.get("workspaceId")
     if not context and document_id:
         # Collect context from notebook if not provided in the request
         logger.info(f"Collecting context for document {document_id}")
-        context = await get_notebook_context(document_id)
+        context = await get_notebook_context(workspace_id, document_id)
     
     question = request.get("question", "")
     if not question:
@@ -149,10 +151,11 @@ async def stream_agent_response(request: AgentRequest, _ = Depends(get_current_u
     
     # Extract context from request or fetch it if not provided
     context = request.get("context")
+    workspace_id = request.get("workspaceId")
     if not context and document_id:
         # Collect context from notebook if not provided in the request
         logger.info(f"Collecting context for document {document_id}")
-        context = await get_notebook_context(document_id)
+        context = await get_notebook_context(workspace_id, document_id)
     
     question = request.get("question", "")
     if not question:
@@ -221,9 +224,10 @@ async def query_agent_v2(
         # Extract context from request or fetch it if not provided
         context = request.get("context")
         document_id = request.get("documentId")
+        workspace_id = request.get("workspaceId")
         if not context and document_id:
             logger.info(f"Collecting context for document {document_id}")
-            context = await get_notebook_context(document_id)
+            context = await get_notebook_context(workspace_id, document_id)
             request["context"] = context
         
         # Process the request
@@ -255,9 +259,10 @@ async def stream_agent_response_v2(
         # Extract context from request or fetch it if not provided
         context = request.get("context")
         document_id = request.get("documentId")
+        workspace_id = request.get("workspaceId")
         if not context and document_id:
             logger.info(f"Collecting context for document {document_id}")
-            context = await get_notebook_context(document_id)
+            context = await get_notebook_context(workspace_id, document_id)
             request["context"] = context
         
         # Define the streaming content generator

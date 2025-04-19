@@ -433,7 +433,7 @@ export function useAgentWebSocket(documentId: string) {
     
     // Send the message
     return new Promise<boolean>((resolve, reject) => {
-      socket.emit('agent:send-message', { conversationId, content }, (response: any) => {
+      socket.emit('agent:message', { conversationId, message: content, streamResponse: true }, (response: any) => {
         if (response.success) {
           // Message sent successfully, it will come back through socket events
           // We'll replace our optimistic message when the real one arrives

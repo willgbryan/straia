@@ -424,7 +424,7 @@ type Jupyter = {
   kernel: services.Kernel.IKernelConnection
 }
 const sessions = new Map<string, Jupyter>()
-async function getSession(
+export async function getSession(
   workspaceId: string,
   sessionId: string
 ): Promise<Jupyter> {

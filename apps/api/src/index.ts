@@ -18,6 +18,8 @@ import { setupYJSSocketServerV2 } from './yjs/v2/index.js'
 import { runSchedule } from './schedule/index.js'
 import { initUpdateChecker } from './update-checker.js'
 import { startPubSubPayloadCleanup } from './yjs/v2/pubsub/pg.js'
+import aiApiProxyRouter from './ai-api-proxy.js'
+import aiApiContextProxyRouter from './ai-api-context-proxy.js'
 
 const getDBUrl = async () => {
   const username = config().POSTGRES_USERNAME
@@ -73,6 +75,12 @@ async function main() {
   const app = express()
   const server = http.createServer(app)
 
+  // Debug: Log all incoming requests
+  app.use((req, res, next) => {
+    console.log(`[DEBUG] Incoming request: ${req.method} ${req.originalUrl}`)
+    next()
+  })
+
   let shutdownFunctions: (() => Promise<void> | void)[] = []
   const socketServer = await createSocketServer(server)
   shutdownFunctions.push(() => socketServer.shutdown())
@@ -114,6 +122,14 @@ async function main() {
 
   app.use('/auth', authRouter(socketServer.io))
   app.use('/v1', v1Router(socketServer.io))
+  app.use('/ai-api', aiApiProxyRouter)
+  app.use('/ai-api/v1', aiApiContextProxyRouter)
+
+  // Debug: Catch-all 404 handler to log unmatched routes
+  app.use((req, res, next) => {
+    console.warn(`[DEBUG] 404 Not Found: ${req.method} ${req.originalUrl}`)
+    res.status(404).json({ error: 'Not Found', path: req.originalUrl })
+  })
 
   let shuttingDown = false
   app.get('/livez', (_req, res) => {

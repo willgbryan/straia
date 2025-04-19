@@ -431,6 +431,16 @@ def prune_context(
     previous_messages: Optional[List[Dict[str, str]]] = None,
     total_token_limit: int = DEFAULT_TOTAL_TOKEN_LIMIT
 ) -> NotebookContext:
+    # Bypass pruning: just return the full context
+    return context
+
+
+def prune_context(
+    context: NotebookContext,
+    question: str,
+    previous_messages: Optional[List[Dict[str, str]]] = None,
+    total_token_limit: int = DEFAULT_TOTAL_TOKEN_LIMIT
+) -> NotebookContext:
     """
     Prune notebook context to fit within token limits.
     

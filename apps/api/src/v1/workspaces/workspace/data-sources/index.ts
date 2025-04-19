@@ -14,6 +14,7 @@ import {
   createSnowflakeDataSource,
   createDatabricksSQLDataSource,
   getWorkspaceById,
+  listDataSources,
 } from '@briefer/database'
 import { z } from 'zod'
 import { getParam } from '../../../../utils/express.js'
@@ -150,6 +151,18 @@ const dataSourcesRouter = (socketServer: IOServer) => {
     name: 'NeverPingedError',
     message: 'The datasource has never been pinged',
   }
+
+  // List all data sources for a workspace
+  router.get('/', async (req, res) => {
+    const workspaceId = getParam(req, 'workspaceId')
+    try {
+      const dataSources = await listDataSources(workspaceId)
+      res.json(dataSources)
+    } catch (err) {
+      req.log?.error?.({ workspaceId, err }, 'Error listing data sources')
+      res.status(500).json({ error: 'Failed to list data sources' })
+    }
+  })
 
   router.post('/', canUpdateWorkspace, async (req, res) => {
     const result = dataSourcePayload.safeParse(req.body)

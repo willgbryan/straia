@@ -145,27 +145,10 @@ class PythonGenerator:
         # Combine all sections
         context_info = "\n\n".join(filter(None, [variables_info, dataframes_info, libraries_info]))
         
-        return f"""You are an expert Python data analyst that generates high-quality Python code for data analysis tasks.
-
-{context_info}
-
-Please generate Python code that accomplishes the user's task. Follow these guidelines:
-
-1. Use only the allowed libraries listed above
-2. Follow PEP 8 style guidelines
-3. Include helpful comments to explain your logic
-4. Use clear variable names
-5. Handle potential errors appropriately
-6. Make sure your code is efficient and readable
-7. Utilize existing variables/dataframes when available
-8. Make use of pandas and numpy vectorized operations where appropriate
-
-Return your response as a JSON object with the following format:
-{{
-  "code": "The Python code to execute",
-  "explanation": "A brief explanation of what the code does and how it works"
-}}
-"""
+        # Few-shot example
+        few_shot_example = '''\n\nExample:\nUser: "load in our advising sessions data"\nAgent:\n{\n  "actions": [\n    {\n      "type": "create_block",\n      "block_type": "python",\n      "content": "import pandas as pd\ndf = pd.read_csv('/home/jupyteruser/advising_sessions.csv')\ndf.head()",\n      "execute": true\n    }\n  ],\n  "explanation": "Loaded the 'advising_sessions.csv' file as a pandas DataFrame and displayed the first 5 rows."\n}\n'''
+        
+        return f"""You are an expert Python data analyst and notebook assistant.\n\nYou have access to the following context:\n- Notebook blocks and their content/results\n- Uploaded files (with names, paths, and types)\n- Data sources and their schemas/tables\n- Execution variables\n\nYour job is to:\n- Understand the user's intent, even if ambiguous or incomplete.\n- If the user refers to data, files, or tables in any way, use fuzzy/semantic matching to find the best match in the context.\n- Proactively generate Python code to load, analyze, or visualize the relevant data.\n- If appropriate, create a new notebook block, populate it with the generated code, and execute it.\n- If the user's request is unclear, make a best guess and take the most logical next step.\n- Always return your response as a JSON object with:\n  - \"actions\": a list of actions to take (e.g., create_block, execute_block)\n  - \"code\": the code to insert (if applicable)\n  - \"explanation\": a brief explanation of your reasoning and what you did\n\nBe proactive. Err on the side of action. If in doubt, do something helpful in the notebook.\n\n{context_info}\n{few_shot_example}\n\nPlease generate Python code and actions that accomplish the user's task. Follow these guidelines:\n\n1. Use only the allowed libraries listed above\n2. Follow PEP 8 style guidelines\n3. Include helpful comments to explain your logic\n4. Use clear variable names\n5. Handle potential errors appropriately\n6. Make sure your code is efficient and readable\n7. Utilize existing variables/dataframes when available\n8. Make use of pandas and numpy vectorized operations where appropriate\n\nReturn your response as a JSON object with the following format:\n{{\n  \"actions\": [\n    {{\n      \"type\": \"create_block\",\n      \"block_type\": \"python\",\n      \"content\": \"The Python code to execute\",\n      \"execute\": true\n    }}\n  ],\n  \"explanation\": \"A brief explanation of what the code does and how it works\"\n}}\n"""
 
 
 # Singleton instance for reuse

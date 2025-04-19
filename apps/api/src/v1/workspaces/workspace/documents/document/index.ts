@@ -1,3 +1,5 @@
+import { Router, Response, Request } from 'express'
+import { z } from 'zod'
 import {
   prisma,
   updateDocument,
@@ -5,28 +7,32 @@ import {
   ApiDocument,
   toApiDocument,
 } from '@briefer/database'
-import { z } from 'zod'
-import { Router, Response } from 'express'
-
-import iconRouter from './icon.js'
-import commentsRouter from './comments.js'
-import favoriteRouter from './favorite.js'
-import filesRouter from './files.js'
-import queriesRouter from './queries/index.js'
-import schedulesRouter from './schedules/index.js'
+import { uuidSchema } from '@briefer/types'
 import { getParam } from '../../../../../utils/express.js'
 import { IOServer } from '../../../../../websocket/index.js'
-import { uuidSchema } from '@briefer/types'
 import {
   deleteDocument,
   duplicateDocument,
   moveDocument,
   restoreDocument,
 } from '../../../../../document-tree.js'
+import { getBlocks } from '@briefer/editor'
+import { getSession } from '../../../../../python/index.js'
+
+// Routers for document sub-resources
+import iconRouter from './icon.js'
+import commentsRouter from './comments.js'
+import favoriteRouter from './favorite.js'
+import filesRouter from './files.js'
+import queriesRouter from './queries/index.js'
+import schedulesRouter from './schedules/index.js'
 import inputsRouter from './inputs.js'
 import publishRouter from './publish.js'
-import { canUpdateWorkspace } from '../../../../../auth/token.js'
 import settingsRouter from './settings.js'
+import { canUpdateWorkspace } from '../../../../../auth/token.js'
+import { getYDocWithoutHistory } from '../../../../../yjs/v2/documents.js'
+import { DocumentPersistor } from '../../../../../yjs/v2/persistors.js'
+import { getDocId, getYDoc } from '../../../../../yjs/v2/index.js'
 
 export default function documentRouter(socketServer: IOServer) {
   const router = Router({ mergeParams: true })
@@ -208,6 +214,78 @@ export default function documentRouter(socketServer: IOServer) {
   router.use('/inputs', canUpdateWorkspace, inputsRouter)
   router.use('/publish', canUpdateWorkspace, publishRouter(socketServer))
   router.use('/settings', canUpdateWorkspace, settingsRouter(socketServer))
+
+  // Add endpoint to get all blocks for a document
+  router.get('/blocks', async (req, res) => {
+    try {
+      const workspaceId = getParam(req, 'workspaceId')
+      const documentId = getParam(req, 'documentId')
+      const docId = getDocId(documentId, null)
+      const wsYDoc = await getYDoc(
+        socketServer,
+        docId,
+        documentId,
+        workspaceId,
+        new DocumentPersistor(docId, documentId)
+      )
+      const yDoc = getYDocWithoutHistory(wsYDoc)
+      const blocks = getBlocks(yDoc)
+      // Convert Yjs blocks to plain objects
+      const result = Array.from(blocks.values()).map(block =>
+        typeof block.toJSON === 'function' ? block.toJSON() : block
+      )
+      res.json(result)
+    } catch (err) {
+      req.log.error({ err }, 'Failed to fetch document blocks')
+      res.status(500).json({ error: 'Failed to fetch document blocks' })
+    }
+  })
+
+  // Real implementation for document execution variables
+  router.get('/variables', async (req: Request, res) => {
+    const workspaceId = getParam(req, 'workspaceId')
+    const documentId = getParam(req, 'documentId')
+    try {
+      const { kernel } = await getSession(workspaceId, documentId)
+      // Python code to get all user variables as a JSON string
+      const code = [
+        'import json',
+        'def _is_jsonable(x):',
+        '    try:',
+        '        json.dumps(x)',
+        '        return True',
+        '    except Exception:',
+        '        return False',
+        'variables = {k: v for k, v in globals().items() if not k.startswith("_") and _is_jsonable(v)}',
+        'print(json.dumps(variables))'
+      ].join('\n')
+      let output = ''
+      const future = kernel.requestExecute({ code, store_history: false })
+      future.onIOPub = (msg: any) => {
+        if (
+          msg.header.msg_type === 'stream' &&
+          msg.content &&
+          typeof msg.content.name === 'string' &&
+          msg.content.name === 'stdout' &&
+          typeof msg.content.text === 'string'
+        ) {
+          output += msg.content.text
+        }
+      }
+      await future.done
+      let variables = {}
+      try {
+        variables = JSON.parse(output)
+      } catch (e) {
+        // If parsing fails, return empty object
+        variables = {}
+      }
+      res.json(variables)
+    } catch (err) {
+      req.log?.error?.({ err, workspaceId, documentId }, 'Error fetching execution variables')
+      res.json({})
+    }
+  })
 
   return router
 }

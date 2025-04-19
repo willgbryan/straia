@@ -156,7 +156,7 @@ export const handleAgentMessage = (
                     const message = JSON.parse(line)
                     io.to(room).emit('agent:stream', {
                       conversationId,
-                      message,
+                      chunk: message,
                     })
                     
                     // Accumulate the full response

@@ -857,6 +857,7 @@ export class WSSharedDocV2 {
 }
 
 const creationPromises = new Map<string, Promise<WSSharedDocV2>>()
+export { getYDoc };
 async function getYDoc(
   socketServer: IOServer,
   id: string,
