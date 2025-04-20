@@ -33,7 +33,8 @@ import { NEXT_PUBLIC_PUBLIC_URL } from '@/utils/env'
 import ReusableComponents from './ReusableComponents'
 import PageSettingsPanel from './PageSettingsPanel'
 import { AITasks, ExecutionQueue } from '@briefer/editor'
-import AgentModal from './v2Editor/AgentModal'
+// import AgentModal from './v2Editor/AgentModal'
+import AgentSidebar from './AgentSidebar'
 import AgentIntegrationListener from './v2Editor/AgentIntegrationListener'
 import { SessionUser } from '@/hooks/useAuth'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -384,17 +385,17 @@ function PrivateDocumentPageInner(
           onOpenFiles={onToggleFiles}
           onSchemaExplorer={onToggleSchemaExplorerSQLBlock}
         />
-        {/* Agent Modal */}
+        {/* Agent Side Panel */}
         {/* Handle agent-generated block creation/execution */}
         <AgentIntegrationListener
           yDoc={yDoc}
           executionQueue={executionQueue}
           userId={props.user.id}
         />
-        <AgentModal
-          open={isAgentOpen}
-          onClose={() => setIsAgentOpen(false)}
+        <AgentSidebar
           workspaceId={props.workspaceId}
+          visible={isAgentOpen}
+          onHide={() => setIsAgentOpen(false)}
         />
 
         <Comments

@@ -32,14 +32,25 @@ export default function AgentIntegrationListener({
       } else if (blockType === 'sql') {
         addConfig = { type: BlockType.SQL, dataSourceId: null, isFileDataSource: false, source: content }
       } else if (blockType === 'visualization') {
-        // Create a visualization block with spec
-        let spec: any = {}
-        try {
-          spec = typeof content === 'string' ? JSON.parse(content) : content
-        } catch {
-          spec = content
+        // Sometimes the agent sends python code under visualization type.
+        // Detect if it looks like code (starts with import/def/plt etc.)
+        const trimmed = typeof content === 'string' ? content.trim() : ''
+        const looksLikeCode = /^(import|def|plt\.|from)/.test(trimmed)
+        if (looksLikeCode) {
+          addConfig = { type: BlockType.Python, source: content }
+        } else {
+          // Assume vega/spec JSON
+          let spec: any = {}
+          try {
+            spec = typeof content === 'string' ? JSON.parse(content) : content
+          } catch {
+            spec = content
+          }
+          addConfig = { type: BlockType.Visualization, spec }
         }
-        addConfig = { type: BlockType.Visualization, spec }
+      } else if (blockType === 'markdown') {
+        // Explicit markdown handling – convert to rich text block
+        addConfig = { type: BlockType.RichText, content }
       } else {
         // default to markdown via rich text
         addConfig = { type: BlockType.RichText, content }
