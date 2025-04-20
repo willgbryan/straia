@@ -49,14 +49,27 @@ export default function AgentIntegrationListener({
           addConfig = { type: BlockType.Visualization, spec }
         }
       } else if (blockType === 'markdown') {
-        // Explicit markdown handling – convert to rich text block
-        addConfig = { type: BlockType.RichText, content }
+        // Create a rich‑text block and seed its content with plain text
+        addConfig = { type: BlockType.RichText }
       } else {
         // default to markdown via rich text
         addConfig = { type: BlockType.RichText, content }
       }
       // Create the block at end of layout
       const blockId = addBlockGroup(yLayout, yBlocks, addConfig, yLayout.length)
+
+      // If we just inserted a RichText block, seed its Yjs content with the
+      // markdown/plain‑text provided by the agent so it is visible immediately.
+      if (addConfig.type === BlockType.RichText) {
+        const yBlock = yBlocks.get(blockId)
+        if (yBlock) {
+          // @ts-ignore – content is a valid RichText attribute
+          const fragment = yBlock.getAttribute('content') as Y.XmlFragment | undefined
+          if (fragment && typeof content === 'string') {
+            fragment.insert(0, [new Y.Text(content)])
+          }
+        }
+      }
       // Enqueue execution if code block
       if (addConfig.type === BlockType.Python || addConfig.type === BlockType.SQL) {
         executionQueue.enqueueBlock(blockId, userId, null, { _tag: 'run-code' } as any)

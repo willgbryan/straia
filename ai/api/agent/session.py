@@ -1,9 +1,11 @@
-from typing import AsyncGenerator, Dict
+from typing import AsyncGenerator, Dict, Any
 from pydantic import BaseModel
 import asyncio
 import uuid
 from api.chains.stream.agent_clarify import template as clarify_template
-from api.chains.stream.agent_plan import template as plan_template
+# new iterative next‑step chain
+# Iterative next‑step chain
+from api.chains.stream.agent_next_step import create_next_step_chain
 # Registry of active agent sessions for handling user clarifications
 sessions: Dict[str, 'AgentSessionManager'] = {}
 from langchain.prompts import PromptTemplate
@@ -32,6 +34,15 @@ class AgentSessionManager:
         # For awaiting clarifications
         self._clarification_future: asyncio.Future | None = None
         self._answers: Dict[str, str] = {}
+        self._expected_terms: list[str] = []
+        self._data_base_dir: str | None = None
+
+        # build the next‑step chain once
+        self._next_step_chain = create_next_step_chain(llm)
+
+        # Execution context for python blocks – shared globals so subsequent
+        # blocks can reference earlier variables just like a notebook.
+        self._py_globals: Dict[str, any] = {}
     
     def _table_info_from_files(self, workspace_id: Optional[str]) -> str:
         """Fallback: synthesize SQL table info from CSV files for a workspace."""
@@ -92,6 +103,40 @@ class AgentSessionManager:
                     continue
         return table_info
 
+    # ------------------------------------------------------------
+    # Simple Python execution helper (synchronous for now)
+    # ------------------------------------------------------------
+    def _execute_python_block(self, code: str) -> dict:
+        """Execute a python code block inside the shared globals."""
+        import io, contextlib, traceback, sys
+
+        stdout_buf, stderr_buf = io.StringIO(), io.StringIO()
+        result: dict = {"event": "execution_result", "blockType": "python"}
+        import os
+        cwd_backup = os.getcwd()
+        try:
+            if self._data_base_dir:
+                os.chdir(self._data_base_dir)
+            with contextlib.redirect_stdout(stdout_buf), contextlib.redirect_stderr(stderr_buf):
+                exec(code, self._py_globals)
+            # Capture any printed output
+            out = stdout_buf.getvalue().strip()
+            if out:
+                result["output"] = out
+            result["status"] = "ok"
+        except Exception as exc:
+            tb = traceback.format_exc()
+            err_out = stderr_buf.getvalue() + "\n" + tb
+            result["status"] = "error"
+            result["error"] = err_out
+            # For debugging
+            print(f"[agent_debug] python exec error: {err_out}")
+        finally:
+            os.chdir(cwd_backup)
+            stdout_buf.close()
+            stderr_buf.close()
+        return result
+
     async def astream(self, request: StartAgentSessionRequest) -> AsyncGenerator[dict, None]:
         """
         Stream a sequence of agent-generated events for the session.
@@ -134,72 +179,82 @@ class AgentSessionManager:
         print(f"[agent_debug] clarification response: {clar_data}")
         # Yield clarifications and wait for user response
         clar_list = clar_data.get("clarifications", [])
+        # store expected terms so we can wait for all answers
+        self._expected_terms = [c.get("term") for c in clar_list if c.get("term")]
         yield {"event": "clarification", "clarifications": clar_list}
         # Wait for user to submit clarification answers
         print(f"[agent_debug] Waiting for user clarification answers...")
         answers = await self._wait_for_clarification()
         print(f"[agent_debug] Received clarification answers: {answers}")
 
-        # Stage 2: Agent plan/actions -- inject table_info and file_names to agent plan prompt
-        # NOTE: You'll need to extend the agent_plan chain and LLM prompt if you want table_info injected!
-        # Prepare file_names context (scan workspace files and Jupyter uploads)
-        # Prepare file_names context (scan workspace files and Jupyter uploads)
-        print(f"[agent_debug] Running planning prompt with file context")
-        csv_files = []
-        # Determine base directories to search for CSV files
-        base_paths = []
-        if request.workspace_id:
-            base_paths.append(f"/data/{request.workspace_id}/files")
-        # Fallback to Jupyter user upload directory
-        base_paths.append("/home/jupyteruser")
-        # Project-local jupyterfiles directory
-        base_paths.append(os.path.join(os.getcwd(), "jupyterfiles"))
-        print(f"[agent_debug] file search base_paths: {base_paths}")
-        # Search for existing base path and list CSVs
-        for base in base_paths:
-            print(f"[agent_debug] checking base path: {base}")
+        # ---------------- CSV discovery (once) ----------------
+        csv_files: list[str] = []
+        for base in (
+            [f"/data/{request.workspace_id}/files"] if request.workspace_id else []
+        ) + ["/home/jupyteruser", os.path.join(os.getcwd(), "jupyterfiles")]:
             if os.path.exists(base):
-                print(f"[agent_debug] found base path: {base}")
                 csv_files = [f for f in os.listdir(base) if f.lower().endswith('.csv')]
+                if csv_files:
+                    self._data_base_dir = base
+                    break
+
+        # ---------------- Iterative FSM loop ----------------
+        context_lines: list[str] = []
+        MAX_STEPS = 12
+
+        for _ in range(MAX_STEPS):
+            recent_ctx = "\n".join(context_lines[-30:])
+            step = self._next_step_chain.invoke(
+                {
+                    "question": request.question,
+                    "why": request.why,
+                    "what": request.what,
+                    "context": recent_ctx,
+                    "table_info": table_info or "",
+                }
+            )
+
+            ev = step
+            print("[agent_debug] next step:", ev)
+
+            if ev.get("event") == "done":
+                yield {"event": "session_completed", "message": "Agent session completed."}
                 break
-        print(f"[agent_debug] csv_files after scanning bases: {csv_files}")
-        file_names = ", ".join(csv_files)
-        plan_prompt = PromptTemplate(
-            template=plan_template,
-            input_variables=["question", "why", "what", "table_info", "file_names"],
-        )
-        plan_text = plan_prompt.format(
-            question=request.question,
-            why=request.why,
-            what=request.what,
-            table_info=table_info or "",
-            file_names=file_names,
-        )
-        try:
-            raw_plan = self.llm.invoke([("system", plan_text)])
-        except Exception:
-            raw_plan = self.llm(plan_text)
-        # Extract text from LLM result for planning
-        if hasattr(raw_plan, 'content'):
-            plan_text_out = raw_plan.content
-        else:
-            plan_text_out = raw_plan if isinstance(raw_plan, str) else str(raw_plan)
-        plan_data = SimpleJsonOutputParser().parse(plan_text_out)
-        print(f"[agent_debug] plan response: {plan_data}")
-        # Stream planned events
-        for ev in plan_data.get("events", []):
-            # Optionally, add table_info to event if it is relevant
+
             if table_info and ev.get("event") == "action" and "table_info" not in ev:
                 ev["table_info"] = table_info
+
             yield ev
-        # Finalize session
-        yield {"event": "session_completed", "message": "Agent session completed."}
+
+            # Execute python blocks immediately
+            if (
+                ev.get("event") == "action"
+                and ev.get("action") == "create_block"
+                and ev.get("blockType") == "python"
+            ):
+                result = self._execute_python_block(ev.get("content", ""))
+                yield result
+                if result["status"] == "error":
+                    context_lines.append("ERROR:" + result["error"].split("\n")[-1])
+                elif result.get("output"):
+                    context_lines.append(result["output"][:500])
+            elif ev.get("event") == "insight":
+                context_lines.append(ev.get("summary", "insight"))
+
+        else:
+            yield {"event": "session_completed", "message": "Stopped after max iterations."}
+
     
     def submit_clarification(self, term: str, answer: str) -> None:
         """Receive a user's clarification answer for a term."""
         print(f"[agent_debug] submit_clarification called: term={term}, answer={answer}")
         self._answers[term] = answer
-        if self._clarification_future and not self._clarification_future.done():
+        # Only resolve future when we have answers for every expected term
+        if (
+            self._clarification_future
+            and not self._clarification_future.done()
+            and all(t in self._answers for t in self._expected_terms)
+        ):
             self._clarification_future.set_result(self._answers)
 
     async def _wait_for_clarification(self) -> Dict[str, str]:

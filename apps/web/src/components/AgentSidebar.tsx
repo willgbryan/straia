@@ -110,7 +110,7 @@ export default function AgentSidebar({
     if (step !== 'running') return
     for (let i = processedIdx.current; i < events.length; i++) {
       const ev = events[i]
-      if (ev.event === 'clarification') {
+      if (ev.event === 'clarification' && !hasProgressRef.current) {
         if (Array.isArray(ev.clarifications)) {
           // Push all received clarifications into the queue.
           const newClars: Clarification[] = ev.clarifications.map((c: any) => ({
@@ -138,6 +138,7 @@ export default function AgentSidebar({
           }
         }
       } else if (ev.event === 'insight') {
+        hasProgressRef.current = true
         setMessages((prev) => [
           ...prev,
           {
@@ -145,7 +146,22 @@ export default function AgentSidebar({
             content: ev.summary ?? 'Here are the insights I found.',
           },
         ])
-      } else if (ev.event === 'action' && ev.action === 'create_block') {
+      } else if (ev.event === 'execution_result') {
+        // surface execution outcome to user
+        const status: string = ev.status
+        if (status === 'error') {
+          const msgText =
+            'I tried running that code but encountered an error: ' +
+            (typeof ev.error === 'string' ? ev.error.split('\n').slice(-3).join('\n') : '')
+          setMessages((prev) => [...prev, { role: 'assistant', content: msgText }])
+        } else {
+          const out = ev.output ?? 'Code executed successfully.'
+          setMessages((prev) => [...prev, { role: 'assistant', content: String(out).slice(0, 500) }])
+        }
+      } else if (ev.event === 'action') {
+        hasProgressRef.current = true
+        if (ev.action === 'create_block') {
+        hasProgressRef.current = true
         // Inform user about new block creation
         setMessages((prev) => [
           ...prev,
@@ -160,6 +176,7 @@ export default function AgentSidebar({
             detail: { blockType: ev.blockType, content: ev.content },
           })
         )
+        }
       }
     }
     processedIdx.current = events.length
