@@ -36,7 +36,10 @@ export function useAgentSession(
     const w = overrideWhy ?? why
     const t = overrideWhat ?? what
     const params = new URLSearchParams({ question: q, why: w, what: t })
-    const url = `${process.env.NEXT_PUBLIC_AI_API_URL}/v1/agent/session/stream?${params.toString()}`
+    // Determine base URL for AI API (fallback to localhost:8000 if env var missing)
+    const baseUrl = process.env.NEXT_PUBLIC_AI_API_URL || 'http://localhost:8000'
+    const url = `${baseUrl}/v1/agent/session/stream?${params.toString()}`
+    console.log('[agent_debug] Connecting EventSource to URL:', url)
     const es = new EventSource(url, { withCredentials: true })
     esRef.current = es
     es.onmessage = (e) => {

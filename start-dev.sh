@@ -5,15 +5,15 @@ set -e
 if [ ! -f ./apps/api/.env ]; then
   echo "NODE_ENV=development" > ./apps/api/.env
   echo "LOG_LEVEL=debug" >> ./apps/api/.env
-  echo "API_URL='http://localhost:8080'" >> ./apps/api/.env
-  echo "FRONTEND_URL='http://localhost:4000'" >> ./apps/api/.env
+  echo "API_URL=http://localhost:8080" >> ./apps/api/.env
+  echo "FRONTEND_URL=http://localhost:4000" >> ./apps/api/.env
   echo "TLD=localhost" >> ./apps/api/.env
   echo "LOGIN_JWT_SECRET=$(openssl rand -hex 24)" >> ./apps/api/.env
   echo "AUTH_JWT_SECRET=$(openssl rand -hex 24)" >> ./apps/api/.env
-  echo "AI_API_URL='http://localhost:8000'" >> ./apps/api/.env
+  echo "AI_API_URL=http://localhost:8000" >> ./apps/api/.env
   echo "AI_API_USERNAME=$(openssl rand -hex 12)" >> ./apps/api/.env
   echo "AI_API_PASSWORD=$(openssl rand -hex 12)" >> ./apps/api/.env
-  echo "PYTHON_ALLOWED_LIBRARIES='plotly,matplotlib,numpy,pandas'" >> ./apps/api/.env
+  echo "PYTHON_ALLOWED_LIBRARIES=plotly,matplotlib,numpy,pandas" >> ./apps/api/.env
   echo "POSTGRES_USERNAME=postgres" >> ./apps/api/.env
   echo "POSTGRES_PASSWORD=password" >> ./apps/api/.env
   echo "POSTGRES_HOSTNAME=localhost" >> ./apps/api/.env
@@ -34,9 +34,9 @@ fi
 # if there is no .env file in WEB, create one
 if [ ! -f ./apps/web/.env ]; then
   echo "NODE_ENV=development" > ./apps/web/.env
-  echo "NEXT_PUBLIC_API_URL='http://localhost:8080'" >> ./apps/web/.env
-  echo "NEXT_PUBLIC_API_WS_URL='ws://localhost:8080'" >> ./apps/web/.env
-  echo "NEXT_PUBLIC_PUBLIC_URL='http://localhost:4000'" >> ./apps/web/.env
+  echo "NEXT_PUBLIC_API_URL=http://localhost:8080" >> ./apps/web/.env
+  echo "NEXT_PUBLIC_API_WS_URL=ws://localhost:8080" >> ./apps/web/.env
+  echo "NEXT_PUBLIC_PUBLIC_URL=http://localhost:4000" >> ./apps/web/.env
 
   echo "Generated a new ./apps/eb/.env file with default values"
 fi

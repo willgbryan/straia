@@ -18,6 +18,8 @@ export default function AgentModal({ open, onClose }: AgentModalProps) {
   const [answeredTerms, setAnsweredTerms] = useState<string[]>([])
 
   const handleStart = () => {
+    // Debug: log manual start invocation
+    console.log('[agent_debug] handleStart called with:', { question, why, what })
     start()
   }
 
@@ -87,6 +89,7 @@ export default function AgentModal({ open, onClose }: AgentModalProps) {
           <button
             onClick={() => {
               // sample commuter use case demo
+              console.log('[agent_debug] Run Commuter Demo clicked')
               const dq =
                 "Show me the total number of commuter rides per day from the rides table"
               const dw =
@@ -95,6 +98,7 @@ export default function AgentModal({ open, onClose }: AgentModalProps) {
               setQuestion(dq)
               setWhy(dw)
               setWhat(dt)
+              console.log('[agent_debug] start called for demo with:', { dq, dw, dt })
               start(dq, dw, dt)
             }}
             disabled={status === 'loading'}

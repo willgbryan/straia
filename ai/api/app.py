@@ -5,6 +5,7 @@
 
 import json
 from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi import FastAPI, Depends, HTTPException, status
 from pydantic import BaseModel
@@ -17,6 +18,14 @@ import secrets
 
 
 app = FastAPI()
+# Enable CORS for the front-end application
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[config("FRONTEND_URL", default="http://localhost:4000")],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 security = HTTPBasic()
 
@@ -86,22 +95,58 @@ from api.agent.session import AgentSessionManager, StartAgentSessionRequest
 
 @app.post("/v1/agent/session/stream")
 async def v1_stream_agent_session(
-    data: StartAgentSessionRequest,
-    _ = Depends(get_current_username)
+    data: StartAgentSessionRequest
 ):
     """
     Start an agent session and stream back events (clarifications, actions, insights).
+    This POST endpoint consumes a JSON body with question, why, what, and optional workspace_id.
     """
-    # Initialize LLM or other dependencies; pass through any necessary credentials
-    # Initialize language model (uses default model and API key if none provided)
+    # Debug: log incoming agent session POST request
+    print(f"[agent_debug] POST /v1/agent/session/stream called with: question={data.question!r}, why={data.why!r}, what={data.what!r}, workspace_id={data.workspace_id!r}")
     llm = initialize_llm()
     manager = AgentSessionManager(llm)
 
     async def generate():
+        # Debug: start streaming events
+        print("[agent_debug] Starting event stream (POST)")
         async for event in manager.astream(data):
-            yield json.dumps(event) + "\n"
+            # Debug: log each event before sending
+            print(f"[agent_debug] POST event: {event}")
+            yield f"data: {json.dumps(event)}\n\n"
 
-    # Stream Server-Sent Events (SSE) with newline-delimited JSON
+    return StreamingResponse(generate(), media_type="text/event-stream")
+
+@app.get("/v1/agent/session/stream")
+async def v1_stream_agent_session_get(
+    question: str,
+    why: str,
+    what: str,
+    workspace_id: Optional[str] = None
+):
+    """
+    Start an agent session and stream back events via GET parameters.
+    Accepts question, why, what, and optional workspace_id as query parameters.
+    """
+    # Debug: log incoming agent session GET request
+    print(f"[agent_debug] GET /v1/agent/session/stream called with: question={question!r}, why={why!r}, what={what!r}, workspace_id={workspace_id!r}")
+    # Build request data from query params
+    data = StartAgentSessionRequest(
+        question=question,
+        why=why,
+        what=what,
+        workspace_id=workspace_id,
+    )
+    llm = initialize_llm()
+    manager = AgentSessionManager(llm)
+
+    async def generate():
+        # Debug: start streaming events (GET)
+        print("[agent_debug] Starting event stream (GET)")
+        async for event in manager.astream(data):
+            # Debug: log each event before sending
+            print(f"[agent_debug] GET event: {event}")
+            yield f"data: {json.dumps(event)}\n\n"
+
     return StreamingResponse(generate(), media_type="text/event-stream")
 
 if __name__ == "__main__":
