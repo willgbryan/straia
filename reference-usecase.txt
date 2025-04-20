@@ -1,0 +1,107 @@
+
+🎯 User Intent
+VP of EM wants to know: “Are first-gen commuter students at risk this semester?”
+The motivation: “I want to know whether my advising staff should proactively reach out to this group.”
+
+Step-by-Step Demo Script
+🟢 Step 1: User Input (Initial Query Form)
+User Interface Shows:
+
+👉 Design note for Will: This screen has one large question input, and two required smaller text fields for "Why" and "What are you trying to solve?"
+Use placeholder text for hints (e.g., “What’s driving this question?”).
+
+🔵 Step 2: Clarifying Questions (With Teaching Moments)
+The system detects ambiguous terms:
+“at risk”
+“first-gen”
+“commuter”
+“this semester”
+The interface switches to a Clarification UI (chat-style or side panel with quick reply buttons and help tooltips).
+
+2A. Clarify “At Risk”
+Prompt:
+When you say “at risk,” what outcome are you concerned about?
+Options (with tooltips):
+🎓 GPA Risk
+ Flag students with GPAs below a defined threshold. This helps assess academic performance concerns.
+🧭 Engagement Risk
+ Looks at LMS activity, advisor check-ins, or missed deadlines. Great for identifying students slipping through the cracks.
+🔁 Retention Risk
+ Predicts likelihood of student departure based on multi-factor indicators.
+Other
+
+User Clicks:
+🟦 Retention Risk
+
+2B. Clarify “First-Gen”
+Prompt:
+Which definition of “first-gen” would you like to use?
+Options (tooltips or expandable panel):
+🧬 Parent Education Level = No Bachelor’s Degree
+ Common federal definition. Based on self-reported parent education.
+📄 Self-Identified First-Gen Flag
+ If students indicated “first-gen” during application or intake.
+🧠 Institutional Custom Logic
+ Defined by your data team. May include edge cases.
+User Clicks:
+🟦 Parent Education Level = No Bachelor’s Degree
+
+2C. Clarify “Commuter Student”
+Prompt:
+How should we define “commuter” students?
+Options:
+🏠 Students Living Off-Campus
+ Residence hall status marked as “off-campus” or “not in university housing.”
+🧾 Students with Local ZIP Codes
+ Home ZIP within 30 miles of campus (e.g. for urban schools).
+📊 Hybrid Method (Recommended)
+ Combines housing + ZIP code logic. Captures most commuters accurately.
+User Clicks:
+🟦 Hybrid Method (Recommended)
+
+
+
+2D. Clarify “This Semester”
+Prompt:
+Which term should we use for “this semester”?
+Options:
+📅 Spring 2025 (in progress)
+ Use current registration, attendance, and activity.
+📈 Fall 2024 (most recently completed)
+ More complete outcomes data is available (grades, retention).
+User Clicks:
+🟦 Spring 2025
+
+
+
+🟣 Step 3: Insight Generation + Output UI
+Once all clarifications are complete, Straia generates a summary insight panel with:
+🧾 Text Summary:
+Insight:
+ “First-gen commuter students are currently retaining at 76%, compared to 84% for all undergraduates this semester.
+Predictive risk indicators suggest a higher chance of departure, particularly among students who:
+Missed 2+ advising check-ins
+Have not logged into LMS in past 10 days
+Are enrolled in fewer than 12 credit hours.”
+
+📊 Visualization:
+Bar chart: Retention by cohort (first-gen commuter vs. all students)
+Line chart (optional): Historical retention for first-gen commuter students (last 3 terms)
+
+
+🧭 Explanation:
+“Retention is calculated as re-enrollment in the next consecutive term. Students are defined as first-gen using parent education, and as commuters using a hybrid model (off-campus + ZIP codes).”
+✅ Follow-up Options (UI buttons):
+[ Save this insight to Notebook ]
+[ Export as PDF or PPT ]
+[ Share with Collaborator ]
+[ Set Alert: Notify me if retention for this cohort drops below 75% next term ]
+[ Ask a Follow-Up Question ]
+
+🟡 Step 4: Optional Learning Modal (Teach the User)
+A small tooltip or info card says:
+💡 You just used a hybrid definition of “commuter students” and selected a predictive retention model. Want to learn more about how this model works or how definitions differ?
+ → [ View Data Dictionary ]
+ → [ Explore How This Metric is Calculated ]
+✅ Bonus: Helps fulfill your vision of teaching admins to think like analysts.
+

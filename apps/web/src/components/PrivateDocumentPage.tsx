@@ -33,6 +33,8 @@ import { NEXT_PUBLIC_PUBLIC_URL } from '@/utils/env'
 import ReusableComponents from './ReusableComponents'
 import PageSettingsPanel from './PageSettingsPanel'
 import { AITasks, ExecutionQueue } from '@briefer/editor'
+import AgentModal from './v2Editor/AgentModal'
+import AgentIntegrationListener from './v2Editor/AgentIntegrationListener'
 import { SessionUser } from '@/hooks/useAuth'
 import { useHotkeys } from 'react-hotkeys-hook'
 
@@ -99,6 +101,8 @@ function PrivateDocumentPageInner(
     | { _tag: 'pageSettings' }
     | null
   >(null)
+  // Agent modal open state
+  const [isAgentOpen, setIsAgentOpen] = useState(false)
 
   const [{ datasources: dataSources }] = useDataSources(props.workspaceId)
 
@@ -326,6 +330,12 @@ function PrivateDocumentPageInner(
           </>
         )}
 
+        <button
+          onClick={() => setIsAgentOpen(true)}
+          className="flex items-center rounded-sm px-3 py-1 text-sm bg-indigo-500 hover:bg-indigo-600 text-white"
+        >
+          Agent
+        </button>
         <EllipsisDropdown
           onToggleSchedules={onToggleSchedules}
           onToggleSnapshots={onToggleSnapshots}
@@ -374,6 +384,14 @@ function PrivateDocumentPageInner(
           onOpenFiles={onToggleFiles}
           onSchemaExplorer={onToggleSchemaExplorerSQLBlock}
         />
+        {/* Agent Modal */}
+        {/* Handle agent-generated block creation/execution */}
+        <AgentIntegrationListener
+          yDoc={yDoc}
+          executionQueue={executionQueue}
+          userId={props.user.id}
+        />
+        <AgentModal open={isAgentOpen} onClose={() => setIsAgentOpen(false)} />
 
         <Comments
           workspaceId={props.workspaceId}

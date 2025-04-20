@@ -195,3 +195,54 @@ export async function pythonEditStreamed(
     }),
   }
 }
+// Agent session streaming: clarifications, actions, insights
+export async function agentSessionStreamed(
+  question: string,
+  why: string,
+  what: string,
+  onEvent: (event: any) => void
+): Promise<{ promise: Promise<void>; abortController: AbortController }> {
+  const abortController = new AbortController()
+  const responseP = axios.post(
+    `${config().AI_API_URL}/v1/agent/session/stream`,
+    { question, why, what },
+    {
+      headers: {
+        Authorization: `Basic ${base64Credentials()}`,
+        'Content-Type': 'application/json',
+      },
+      responseType: 'stream',
+      signal: abortController.signal,
+    }
+  )
+  return {
+    abortController,
+    promise: new Promise<void>(async (resolve, reject) => {
+      try {
+        const response = await responseP
+        let success = false
+        let error: Error | null = null
+        response.data
+          .pipe(split2(JSON.parse))
+          .on('data', (obj: any) => {
+            onEvent(obj)
+            success = true
+          })
+          .on('error', (err: any) => reject(err))
+          .on('finish', () => {
+            if (!success) {
+              reject(error || new Error('No agent events received'))
+            } else {
+              resolve()
+            }
+          })
+      } catch (e) {
+        if (e instanceof CanceledError) {
+          resolve()
+          return
+        }
+        reject(e)
+      }
+    }),
+  }
+}

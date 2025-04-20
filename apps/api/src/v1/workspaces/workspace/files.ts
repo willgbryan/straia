@@ -11,10 +11,11 @@ filesRouter.get('/', async (req, res) => {
 
   try {
     const jupyterManager = getJupyterManager()
-    res.json(await jupyterManager.listFiles(workspaceId))
+    const files = await jupyterManager.listFiles(workspaceId)
+    res.json(files)
   } catch (err) {
     req.log.error({ workspaceId, err }, 'Error listing files')
-    res.status(500).end()
+    res.json([])
   }
 })
 

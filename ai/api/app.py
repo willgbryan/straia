@@ -81,6 +81,29 @@ async def v1_stream_python_edit(data: PythonEditInputData, _ = Depends(get_curre
 async def ping():
     return "pong"
 
+# Agent session streaming endpoint
+from api.agent.session import AgentSessionManager, StartAgentSessionRequest
+
+@app.post("/v1/agent/session/stream")
+async def v1_stream_agent_session(
+    data: StartAgentSessionRequest,
+    _ = Depends(get_current_username)
+):
+    """
+    Start an agent session and stream back events (clarifications, actions, insights).
+    """
+    # Initialize LLM or other dependencies; pass through any necessary credentials
+    # Initialize language model (uses default model and API key if none provided)
+    llm = initialize_llm()
+    manager = AgentSessionManager(llm)
+
+    async def generate():
+        async for event in manager.astream(data):
+            yield json.dumps(event) + "\n"
+
+    # Stream Server-Sent Events (SSE) with newline-delimited JSON
+    return StreamingResponse(generate(), media_type="text/event-stream")
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
