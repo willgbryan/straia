@@ -31,6 +31,15 @@ export default function AgentIntegrationListener({
         addConfig = { type: BlockType.Python, source: content }
       } else if (blockType === 'sql') {
         addConfig = { type: BlockType.SQL, dataSourceId: null, isFileDataSource: false, source: content }
+      } else if (blockType === 'visualization') {
+        // Create a visualization block with spec
+        let spec: any = {}
+        try {
+          spec = typeof content === 'string' ? JSON.parse(content) : content
+        } catch {
+          spec = content
+        }
+        addConfig = { type: BlockType.Visualization, spec }
       } else {
         // default to markdown via rich text
         addConfig = { type: BlockType.RichText, content }

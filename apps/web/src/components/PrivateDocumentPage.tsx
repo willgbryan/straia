@@ -391,7 +391,11 @@ function PrivateDocumentPageInner(
           executionQueue={executionQueue}
           userId={props.user.id}
         />
-        <AgentModal open={isAgentOpen} onClose={() => setIsAgentOpen(false)} />
+        <AgentModal
+          open={isAgentOpen}
+          onClose={() => setIsAgentOpen(false)}
+          workspaceId={props.workspaceId}
+        />
 
         <Comments
           workspaceId={props.workspaceId}

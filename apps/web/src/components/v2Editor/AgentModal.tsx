@@ -5,13 +5,20 @@ import { useAgentSession, AgentEvent } from '../../hooks/useAgentSession'
 interface AgentModalProps {
   open: boolean
   onClose: () => void
+  workspaceId: string
 }
 
-export default function AgentModal({ open, onClose }: AgentModalProps) {
+export default function AgentModal({ open, onClose, workspaceId }: AgentModalProps) {
   const [question, setQuestion] = useState('')
   const [why, setWhy] = useState('')
   const [what, setWhat] = useState('')
-  const { events, status, start, stop, submitAnswer } = useAgentSession(question, why, what)
+  // Pass workspaceId for file schema fallback
+  const { events, status, start, stop, submitAnswer } = useAgentSession(
+    question,
+    why,
+    what,
+    workspaceId
+  )
   // hold user’s answers to clarifications
   const [clarAnswers, setClarAnswers] = useState<Record<string, string>>({})
   // track which clarification terms have been submitted
@@ -88,13 +95,13 @@ export default function AgentModal({ open, onClose }: AgentModalProps) {
           </button>
           <button
             onClick={() => {
-              // sample commuter use case demo
-              console.log('[agent_debug] Run Commuter Demo clicked')
+              // sample NBA dataset demo
+              console.log('[agent_debug] Run NBA Demo clicked')
               const dq =
-                "Show me the total number of commuter rides per day from the rides table"
+                "Show me the average points per game for LeBron James in the 2020 NBA season"
               const dw =
-                "To analyze daily commuter ridership trends"
-              const dt = "commuter use case demo"
+                "To analyze historical player performance trends"
+              const dt = "NBA dataset demo"
               setQuestion(dq)
               setWhy(dw)
               setWhat(dt)
@@ -104,7 +111,7 @@ export default function AgentModal({ open, onClose }: AgentModalProps) {
             disabled={status === 'loading'}
             className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700 disabled:opacity-50"
           >
-            Run Commuter Demo
+            Run NBA Demo
           </button>
         </div>
         <div className="space-y-3 max-h-64 overflow-auto">

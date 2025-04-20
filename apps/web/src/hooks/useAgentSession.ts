@@ -8,7 +8,8 @@ export type AgentEvent = {
 export function useAgentSession(
   question: string,
   why: string,
-  what: string
+  what: string,
+  workspaceId?: string
 ): {
   events: AgentEvent[]
   status: 'idle' | 'loading' | 'error' | 'done'
@@ -36,6 +37,8 @@ export function useAgentSession(
     const w = overrideWhy ?? why
     const t = overrideWhat ?? what
     const params = new URLSearchParams({ question: q, why: w, what: t })
+    // Include workspace_id for file-based schema fallback
+    if (workspaceId) params.append('workspace_id', workspaceId)
     // Determine base URL for AI API (fallback to localhost:8000 if env var missing)
     const baseUrl = process.env.NEXT_PUBLIC_AI_API_URL || 'http://localhost:8000'
     const url = `${baseUrl}/v1/agent/session/stream?${params.toString()}`
@@ -91,8 +94,10 @@ export function useAgentSession(
       return
     }
     try {
-      await fetch(
-        `${process.env.NEXT_PUBLIC_AI_API_URL}/v1/agent/session/respond`,
+      // Determine base URL for AI API
+      const baseUrl = process.env.NEXT_PUBLIC_AI_API_URL || 'http://localhost:8000'
+      const resp = await fetch(
+        `${baseUrl}/v1/agent/session/respond`,
         {
           method: 'POST',
           credentials: 'include',
@@ -100,6 +105,9 @@ export function useAgentSession(
           body: JSON.stringify({ session_id: sid, term, answer }),
         }
       )
+      if (!resp.ok) {
+        console.error('Error submitting clarification, status:', resp.status)
+      }
     } catch (err) {
       console.error('Error submitting clarification', err)
     }

@@ -9,6 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi import FastAPI, Depends, HTTPException, status
 from pydantic import BaseModel
+import uuid
+from api.agent.session import sessions as _agent_sessions
 from typing import List, Optional
 from decouple import config
 from api.llms import initialize_llm
@@ -105,16 +107,39 @@ async def v1_stream_agent_session(
     print(f"[agent_debug] POST /v1/agent/session/stream called with: question={data.question!r}, why={data.why!r}, what={data.what!r}, workspace_id={data.workspace_id!r}")
     llm = initialize_llm()
     manager = AgentSessionManager(llm)
+    # Register session for clarifications
+    session_id = str(uuid.uuid4())
+    _agent_sessions[session_id] = manager
 
     async def generate():
-        # Debug: start streaming events
+        # Debug: start streaming events (POST)
         print("[agent_debug] Starting event stream (POST)")
+        first = True
         async for event in manager.astream(data):
+            # Inject session_id in first event
+            if first:
+                event["session_id"] = session_id
+                first = False
             # Debug: log each event before sending
             print(f"[agent_debug] POST event: {event}")
             yield f"data: {json.dumps(event)}\n\n"
 
     return StreamingResponse(generate(), media_type="text/event-stream")
+  
+# Endpoint to receive clarification responses from client and resume session
+class ClarificationResponse(BaseModel):
+    session_id: str
+    term: str
+    answer: str
+
+@app.post("/v1/agent/session/respond")
+async def v1_agent_session_respond(data: ClarificationResponse):
+    """Receive a user's answer to a clarification term and resume the agent session."""
+    manager = _agent_sessions.get(data.session_id)
+    if not manager:
+        raise HTTPException(status_code=404, detail="Session not found")
+    manager.submit_clarification(data.term, data.answer)
+    return {"status": "ok"}
 
 @app.get("/v1/agent/session/stream")
 async def v1_stream_agent_session_get(
@@ -138,11 +163,19 @@ async def v1_stream_agent_session_get(
     )
     llm = initialize_llm()
     manager = AgentSessionManager(llm)
+    # Register session for clarifications
+    session_id = str(uuid.uuid4())
+    _agent_sessions[session_id] = manager
 
     async def generate():
         # Debug: start streaming events (GET)
         print("[agent_debug] Starting event stream (GET)")
+        first = True
         async for event in manager.astream(data):
+            # Inject session_id in first event
+            if first:
+                event["session_id"] = session_id
+                first = False
             # Debug: log each event before sending
             print(f"[agent_debug] GET event: {event}")
             yield f"data: {json.dumps(event)}\n\n"
