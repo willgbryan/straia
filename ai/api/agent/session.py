@@ -297,18 +297,22 @@ class AgentSessionManager:
 
                 # Update conversational context based on execution result
                 status = feedback.get("status")
-                if status == "error":
+                raw = feedback.get("result") or []
+                code_snippet = ev.get("content", "").strip().splitlines()[0][:120]
+                if raw:
+                    types = [str(r.get("type")) for r in raw if isinstance(r, dict) and r.get("type")]
+                    context_lines.append(f"RESULTS: {', '.join(types)} for {code_snippet}")
+                elif status == "error":
                     err = feedback.get("error", "")
-                    context_lines.append("ERROR:" + err[:120])
+                    context_lines.append(f"ERROR: {err[:120]} running {code_snippet}")
                 else:
                     out = feedback.get("output")
                     if out:
-                        context_lines.append(out[:500])
+                        context_lines.append(f"OUTPUT: {out[:120]} from {code_snippet}")
                     else:
-                        # No output recorded, append summary to prevent repetition
-                        snippet = ev.get("summary") or ev.get("content", "")
-                        if snippet:
-                            context_lines.append(str(snippet)[:120])
+                        # No output or raw results, record summary and snippet
+                        summary = ev.get("summary") or "executed"
+                        context_lines.append(f"{summary}: {code_snippet}")
 
             # ------------------------------------------------------------
             # 2. Handle insight events – append to context so the LLM can

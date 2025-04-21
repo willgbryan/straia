@@ -53,6 +53,10 @@ export function useAgentSession(
           // backend may send session_id or sessionId
           sessionIdRef.current = (data.session_id as string) || (data.sessionId as string) || null
         }
+        // Dispatch raw execution_result events for downstream processing
+        if (data.event === 'execution_result') {
+          window.dispatchEvent(new CustomEvent('agent:raw_execution_result', { detail: data }))
+        }
         setEvents((prev) => [...prev, data])
         if (data.event === 'session_completed') {
           setStatus('done')

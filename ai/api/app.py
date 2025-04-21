@@ -11,7 +11,7 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from pydantic import BaseModel
 import uuid
 from api.agent.session import sessions as _agent_sessions
-from typing import List, Optional
+from typing import List, Optional, Any
 from decouple import config
 from api.llms import initialize_llm
 from api.chains.stream.python_edit import create_python_edit_stream_query_chain
@@ -103,6 +103,8 @@ class ExecutionFeedback(BaseModel):
     status: str  # 'ok' | 'error'
     output: str | None = None
     error: str | None = None
+    # Raw execution result items (e.g., DataFrame or chart outputs)
+    result: list[Any] | None = None
 
 
 @app.post("/v1/agent/session/feedback")
@@ -110,12 +112,22 @@ async def v1_agent_feedback(data: ExecutionFeedback):
     mgr = _agent_sessions.get(data.session_id)
     if not mgr:
         raise HTTPException(status_code=404, detail="session not found")
-    mgr.submit_execution_feedback(
-        block_id=data.block_id,
-        status=data.status,
-        output=data.output,
-        error=data.error,
-    )
+    # Resolve agent FSM future with raw feedback including any result payload
+    fut = mgr._pending_exec_futures.get(data.block_id)
+    if fut and not fut.done():
+        # Build execution_result event including raw feedback
+        event = {
+            "event": "execution_result",
+            "blockType": "python",
+            "blockId": data.block_id,
+            "status": data.status,
+            "output": data.output,
+            "error": data.error,
+        }
+        # Include raw result items if provided
+        if data.result is not None:
+            event["result"] = data.result
+        fut.set_result(event)
     return {"ok": True}
 
 @app.post("/v1/agent/session/stream")

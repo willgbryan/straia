@@ -20,6 +20,8 @@ export default function AgentIntegrationListener({
   useEffect(() => {
     const backendToUi = new Map<string, string>()
     let currentSessionId: string | null = null
+    // Pre-fetch Yjs blocks map for raw execution injection
+    const yBlocks = getBlocks(yDoc)
 
     const onSessionStarted = (ev: CustomEvent) => {
       currentSessionId = ev.detail.sessionId as string
@@ -103,6 +105,19 @@ export default function AgentIntegrationListener({
     }
     window.addEventListener('agent:create_block', handler as any)
     window.addEventListener('agent:session_started', onSessionStarted as any)
+    // Listen for raw execution results from SSE and write to Yjs blocks
+    const rawExecHandler = (e: CustomEvent) => {
+      const { blockId: backendId, result } = e.detail as any
+      const uiId = backendToUi.get(backendId)
+      if (!uiId) return
+      const yBlock = yBlocks.get(uiId)
+      if (!yBlock) return
+      // Write raw result array onto the block for feedback and context
+      yBlock.doc?.transact(() => {
+        yBlock.setAttribute('result', result)
+      })
+    }
+    window.addEventListener('agent:raw_execution_result', rawExecHandler as any)
 
     const sendFeedback = (yBlock: any) => {
       const uiId = yBlock.getAttribute('id')
@@ -111,19 +126,35 @@ export default function AgentIntegrationListener({
       const [backendId] = entry
 
       const result = yBlock.getAttribute('result') || []
-      const hasErr = result.some((r: any) => r.type === 'error')
-      const status = hasErr ? 'error' : 'ok'
-      const txt = result.find((r: any) => r.type === 'text')
-      const err = result.find((r: any) => r.type === 'error')
-      const output = txt ? String(txt.text).slice(0, 500) : null
-      const error = err ? String(err.traceback || '').slice(-300) : null
+      const errItem = result.find((r: any) => r.type === 'error')
+      const txtItem = result.find((r: any) => r.type === 'text')
+      // Summary field: include text, error, or chart placeholder
+      let status: 'ok' | 'error' = 'ok'
+      let output: string | null = null
+      let error: string | null = null
+      if (errItem) {
+        status = 'error'
+        error = String(errItem.traceback || '').slice(-300)
+      } else if (txtItem) {
+        output = String(txtItem.text).slice(0, 500)
+      } else if (result.some((r: any) => ['image', 'plotly', 'html'].includes(r.type))) {
+        // Chart or rich output placeholder
+        output = '[chart output]'
+      }
 
       if (currentSessionId) {
         const base = process.env.NEXT_PUBLIC_AI_API_URL || 'http://localhost:8000'
         fetch(`${base}/v1/agent/session/feedback`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ session_id: currentSessionId, block_id: backendId, status, output, error }),
+          body: JSON.stringify({
+            session_id: currentSessionId,
+            block_id: backendId,
+            status,
+            output,
+            error,
+            result: result
+          }),
         }).catch(() => {})
       }
     }
@@ -139,6 +170,7 @@ export default function AgentIntegrationListener({
     return () => {
       window.removeEventListener('agent:create_block', handler as any)
       window.removeEventListener('agent:session_started', onSessionStarted as any)
+      window.removeEventListener('agent:raw_execution_result', rawExecHandler as any)
       // @ts-ignore detach
       yDoc.off('afterTransaction', txnHandler)
     }

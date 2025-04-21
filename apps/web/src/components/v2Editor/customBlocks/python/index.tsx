@@ -142,7 +142,12 @@ function PythonBlock(props: Props) {
   )
 
   const { id: blockId, componentId } = getPythonAttributes(props.block)
+  // Debug status changes: log state transitions
+  useEffect(() => {
+    console.debug('[agent_debug] PythonBlock status for', blockId, 'changed to', status)
+  }, [status, blockId])
   const onRun = useCallback(() => {
+    console.debug('[agent_debug] PythonBlock onRun enqueue for', blockId)
     props.executionQueue.enqueueBlock(
       blockId,
       props.userId,
