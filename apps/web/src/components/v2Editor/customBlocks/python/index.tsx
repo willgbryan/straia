@@ -25,7 +25,7 @@ import {
 import clsx from 'clsx'
 import type { ApiDocument, ApiWorkspace } from '@briefer/database'
 import { useEnvironmentStatus } from '@/hooks/useEnvironmentStatus'
-import { RefObject, useCallback, useMemo, useState } from 'react'
+import { RefObject, useCallback, useEffect, useMemo, useState } from 'react'
 import {
   ExecutingPythonText,
   LoadingEnvText,
@@ -185,6 +185,20 @@ function PythonBlock(props: Props) {
         exhaustiveCheck(status)
     }
   }, [status, execution, onRun, blockId])
+
+  // Automatically run blocks when the agent requests via event
+  useEffect(() => {
+    console.debug('[agent_debug] listener for agent:run_block registered for', blockId)
+    const handler = (e: CustomEvent) => {
+      const detail = e.detail as any
+      if (detail.blockId === blockId) {
+        console.debug('[agent_debug] received agent:run_block for', blockId)
+        onRun()
+      }
+    }
+    window.addEventListener('agent:run_block', handler as any)
+    return () => window.removeEventListener('agent:run_block', handler as any)
+  }, [blockId, onRun])
 
   const statusIsDisabled = isExecutionStatusLoading(status)
 

@@ -270,43 +270,45 @@ class AgentSessionManager:
             yield ev
 
             # ------------------------------------------------------------
-            # 1. Execute python blocks server‑side immediately.
+            # 1. Defer python block execution to the UI/notebook and await feedback.
             # ------------------------------------------------------------
-            # The original implementation waited for a websocket/kernel
-            # callback from the front‑end UI which is not yet connected in
-            # the OSS environment.  This caused the FSM to stall after the
-            # first block creation.  We now execute the block in‑process so
-            # the loop can continue, *while still* allowing a future UI to
-            # provide richer execution feedback by resolving the
-            # _pending_exec_futures entry (the first response wins).
             if (
                 ev.get("event") == "action"
                 and ev.get("action") == "create_block"
                 and ev.get("blockType") == "python"
             ):
                 blk_id = ev["blockId"]
+                # Register a future to receive execution feedback from the UI
+                loop = asyncio.get_event_loop()
+                fut = loop.create_future()
+                self._pending_exec_futures[blk_id] = fut
 
-                # Kick off immediate local execution
-                local_result = self._execute_python_block(ev["content"])
-                # Attach block id so the consumer can map result -> block
-                local_result["blockId"] = blk_id
+                # Await UI/kernel execution feedback via POST /agent/session/feedback
+                try:
+                    feedback = await asyncio.wait_for(fut, timeout=2.0)
+                except asyncio.TimeoutError:
+                    # UI did not run cell in time; fallback to local execution
+                    print(f"[agent_debug] UI feedback timeout for block {blk_id}, executing locally")
+                    local = self._execute_python_block(ev.get("content", ""))
+                    local["blockId"] = blk_id
+                    feedback = local
+                # feedback is a dict with keys: event, blockType, status, output, error, blockId
+                yield feedback
 
-                # Optionally register a pending future so that a UI (if any)
-                # can *replace* the local result later. We only register the
-                # future if one does not already exist.
-                # We purposefully do not wait on front‑end execution feedback
-                # to keep the analysis flowing, but we still allow a future
-                # UI to submit it – the manager will just ignore it if the
-                # session has already progressed.
-
-                # Yield the execution result to the stream
-                yield local_result
-
-                # Add to conversational context
-                if local_result.get("status") == "error":
-                    context_lines.append("ERROR:" + local_result.get("error", "")[:120])
-                elif local_result.get("output"):
-                    context_lines.append(local_result["output"][:500])
+                # Update conversational context based on execution result
+                status = feedback.get("status")
+                if status == "error":
+                    err = feedback.get("error", "")
+                    context_lines.append("ERROR:" + err[:120])
+                else:
+                    out = feedback.get("output")
+                    if out:
+                        context_lines.append(out[:500])
+                    else:
+                        # No output recorded, append summary to prevent repetition
+                        snippet = ev.get("summary") or ev.get("content", "")
+                        if snippet:
+                            context_lines.append(str(snippet)[:120])
 
             # ------------------------------------------------------------
             # 2. Handle insight events – append to context so the LLM can

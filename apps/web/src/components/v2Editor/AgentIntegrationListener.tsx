@@ -93,6 +93,12 @@ export default function AgentIntegrationListener({
       // Enqueue execution if code block
       if (addConfig.type === BlockType.Python || addConfig.type === BlockType.SQL) {
         executionQueue.enqueueBlock(blockId, userId, null, { _tag: 'run-code' } as any)
+        // Auto-run new Python/SQL blocks: delay to allow UI mount
+        console.debug('[agent_debug] scheduling agent:run_block for', blockId)
+        setTimeout(() => {
+          console.debug('[agent_debug] dispatch agent:run_block for', blockId)
+          window.dispatchEvent(new CustomEvent('agent:run_block', { detail: { blockId } }))
+        }, 100)
       }
     }
     window.addEventListener('agent:create_block', handler as any)
