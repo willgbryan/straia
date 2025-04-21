@@ -95,6 +95,29 @@ async def ping():
 # Agent session streaming endpoint
 from api.agent.session import AgentSessionManager, StartAgentSessionRequest
 
+# ---------------- Feedback endpoint ------------------
+
+class ExecutionFeedback(BaseModel):
+    session_id: str
+    block_id: str
+    status: str  # 'ok' | 'error'
+    output: str | None = None
+    error: str | None = None
+
+
+@app.post("/v1/agent/session/feedback")
+async def v1_agent_feedback(data: ExecutionFeedback):
+    mgr = _agent_sessions.get(data.session_id)
+    if not mgr:
+        raise HTTPException(status_code=404, detail="session not found")
+    mgr.submit_execution_feedback(
+        block_id=data.block_id,
+        status=data.status,
+        output=data.output,
+        error=data.error,
+    )
+    return {"ok": True}
+
 @app.post("/v1/agent/session/stream")
 async def v1_stream_agent_session(
     data: StartAgentSessionRequest

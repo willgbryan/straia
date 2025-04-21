@@ -18,11 +18,15 @@ export default function AgentIntegrationListener({
   userId,
 }: AgentIntegrationListenerProps) {
   useEffect(() => {
+    const backendToUi = new Map<string, string>()
+    let currentSessionId: string | null = null
+
+    const onSessionStarted = (ev: CustomEvent) => {
+      currentSessionId = ev.detail.sessionId as string
+    }
+
     const handler = (e: CustomEvent) => {
-      const { blockType, content } = e.detail as {
-        blockType: string
-        content: string
-      }
+      const { blockType, content, blockId: backendId } = e.detail as any
       const yLayout = getLayout(yDoc)
       const yBlocks = getBlocks(yDoc)
       // Determine block config based on type
@@ -55,8 +59,14 @@ export default function AgentIntegrationListener({
         // default to markdown via rich text
         addConfig = { type: BlockType.RichText, content }
       }
-      // Create the block at end of layout
+      // Preserve backendId if provided
+      if (backendId) {
+        addConfig.id = backendId
+      }
+
       const blockId = addBlockGroup(yLayout, yBlocks, addConfig, yLayout.length)
+
+      if (backendId) backendToUi.set(backendId, blockId)
 
       // If we just inserted a RichText block, seed its Yjs content with the
       // markdown/plain‑text provided by the agent so it is visible immediately.
@@ -64,9 +74,19 @@ export default function AgentIntegrationListener({
         const yBlock = yBlocks.get(blockId)
         if (yBlock) {
           // @ts-ignore – content is a valid RichText attribute
-          const fragment = yBlock.getAttribute('content') as Y.XmlFragment | undefined
+          const fragment = yBlock.getAttribute('content') as any
           if (fragment && typeof content === 'string') {
-            fragment.insert(0, [new Y.Text(content)])
+            // Build a Y.XmlText with the markdown string as its content so it
+            // actually shows up in the editor instead of an empty block.
+            // Older code attempted `new Y.XmlText(content)` which creates an
+            // element node instead of a text node, leading to empty blocks
+            // and the `el.toArray` runtime errors we saw.
+            //
+            // Correct approach:
+            const yText = new (Y as any).XmlText()
+            yText.insert(0, content)
+            // Insert as child of the fragment
+            fragment.insert(0, [yText])
           }
         }
       }
@@ -76,8 +96,45 @@ export default function AgentIntegrationListener({
       }
     }
     window.addEventListener('agent:create_block', handler as any)
+    window.addEventListener('agent:session_started', onSessionStarted as any)
+
+    const sendFeedback = (yBlock: any) => {
+      const uiId = yBlock.getAttribute('id')
+      const entry = Array.from(backendToUi.entries()).find(([, v]) => v === uiId)
+      if (!entry) return
+      const [backendId] = entry
+
+      const result = yBlock.getAttribute('result') || []
+      const hasErr = result.some((r: any) => r.type === 'error')
+      const status = hasErr ? 'error' : 'ok'
+      const txt = result.find((r: any) => r.type === 'text')
+      const err = result.find((r: any) => r.type === 'error')
+      const output = txt ? String(txt.text).slice(0, 500) : null
+      const error = err ? String(err.traceback || '').slice(-300) : null
+
+      if (currentSessionId) {
+        const base = process.env.NEXT_PUBLIC_AI_API_URL || 'http://localhost:8000'
+        fetch(`${base}/v1/agent/session/feedback`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: currentSessionId, block_id: backendId, status, output, error }),
+        }).catch(() => {})
+      }
+    }
+
+    const txnHandler = (txn: any) => {
+      (txn.changed as Map<any, Set<string>>).forEach((set: Set<string>, type: any) => {
+        if (set.has('result')) sendFeedback(type)
+      })
+    }
+
+    // @ts-ignore attach
+    yDoc.on('afterTransaction', txnHandler)
     return () => {
       window.removeEventListener('agent:create_block', handler as any)
+      window.removeEventListener('agent:session_started', onSessionStarted as any)
+      // @ts-ignore detach
+      yDoc.off('afterTransaction', txnHandler)
     }
   }, [yDoc, executionQueue, userId])
 

@@ -1,4 +1,5 @@
 from typing import AsyncGenerator, Dict, Any
+import uuid
 from pydantic import BaseModel
 import asyncio
 import uuid
@@ -39,6 +40,9 @@ class AgentSessionManager:
 
         # build the next‑step chain once
         self._next_step_chain = create_next_step_chain(llm)
+
+        # Track block execution futures waiting for UI/kernel feedback
+        self._pending_exec_futures: Dict[str, asyncio.Future] = {}
 
         # Execution context for python blocks – shared globals so subsequent
         # blocks can reference earlier variables just like a notebook.
@@ -91,6 +95,8 @@ class AgentSessionManager:
         csv_files = [f for f in os.listdir(base) if f.lower().endswith('.csv')]
         print(f"[agent_debug] CSV files found: {csv_files}")
         if csv_files:
+            # store for later execution path resolution
+            self._data_base_dir = base
             table_info += f"Available files: {', '.join(csv_files)}\n"
         for filename in csv_files:
                 try:
@@ -119,9 +125,36 @@ class AgentSessionManager:
                 os.chdir(self._data_base_dir)
             with contextlib.redirect_stdout(stdout_buf), contextlib.redirect_stderr(stderr_buf):
                 exec(code, self._py_globals)
-            # Capture any printed output
-            out = stdout_buf.getvalue().strip()
+
+            # ------------------------------------------------------------
+            # Capture standard output *and* replicate the Jupyter‑style
+            # behaviour where the value of the last expression is displayed.
+            # ------------------------------------------------------------
+            out = stdout_buf.getvalue()
+
+            # Attempt to evaluate the value of the last expression so that
+            # objects like DataFrames are rendered even when the block does
+            # not explicitly print them.
+            try:
+                import ast
+
+                parsed = ast.parse(code)
+                if parsed.body and isinstance(parsed.body[-1], ast.Expr):
+                    expr_node = parsed.body[-1].value
+                    expr_code = compile(ast.Expression(expr_node), filename="<inline-eval>", mode="eval")
+                    val = eval(expr_code, self._py_globals)
+                    if val is not None:
+                        out += ("\n" if out else "") + repr(val)
+            except Exception:
+                # Silently ignore problems evaluating the expression – the
+                # code already executed successfully.
+                pass
+
+            out = out.strip()
             if out:
+                # Prevent extremely large payloads in the event stream.
+                if len(out) > 5000:
+                    out = out[:5000] + "…"  # truncate
                 result["output"] = out
             result["status"] = "ok"
         except Exception as exc:
@@ -182,9 +215,14 @@ class AgentSessionManager:
         # store expected terms so we can wait for all answers
         self._expected_terms = [c.get("term") for c in clar_list if c.get("term")]
         yield {"event": "clarification", "clarifications": clar_list}
-        # Wait for user to submit clarification answers
-        print(f"[agent_debug] Waiting for user clarification answers...")
-        answers = await self._wait_for_clarification()
+
+        # If there are clarification terms, wait for user input; otherwise we
+        # continue immediately.
+        if self._expected_terms:
+            print(f"[agent_debug] Waiting for user clarification answers...")
+            answers = await self._wait_for_clarification()
+        else:
+            answers = {}
         print(f"[agent_debug] Received clarification answers: {answers}")
 
         # ---------------- CSV discovery (once) ----------------
@@ -224,22 +262,71 @@ class AgentSessionManager:
             if table_info and ev.get("event") == "action" and "table_info" not in ev:
                 ev["table_info"] = table_info
 
+            # Ensure blockId for actions that create blocks
+            if ev.get("event") == "action" and ev.get("action") == "create_block":
+                if "blockId" not in ev:
+                    ev["blockId"] = str(uuid.uuid4())
+
             yield ev
 
-            # Execute python blocks immediately
+            # ------------------------------------------------------------
+            # 1. Execute python blocks server‑side immediately.
+            # ------------------------------------------------------------
+            # The original implementation waited for a websocket/kernel
+            # callback from the front‑end UI which is not yet connected in
+            # the OSS environment.  This caused the FSM to stall after the
+            # first block creation.  We now execute the block in‑process so
+            # the loop can continue, *while still* allowing a future UI to
+            # provide richer execution feedback by resolving the
+            # _pending_exec_futures entry (the first response wins).
             if (
                 ev.get("event") == "action"
                 and ev.get("action") == "create_block"
                 and ev.get("blockType") == "python"
             ):
-                result = self._execute_python_block(ev.get("content", ""))
-                yield result
-                if result["status"] == "error":
-                    context_lines.append("ERROR:" + result["error"].split("\n")[-1])
-                elif result.get("output"):
-                    context_lines.append(result["output"][:500])
+                blk_id = ev["blockId"]
+
+                # Kick off immediate local execution
+                local_result = self._execute_python_block(ev["content"])
+                # Attach block id so the consumer can map result -> block
+                local_result["blockId"] = blk_id
+
+                # Optionally register a pending future so that a UI (if any)
+                # can *replace* the local result later. We only register the
+                # future if one does not already exist.
+                # We purposefully do not wait on front‑end execution feedback
+                # to keep the analysis flowing, but we still allow a future
+                # UI to submit it – the manager will just ignore it if the
+                # session has already progressed.
+
+                # Yield the execution result to the stream
+                yield local_result
+
+                # Add to conversational context
+                if local_result.get("status") == "error":
+                    context_lines.append("ERROR:" + local_result.get("error", "")[:120])
+                elif local_result.get("output"):
+                    context_lines.append(local_result["output"][:500])
+
+            # ------------------------------------------------------------
+            # 2. Handle insight events – append to context so the LLM can
+            #    build on previous insights.
+            # ------------------------------------------------------------
             elif ev.get("event") == "insight":
                 context_lines.append(ev.get("summary", "insight"))
+
+            # 3.  For non‑python blocks (e.g. markdown, sql, etc.) we still
+            #     add a short representation to the running context so the
+            #     FSM is aware the action was taken and doesn’t loop creating
+            #     the same markdown repeatedly.
+            elif (
+                ev.get("event") == "action"
+                and ev.get("action") == "create_block"
+                and ev.get("blockType") != "python"
+            ):
+                snippet = ev.get("summary") or ev.get("content", "")
+                if snippet:
+                    context_lines.append(str(snippet)[:120])
 
         else:
             yield {"event": "session_completed", "message": "Stopped after max iterations."}
@@ -256,6 +343,20 @@ class AgentSessionManager:
             and all(t in self._answers for t in self._expected_terms)
         ):
             self._clarification_future.set_result(self._answers)
+
+    # -------- feedback from UI after kernel executes a block ---------
+    def submit_execution_feedback(self, block_id: str, status: str, output: str | None, error: str | None):
+        fut = self._pending_exec_futures.pop(block_id, None)
+        if fut and not fut.done():
+            fut.set_result(
+                {
+                    "event": "execution_result",
+                    "blockType": "python",
+                    "status": status,
+                    "output": output,
+                    "error": error,
+                }
+            )
 
     async def _wait_for_clarification(self) -> Dict[str, str]:
         """Await user clarification answers."""

@@ -77,6 +77,8 @@ export default function AgentSidebar({
 
   // keep track of processed SSE events to prevent duplication
   const processedIdx = useRef(0)
+  // current session id from backend
+  const sessionIdRef = useRef<string | null>(null)
 
   // once the agent starts emitting actionable results we should no longer
   // surface clarification prompts that might arrive late due to streaming
@@ -110,6 +112,13 @@ export default function AgentSidebar({
     if (step !== 'running') return
     for (let i = processedIdx.current; i < events.length; i++) {
       const ev = events[i]
+      if (ev.event === 'session_started') {
+        const sid = (ev.session_id as string) || (ev.sessionId as string)
+        if (sid) {
+          sessionIdRef.current = sid
+          window.dispatchEvent(new CustomEvent('agent:session_started', { detail: { sessionId: sid } }))
+        }
+      }
       if (ev.event === 'clarification' && !hasProgressRef.current) {
         if (Array.isArray(ev.clarifications)) {
           // Push all received clarifications into the queue.
@@ -173,7 +182,7 @@ export default function AgentSidebar({
         // Dispatch event so the notebook can handle block creation
         window.dispatchEvent(
           new CustomEvent('agent:create_block', {
-            detail: { blockType: ev.blockType, content: ev.content },
+            detail: { blockType: ev.blockType, content: ev.content, blockId: ev.blockId },
           })
         )
         }
