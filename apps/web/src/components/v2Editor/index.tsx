@@ -58,7 +58,8 @@ import {
 } from '@briefer/editor'
 import EnvBar from '../EnvBar'
 import PlusButton from './PlusButton'
-import RichTextBlock from './customBlocks/richText'
+import dynamic from 'next/dynamic'
+const RichTextBlock = dynamic(() => import('./customBlocks/richText'), { ssr: false })
 import SQLBlock from './customBlocks/sql'
 import { ApiDocument, UserWorkspaceRole } from '@briefer/database'
 import PythonBlock from './customBlocks/python'

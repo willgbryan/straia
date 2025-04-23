@@ -15,7 +15,7 @@ import Color from '@tiptap/extension-color'
 import MathExtension from '@aarkue/tiptap-math-extension'
 import type { RichTextBlock } from '@briefer/editor'
 import clsx from 'clsx'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ConnectDragPreview } from 'react-dnd'
 import ImageExtension from './ImageExtension'
 
@@ -139,7 +139,24 @@ interface Props {
   isCursorWithin: boolean
   isCursorInserting: boolean
 }
+
+// Add a ClientOnly wrapper to ensure hooks are always called in the same order
+function ClientOnly({ children }: { children: React.ReactNode }) {
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => { setIsClient(true); }, []);
+  if (!isClient) return null;
+  return <>{children}</>;
+}
+
 const RichTextBlock = (props: Props) => {
+  return (
+    <ClientOnly>
+      <RichTextBlockClient {...props} />
+    </ClientOnly>
+  );
+}
+
+function RichTextBlockClient(props: Props) {
   const id = props.block.getAttribute('id')!
   const rawMarkdown = props.block.getAttribute('title') || ''
   const setTitle = useCallback(
@@ -162,7 +179,13 @@ const RichTextBlock = (props: Props) => {
   useEffect(() => {
     if (editor && rawMarkdown) {
       const json = editor.getJSON()
-      if (!json.content || json.content.length === 0) {
+      const isEmpty =
+        !json.content ||
+        json.content.length === 0 ||
+        (json.content.length === 1 &&
+          json.content[0].type === 'paragraph' &&
+          (!json.content[0].content || json.content[0].content.length === 0))
+      if (isEmpty) {
         editor.commands.setContent(rawMarkdown)
       }
     }
@@ -195,15 +218,6 @@ const RichTextBlock = (props: Props) => {
     }
   }, [editor, id, editorAPI.insert, editorAPI.blur])
   
-  // If this block has narrative text, bypass editor and render raw markdown as plain text
-  if (rawMarkdown) {
-    return (
-      <div data-testid={`MarkdownBlock-${id}`} style={{ whiteSpace: 'pre-wrap' }}>
-        {rawMarkdown}
-      </div>
-    )
-  }
-
   const ringColor =
     editor?.isFocused && !props.belongsToMultiTabGroup && props.isEditable
       ? 'ring-1 ring-ceramic-400'
@@ -243,8 +257,10 @@ const RichTextBlock = (props: Props) => {
       <div className={editor?.isFocused ? 'block' : 'hidden'}>
         <div>{editor && <FormattingToolbar editor={editor} />}</div>
       </div>
-      {/* Disable immediate render during SSR to avoid hydration mismatches */}
-      <EditorContent editor={editor} />
+      {/* Only render EditorContent on the client to avoid SSR hydration errors */}
+      {editor && (
+        <EditorContent editor={editor} />
+      )}
     </div>
   )
 }

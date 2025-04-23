@@ -396,6 +396,7 @@ function PrivateDocumentPageInner(
           workspaceId={props.workspaceId}
           visible={isAgentOpen}
           onHide={() => setIsAgentOpen(false)}
+          yDoc={yDoc}
         />
 
         <Comments

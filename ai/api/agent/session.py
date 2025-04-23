@@ -23,6 +23,7 @@ class StartAgentSessionRequest(BaseModel):
     why: str       # User explanation for why they are asking
     what: str      # Description of what the user is trying to solve
     workspace_id: Optional[str] = None  # New: workspace context for file fallback
+    notebook_blocks: Optional[list] = None  # <-- Added
 
 class AgentSessionManager:
     """
@@ -201,16 +202,23 @@ class AgentSessionManager:
         # Initialize local notebook cell history and context summaries
         notebook_cells: list[str] = []
 
+        notebook_blocks = request.notebook_blocks or []
+        notebook_blocks_str = ""
+        if notebook_blocks:
+            import json
+            notebook_blocks_str = json.dumps(notebook_blocks, indent=2)
+
         # Stage 1: Clarification using current agent prompt
         print(f"[agent_debug] Running clarification prompt")
         clar_prompt = PromptTemplate(
             template=clarify_template,
-            input_variables=["question", "why", "what"],
+            input_variables=["question", "why", "what", "notebook_blocks"],
         )
         clar_text = clar_prompt.format(
             question=request.question,
             why=request.why,
             what=request.what,
+            notebook_blocks=notebook_blocks_str,
         )
         # Call LLM synchronously
         raw_clar = None
@@ -278,6 +286,7 @@ class AgentSessionManager:
                     "what": request.what,
                     "context": full_ctx,
                     "table_info": table_info or "",
+                    "notebook_blocks": notebook_blocks_str,
                 }
             )
 

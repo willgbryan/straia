@@ -9,7 +9,8 @@ export function useAgentSession(
   question: string,
   why: string,
   what: string,
-  workspaceId?: string
+  workspaceId?: string,
+  notebookBlocks?: any[]
 ): {
   events: AgentEvent[]
   status: 'idle' | 'loading' | 'error' | 'done'
@@ -20,7 +21,7 @@ export function useAgentSession(
 } {
   const [events, setEvents] = useState<AgentEvent[]>([])
   const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'done'>('idle')
-  const esRef = useRef<EventSource | null>(null)
+  const controllerRef = useRef<AbortController | null>(null)
   // track session ID for sending clarification responses
   const sessionIdRef = useRef<string | null>(null)
 
@@ -30,63 +31,83 @@ export function useAgentSession(
     overrideWhy?: string,
     overrideWhat?: string
   ) => {
-    if (esRef.current) return
+    if (controllerRef.current) return
     setEvents([])
     setStatus('loading')
     const q = overrideQuestion ?? question
     const w = overrideWhy ?? why
     const t = overrideWhat ?? what
-    const params = new URLSearchParams({ question: q, why: w, what: t })
-    // Include workspace_id for file-based schema fallback
-    if (workspaceId) params.append('workspace_id', workspaceId)
-    // Determine base URL for AI API (fallback to localhost:8000 if env var missing)
     const baseUrl = process.env.NEXT_PUBLIC_AI_API_URL || 'http://localhost:8000'
-    const url = `${baseUrl}/v1/agent/session/stream?${params.toString()}`
-    console.log('[agent_debug] Connecting EventSource to URL:', url)
-    const es = new EventSource(url, { withCredentials: true })
-    esRef.current = es
-    es.onmessage = (e) => {
-      try {
-        const data: AgentEvent = JSON.parse(e.data)
-        // capture session ID on start
-        if (data.event === 'session_started') {
-          // backend may send session_id or sessionId
-          sessionIdRef.current = (data.session_id as string) || (data.sessionId as string) || null
-        }
-        // Dispatch raw execution_result events for downstream processing
-        if (data.event === 'execution_result') {
-          window.dispatchEvent(new CustomEvent('agent:raw_execution_result', { detail: data }))
-        }
-        setEvents((prev) => [...prev, data])
-        if (data.event === 'session_completed') {
-          setStatus('done')
-          es.close()
-          esRef.current = null
-        }
-      } catch {
-        // ignore parse errors
-      }
+    const url = `${baseUrl}/v1/agent/session/stream`
+    const body = {
+      question: q,
+      why: w,
+      what: t,
+      workspace_id: workspaceId,
+      notebook_blocks: notebookBlocks,
     }
-    es.onerror = () => {
-      setStatus('error')
-      if (esRef.current) {
-        esRef.current.close()
-        esRef.current = null
-      }
-    }
+    const controller = new AbortController()
+    controllerRef.current = controller
+    fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    })
+      .then(async (resp) => {
+        if (!resp.body) throw new Error('No response body')
+        const reader = resp.body.getReader()
+        let buffer = ''
+        while (true) {
+          const { value, done } = await reader.read()
+          if (done) break
+          buffer += new TextDecoder().decode(value)
+          let idx
+          while ((idx = buffer.indexOf('\n')) !== -1) {
+            const line = buffer.slice(0, idx).trim()
+            buffer = buffer.slice(idx + 1)
+            if (!line) continue
+            try {
+              const data: AgentEvent = JSON.parse(line)
+              console.log('Agent event received', data)
+              if (data.event === 'session_started') {
+                sessionIdRef.current = (data.session_id as string) || (data.sessionId as string) || null
+              }
+              if (data.event === 'execution_result') {
+                window.dispatchEvent(new CustomEvent('agent:raw_execution_result', { detail: data }))
+              }
+              setEvents((prev) => [...prev, data])
+              if (data.event === 'session_completed') {
+                setStatus('done')
+                controllerRef.current = null
+                return
+              }
+            } catch {
+              // ignore parse errors
+            }
+          }
+        }
+        setStatus('done')
+        controllerRef.current = null
+      })
+      .catch(() => {
+        setStatus('error')
+        controllerRef.current = null
+      })
   }
 
   const stop = () => {
-    if (esRef.current) {
-      esRef.current.close()
-      esRef.current = null
+    if (controllerRef.current) {
+      controllerRef.current.abort()
+      controllerRef.current = null
     }
     setStatus('idle')
   }
 
   useEffect(() => {
     return () => {
-      if (esRef.current) esRef.current.close()
+      if (controllerRef.current) controllerRef.current.abort()
     }
   }, [])
 
@@ -98,7 +119,6 @@ export function useAgentSession(
       return
     }
     try {
-      // Determine base URL for AI API
       const baseUrl = process.env.NEXT_PUBLIC_AI_API_URL || 'http://localhost:8000'
       const resp = await fetch(
         `${baseUrl}/v1/agent/session/respond`,

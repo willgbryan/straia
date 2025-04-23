@@ -5,11 +5,15 @@ import {
   useAgentSession,
 } from '@/hooks/useAgentSession'
 import { ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
+import { getAgentNotebookBlocks } from '@/utils/agentNotebookBlocks'
+import * as Y from 'yjs'
+import { YBlock } from '@briefer/editor'
 
 interface Props {
   workspaceId: string
   visible: boolean
   onHide: () => void
+  yDoc: Y.Doc
 }
 
 type ChatMessage =
@@ -28,6 +32,7 @@ export default function AgentSidebar({
   workspaceId,
   visible,
   onHide,
+  yDoc,
 }: Props) {
   // conversation steps: gather the three required inputs sequentially
   const [step, setStep] = useState<'question' | 'why' | 'what' | 'running'>('question')
@@ -67,13 +72,23 @@ export default function AgentSidebar({
   // clarification awaiting a response.
   const [currentClar, setCurrentClar] = useState<Clarification | undefined>()
 
+  // Get blocks from yDoc and summarize for agent context
+  const blocks = useMemo(() => yDoc.getMap<YBlock>('blocks'), [yDoc])
+  // Use state for notebookBlocks so it can be updated after block creation
+  const [notebookBlocks, setNotebookBlocks] = useState(() => getAgentNotebookBlocks(Array.from(blocks.values())))
+
+  // Update notebookBlocks whenever blocks change
+  useEffect(() => {
+    setNotebookBlocks(getAgentNotebookBlocks(Array.from(blocks.values())))
+  }, [blocks])
+
   const {
     events,
     status,
     start,
     stop,
     submitAnswer,
-  } = useAgentSession(question, why, what, workspaceId)
+  } = useAgentSession(question, why, what, workspaceId, notebookBlocks)
 
   // keep track of processed SSE events to prevent duplication
   const processedIdx = useRef(0)
@@ -109,7 +124,7 @@ export default function AgentSidebar({
 
   // handle new events from agent
   useEffect(() => {
-    if (step !== 'running') return
+    // Always process new events, regardless of step
     for (let i = processedIdx.current; i < events.length; i++) {
       const ev = events[i]
       if (ev.event === 'session_started') {
@@ -129,24 +144,27 @@ export default function AgentSidebar({
           }))
           clarQueueRef.current.push(...newClars)
 
-          // If we are not already waiting on a clarification, present the next one.
-          if (!currentClar) {
-            const next = clarQueueRef.current.shift()
-            if (next) {
-              setCurrentClar(next)
-              setMessages((prev) => [
-                ...prev,
-                {
-                  role: 'assistant_clarify',
-                  term: next.term,
-                  question: next.question,
-                  options: next.options,
-                },
-              ])
-            }
-          }
+          // Debug logging
+          console.log('Clarification event received', ev, { currentClar, clarQueue: clarQueueRef.current })
         }
-      } else if (ev.event === 'insight') {
+      }
+      // Always show the next clarification if not already being shown
+      if (!currentClar && clarQueueRef.current.length > 0) {
+        const next = clarQueueRef.current.shift()
+        if (next) {
+          setCurrentClar(next)
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: 'assistant_clarify',
+              term: next.term,
+              question: next.question,
+              options: next.options,
+            },
+          ])
+        }
+      }
+      if (ev.event === 'insight') {
         hasProgressRef.current = true
         setMessages((prev) => [
           ...prev,
@@ -194,7 +212,7 @@ export default function AgentSidebar({
       }
     }
     processedIdx.current = events.length
-  }, [events, step, currentClar])
+  }, [events, currentClar])
 
   // handle user submission for sequential Q/A before running agent
   const sendUserMessage = useCallback(
@@ -289,6 +307,23 @@ export default function AgentSidebar({
 
   // Determine whether to show input: only before running agent
   const showInput = step !== 'running'
+
+  // After handling agent:create_block, update notebookBlocks
+  useEffect(() => {
+    const handler = (e: CustomEvent) => {
+      // ... existing code ...
+      // After block is created, update notebookBlocks
+      setTimeout(() => {
+        setNotebookBlocks(getAgentNotebookBlocks(Array.from(yDoc.getMap<YBlock>('blocks').values())))
+      }, 100)
+    }
+    window.addEventListener('agent:create_block', handler as any)
+    // ... existing code ...
+    return () => {
+      window.removeEventListener('agent:create_block', handler as any)
+      // ... existing code ...
+    }
+  }, [yDoc])
 
   return (
     <Transition

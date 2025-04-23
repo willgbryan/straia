@@ -157,9 +157,9 @@ async def v1_stream_agent_session(
                 first = False
             # Debug: log each event before sending
             print(f"[agent_debug] POST event: {event}")
-            yield f"data: {json.dumps(event)}\n\n"
+            yield json.dumps(event) + "\n"
 
-    return StreamingResponse(generate(), media_type="text/event-stream")
+    return StreamingResponse(generate(), media_type="text/plain")
   
 # Endpoint to receive clarification responses from client and resume session
 class ClarificationResponse(BaseModel):
