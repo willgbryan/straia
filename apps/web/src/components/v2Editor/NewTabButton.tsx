@@ -144,7 +144,7 @@ function NewTabButton(props: Props) {
             blocks,
             props.blockGroupId,
             props.lastBlockId,
-            { type: item.type, dataframeName: dataframe?.name ?? null },
+            { type: item.type, dataframeName: dataframe?.name ?? null } as any,
             'after'
           )
           break

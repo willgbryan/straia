@@ -267,7 +267,7 @@ const GeneralTab = ({
 
   return (
     <div className="text-xs text-gray-500 flex flex-col space-y-8">
-      {yAxes.length > 1 || yAxes.some((y) => y.series.length > 1) ? null : (
+      {yAxes.length > 1 || yAxes.some((y) => Array.isArray(y.series) && y.series.length > 1) ? null : (
         <div>
           <ChartTypeSelector
             label="Chart Type"

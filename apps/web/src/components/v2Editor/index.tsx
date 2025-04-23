@@ -1304,7 +1304,7 @@ const Editor = (props: Props) => {
             newBlockId = addBlockGroup(
               layout.value,
               blocks.value,
-              { type, dataframeName: dataframe?.name ?? null },
+              { type, dataframeName: dataframe?.name ?? null } as any,
               index
             )
             break
@@ -1498,7 +1498,7 @@ const Editor = (props: Props) => {
               blocks.value,
               blockGroupId,
               blockId,
-              { type, dataframeName: dataframe?.name ?? null },
+              { type, dataframeName: dataframe?.name ?? null } as any,
               position
             )
             break

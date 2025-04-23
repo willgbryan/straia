@@ -182,7 +182,12 @@ export default function AgentSidebar({
         // Dispatch event so the notebook can handle block creation
         window.dispatchEvent(
           new CustomEvent('agent:create_block', {
-            detail: { blockType: ev.blockType, content: ev.content, blockId: ev.blockId },
+            detail: {
+              blockType: ev.blockType,
+              content: ev.content,
+              blockId: ev.blockId,
+              input: ev.input,
+            },
           })
         )
         }

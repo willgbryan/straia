@@ -19,15 +19,26 @@ export const isRichTextBlock = (
   return block.getAttribute('type') === BlockType.RichText
 }
 
-export const makeRichTextBlock = (id: string): Y.XmlElement<RichTextBlock> => {
+/**
+ * Create a RichText block, optionally seeding its content fragment.
+ */
+export const makeRichTextBlock = (
+  id: string,
+  initialContent?: string
+): Y.XmlElement<RichTextBlock> => {
   const yBlock = new Y.XmlElement<RichTextBlock>('block')
 
+  // Build content fragment, optionally with initial text
+  const fragment = new Y.XmlFragment()
+  if (initialContent) {
+    fragment.insert(0, [new Y.XmlText(initialContent)])
+  }
   const attrs: RichTextBlock = {
     id,
     index: null,
-    title: '',
+    title: initialContent ?? '',
     type: BlockType.RichText,
-    content: new Y.XmlFragment(),
+    content: fragment,
   }
 
   for (const [key, value] of Object.entries(attrs)) {

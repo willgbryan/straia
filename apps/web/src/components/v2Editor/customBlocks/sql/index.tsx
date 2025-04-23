@@ -603,12 +603,12 @@ function SQLBlock(props: Props) {
       return
     }
 
-    const block: AddBlockGroupBlock = {
+    const block = {
       type: flags.visualizationsV2
         ? BlockType.VisualizationV2
         : BlockType.Visualization,
       dataframeName: props.block.getAttribute('dataframeName')?.value ?? null,
-    }
+    } as AddBlockGroupBlock
 
     addGroupedBlock(
       props.layout,

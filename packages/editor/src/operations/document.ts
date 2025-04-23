@@ -7,6 +7,9 @@ import {
   TabRef,
   getTabsFromBlockGroup,
 } from './blockGroup.js'
+import { JsonObject } from '@briefer/types'
+import type { ChartType } from '@briefer/types'
+import type { VisualizationV2BlockInput } from '../blocks/visualization-v2.js'
 import {
   BlockType,
   YBlock,
@@ -19,6 +22,7 @@ import {
   makePythonBlock,
   makeVisualizationBlock,
 } from '../blocks/index.js'
+import { makeVisualizationV2Block } from '../blocks/visualization-v2.js'
 import { makeRichTextBlock } from '../blocks/richText.js'
 import { makeSQLBlock } from '../blocks/sql.js'
 import { makeWritebackBlock } from '../blocks/writeback.js'
@@ -28,16 +32,20 @@ import {
   getBlocks,
   getDashboard,
   getLayout,
-  makeVisualizationV2Block,
   removeBlocksFromDashboard,
   switchBlockType,
 } from '../index.js'
 import { makePivotTableBlock } from '../blocks/pivotTable.js'
 
 export type AddBlockGroupBlock =
+  // RichText block with optional initialContent
+  | {
+      type: BlockType.RichText
+      initialContent?: string
+    }
+  // Input-like blocks without payload
   | {
       type:
-        | BlockType.RichText
         | BlockType.Input
         | BlockType.DropdownInput
         | BlockType.DateInput
@@ -55,10 +63,20 @@ export type AddBlockGroupBlock =
       source?: string
     }
   | {
-      type:
-        | BlockType.Visualization
-        | BlockType.VisualizationV2
-        | BlockType.PivotTable
+      type: BlockType.Visualization
+      dataframeName: string | null
+      spec?: JsonObject
+      chartType?: ChartType
+    }
+  // V2 visualization (Vega-Lite spec)
+  // V2 visualization with structured input
+  | {
+      type: BlockType.VisualizationV2
+      input: VisualizationV2BlockInput
+    }
+  // Pivot table view
+  | {
+      type: BlockType.PivotTable
       dataframeName: string | null
     }
   | { type: BlockType.DashboardHeader; content: string }
@@ -69,7 +87,8 @@ const createBlock = (block: AddBlockGroupBlock, yBlockDefs: Y.Map<YBlock>) => {
 
   switch (block.type) {
     case BlockType.RichText:
-      yBlock = makeRichTextBlock(blockId)
+      // Create RichText block, seeding with initialContent if present
+      yBlock = makeRichTextBlock(blockId, (block as any).initialContent)
       break
     case BlockType.SQL:
       yBlock = makeSQLBlock(blockId, yBlockDefs, {
@@ -84,14 +103,20 @@ const createBlock = (block: AddBlockGroupBlock, yBlockDefs: Y.Map<YBlock>) => {
       })
       break
     case BlockType.Visualization:
+      // Legacy V1: raw Vega-Lite spec
+      console.debug('[agent_debug] createBlock received Visualization (v1) block config:', block)
       yBlock = makeVisualizationBlock(blockId, {
-        dataframeName: block.dataframeName,
+        dataframeName: (block as any).dataframeName,
+        spec: (block as any).spec ?? null,
+        chartType: (block as any).chartType ?? 'groupedColumn',
       })
       break
     case BlockType.VisualizationV2:
-      yBlock = makeVisualizationV2Block(blockId, {
-        dataframeName: block.dataframeName,
-      })
+      // New V2: structured input
+      console.debug('[agent_debug] createBlock received VisualizationV2 block config:', block)
+      const vizInput = (block as any).input as VisualizationV2BlockInput
+      console.debug('[agent_debug] visualizationV2 vizInput in createBlock:', vizInput)
+      yBlock = makeVisualizationV2Block(blockId, vizInput)
       break
     case BlockType.Input:
       yBlock = makeInputBlock(blockId, yBlockDefs)

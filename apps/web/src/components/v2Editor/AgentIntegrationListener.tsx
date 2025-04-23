@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import * as Y from 'yjs'
-import { addBlockGroup } from '@briefer/editor'
-import { getLayout, getBlocks } from '@briefer/editor'
+import { addBlockGroup, getLayout, getBlocks, getClosestDataframe } from '@briefer/editor'
 import { ExecutionQueue } from '@briefer/editor'
 import { BlockType } from '@briefer/editor'
 
@@ -37,7 +36,14 @@ export default function AgentIntegrationListener({
         addConfig = { type: BlockType.Python, source: content }
       } else if (blockType === 'sql') {
         addConfig = { type: BlockType.SQL, dataSourceId: null, isFileDataSource: false, source: content }
+      } else if (blockType === 'visualizationV2') {
+        // Agent provided structured input for v2 visualization
+        console.debug('[agent_debug] Received visualizationV2 event detail:', e.detail)
+        const inputObj = (e.detail as any).input || {}
+        console.debug('[agent_debug] visualizationV2 inputObj:', inputObj)
+        addConfig = { type: BlockType.VisualizationV2, input: inputObj }
       } else if (blockType === 'visualization') {
+        console.debug('[agent_debug] Received visualization (v1) event detail:', e.detail)
         // Sometimes the agent sends python code under visualization type.
         // Detect if it looks like code (starts with import/def/plt etc.)
         const trimmed = typeof content === 'string' ? content.trim() : ''
@@ -45,21 +51,38 @@ export default function AgentIntegrationListener({
         if (looksLikeCode) {
           addConfig = { type: BlockType.Python, source: content }
         } else {
-          // Assume vega/spec JSON
+          // Assume a Vega-Lite spec; attempt JSON.parse, then fallback to JS eval
           let spec: any = {}
+        if (typeof content === 'string') {
           try {
-            spec = typeof content === 'string' ? JSON.parse(content) : content
-          } catch {
-            spec = content
+            spec = JSON.parse(content)
+          } catch (_e) {
+            // Fallback: interpret content as JS object literal
+            try {
+              // eslint-disable-next-line no-new-func
+              spec = new Function('return (' + content + ')')()
+            } catch (__e) {
+              spec = {}
+            }
           }
-          addConfig = { type: BlockType.Visualization, spec }
+        } else {
+          spec = content
         }
-      } else if (blockType === 'markdown') {
-        // Create a rich‑text block and seed its content with plain text
-        addConfig = { type: BlockType.RichText }
+          // Pick the closest DataFrame to seed the visualization
+          const df = getClosestDataframe(yDoc, yLayout.length - 1)
+        // Create a v2 visualization block with default chartType from spec.mark.type
+        const markType = spec?.mark?.type ?? 'line'
+        addConfig = { type: BlockType.VisualizationV2, spec, chartType: markType }
+        if (df && df.blockId) {
+          addConfig.dataframeName = df.blockId
+        }
+        }
+    } else if (blockType === 'richText') {
+        // Create a rich‑text block and seed its content fragment with the markdown
+        addConfig = { type: BlockType.RichText, initialContent: content }
       } else {
-        // default to markdown via rich text
-        addConfig = { type: BlockType.RichText, content }
+        // Default fallback: rich text block for any other content
+        addConfig = { type: BlockType.RichText }
       }
       // Preserve backendId if provided
       if (backendId) {
@@ -72,26 +95,6 @@ export default function AgentIntegrationListener({
 
       // If we just inserted a RichText block, seed its Yjs content with the
       // markdown/plain‑text provided by the agent so it is visible immediately.
-      if (addConfig.type === BlockType.RichText) {
-        const yBlock = yBlocks.get(blockId)
-        if (yBlock) {
-          // @ts-ignore – content is a valid RichText attribute
-          const fragment = yBlock.getAttribute('content') as any
-          if (fragment && typeof content === 'string') {
-            // Build a Y.XmlText with the markdown string as its content so it
-            // actually shows up in the editor instead of an empty block.
-            // Older code attempted `new Y.XmlText(content)` which creates an
-            // element node instead of a text node, leading to empty blocks
-            // and the `el.toArray` runtime errors we saw.
-            //
-            // Correct approach:
-            const yText = new (Y as any).XmlText()
-            yText.insert(0, content)
-            // Insert as child of the fragment
-            fragment.insert(0, [yText])
-          }
-        }
-      }
       // Enqueue execution if code block
       if (addConfig.type === BlockType.Python || addConfig.type === BlockType.SQL) {
         executionQueue.enqueueBlock(blockId, userId, null, { _tag: 'run-code' } as any)
@@ -113,8 +116,22 @@ export default function AgentIntegrationListener({
       const yBlock = yBlocks.get(uiId)
       if (!yBlock) return
       // Write raw result array onto the block for feedback and context
+      // Store execution result
       yBlock.doc?.transact(() => {
-        yBlock.setAttribute('result', result)
+        (yBlock as any).setAttribute('result', result)
+      })
+      // Fallback: patch any visualization blocks with empty data values
+      yBlocks.forEach((block) => {
+        const bt = block.getAttribute('type')
+        if (bt === BlockType.Visualization) {
+          const spec = (block as any).getAttribute('spec') as any
+          if (spec && spec.data && Array.isArray(spec.data.values) && spec.data.values.length === 0) {
+            spec.data.values = result
+            block.doc?.transact(() => {
+              (block as any).setAttribute('spec', spec)
+            })
+          }
+        }
       })
     }
     window.addEventListener('agent:raw_execution_result', rawExecHandler as any)
@@ -161,7 +178,25 @@ export default function AgentIntegrationListener({
 
     const txnHandler = (txn: any) => {
       (txn.changed as Map<any, Set<string>>).forEach((set: Set<string>, type: any) => {
-        if (set.has('result')) sendFeedback(type)
+        if (set.has('result')) {
+          console.debug('[agent_debug] txnHandler result attr on block id=', type.getAttribute('id'))
+          sendFeedback(type)
+          // Patch empty Vega-Lite specs with actual result data
+          const resultData = (type as any).getAttribute('result') || []
+          yBlocks.forEach((block) => {
+            if (block.getAttribute('type') === BlockType.Visualization) {
+              const spec = (block as any).getAttribute('spec') as any
+              if (
+                spec && spec.data && Array.isArray(spec.data.values) && spec.data.values.length === 0
+              ) {
+                spec.data.values = resultData
+                block.doc?.transact(() => {
+                  (block as any).setAttribute('spec', spec)
+                })
+              }
+            }
+          })
+        }
       })
     }
 

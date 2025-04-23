@@ -38,6 +38,10 @@ class AgentSessionManager:
         self._expected_terms: list[str] = []
         self._data_base_dir: str | None = None
 
+        # Notebook cells history to feed back as context
+        # (local history of all create_block contents)
+        # Will be used to inform next-step chain of notebook state
+        self._notebook_cells: list[str] = []
         # build the next‑step chain once
         self._next_step_chain = create_next_step_chain(llm)
 
@@ -121,8 +125,18 @@ class AgentSessionManager:
         import os
         cwd_backup = os.getcwd()
         try:
+            # Change to data dir if available
             if self._data_base_dir:
                 os.chdir(self._data_base_dir)
+            # Stub out server-side plotting to avoid in-process Matplotlib GUI
+            try:
+                import matplotlib
+                matplotlib.use('Agg')
+                import matplotlib.pyplot as plt
+                self._py_globals['plt'] = plt
+            except Exception:
+                pass
+            # Execute code
             with contextlib.redirect_stdout(stdout_buf), contextlib.redirect_stderr(stderr_buf):
                 exec(code, self._py_globals)
 
@@ -184,6 +198,8 @@ class AgentSessionManager:
         table_info = self._table_info_from_files(request.workspace_id)
         # Debug: log table_info fetched
         print(f"[agent_debug] table_info fetched: {table_info!r}")
+        # Initialize local notebook cell history and context summaries
+        notebook_cells: list[str] = []
 
         # Stage 1: Clarification using current agent prompt
         print(f"[agent_debug] Running clarification prompt")
@@ -237,17 +253,30 @@ class AgentSessionManager:
                     break
 
         # ---------------- Iterative FSM loop ----------------
+        # Context summaries (exec results) – no longer used for FSM context
         context_lines: list[str] = []
         MAX_STEPS = 12
 
         for _ in range(MAX_STEPS):
-            recent_ctx = "\n".join(context_lines[-30:])
+            # Build 'notebook context' from actual cell contents
+            recent_ctx = "\n\n".join(notebook_cells[-20:])
+            # Append recent execution/insight summaries (including errors) to context
+            full_ctx = recent_ctx
+            if context_lines:
+                # include last few context lines (e.g., errors, outputs, insights)
+                recent_lines = context_lines[-10:]
+                full_ctx += "\n\n" + "\n".join(recent_lines)
+            # DEBUG: show combined context passed to next-step chain
+            print(f"[agent_debug] FSM recent_ctx: {recent_ctx[:500]!r}")
+            print(f"[agent_debug] FSM context_lines: {context_lines[-10:]!r}")
+            print(f"[agent_debug] FSM full_ctx: {full_ctx[:500]!r}")
+            # Invoke LLM for the next step using combined context
             step = self._next_step_chain.invoke(
                 {
                     "question": request.question,
                     "why": request.why,
                     "what": request.what,
-                    "context": recent_ctx,
+                    "context": full_ctx,
                     "table_info": table_info or "",
                 }
             )
@@ -267,52 +296,100 @@ class AgentSessionManager:
                 if "blockId" not in ev:
                     ev["blockId"] = str(uuid.uuid4())
 
-            yield ev
+            # --- PATCH: Normalize yAxes for visualizationV2 blocks ---
+            def normalize_yaxes(yaxes):
+                import uuid
+                def ensure_series_fields(s):
+                    return {
+                        'id': s.get('id', str(uuid.uuid4())),
+                        'column': s.get('column') or s.get('field'),
+                        'aggregateFunction': s.get('aggregateFunction', 'sum'),
+                        'groupBy': s.get('groupBy', None),
+                        'chartType': s.get('chartType', None),
+                        'name': s.get('name', None),
+                        'color': s.get('color', None),
+                        'groups': s.get('groups', None),
+                        'dateFormat': s.get('dateFormat', None),
+                        'numberFormat': s.get('numberFormat', None),
+                    }
+                normalized = []
+                for idx, y in enumerate(yaxes):
+                    if isinstance(y, dict) and 'series' in y and isinstance(y['series'], list):
+                        y['series'] = [ensure_series_fields(s) for s in y['series']]
+                        normalized.append(y)
+                        continue
+                    if isinstance(y, str):
+                        series = [ensure_series_fields({'column': y})]
+                    elif isinstance(y, dict) and ('column' in y or 'field' in y):
+                        series = [ensure_series_fields(y)]
+                    elif isinstance(y, list):
+                        series = [ensure_series_fields(s) for s in y]
+                    else:
+                        series = []
+                    normalized.append({
+                        'id': str(uuid.uuid4()),
+                        'name': None,
+                        'series': series
+                    })
+                return normalized
 
-            # ------------------------------------------------------------
-            # 1. Defer python block execution to the UI/notebook and await feedback.
-            # ------------------------------------------------------------
             if (
                 ev.get("event") == "action"
                 and ev.get("action") == "create_block"
-                and ev.get("blockType") == "python"
+                and ev.get("blockType") == "visualizationV2"
+                and isinstance(ev.get("input"), dict)
+                and "yAxes" in ev["input"]
             ):
+                ev["input"]["yAxes"] = normalize_yaxes(ev["input"]["yAxes"])
+                print("[agent_debug] visualizationV2 yAxes payload:", ev["input"]["yAxes"])
+
+            yield ev
+
+            # ------------------------------------------------------------
+            # 1. Execute python blocks locally and capture output as context.
+            # ------------------------------------------------------------
+            if ev.get("event") == "action" and ev.get("action") == "create_block" and ev.get("blockType") == "python":
                 blk_id = ev["blockId"]
-                # Register a future to receive execution feedback from the UI
-                loop = asyncio.get_event_loop()
-                fut = loop.create_future()
-                self._pending_exec_futures[blk_id] = fut
-
-                # Await UI/kernel execution feedback via POST /agent/session/feedback
-                try:
-                    feedback = await asyncio.wait_for(fut, timeout=2.0)
-                except asyncio.TimeoutError:
-                    # UI did not run cell in time; fallback to local execution
-                    print(f"[agent_debug] UI feedback timeout for block {blk_id}, executing locally")
-                    local = self._execute_python_block(ev.get("content", ""))
-                    local["blockId"] = blk_id
-                    feedback = local
-                # feedback is a dict with keys: event, blockType, status, output, error, blockId
+                code = ev.get("content", "")
+                # Record the cell content in notebook history
+                notebook_cells.append(code)
+                # Execute the code and capture result
+                feedback = self._execute_python_block(code)
+                feedback["blockId"] = blk_id
                 yield feedback
-
-                # Update conversational context based on execution result
+                # Update context summaries
                 status = feedback.get("status")
-                raw = feedback.get("result") or []
-                code_snippet = ev.get("content", "").strip().splitlines()[0][:120]
-                if raw:
-                    types = [str(r.get("type")) for r in raw if isinstance(r, dict) and r.get("type")]
-                    context_lines.append(f"RESULTS: {', '.join(types)} for {code_snippet}")
-                elif status == "error":
-                    err = feedback.get("error", "")
-                    context_lines.append(f"ERROR: {err[:120]} running {code_snippet}")
+                out = feedback.get("output")
+                err = feedback.get("error")
+                snippet = code.strip().splitlines()[0][:120]
+                if status == "error":
+                    context_lines.append(f"ERROR: {err[:120]} running {snippet}")
+                    # Automatically invoke Python-edit chain to fix the error
+                    try:
+                        from api.chains.stream.python_edit import create_python_edit_stream_query_chain
+                        parser_ctx = ''  # no global variables
+                        instr = f"The code above raised an error: {err.strip()}. Please correct the Python code."
+                        py_edit_chain = create_python_edit_stream_query_chain(self.llm)
+                        first_fix = True
+                        async for edit in py_edit_chain.astream({
+                            "source": code,
+                            "instructions": instr,
+                            "allowed_libraries": [],
+                            "variables": parser_ctx,
+                        }):
+                            src = edit.get("source")
+                            if first_fix and isinstance(src, str):
+                                # Emit a single corrected Python cell
+                                yield {"event": "action", "action": "create_block", "blockType": "python", "content": src}
+                                first_fix = False
+                                break
+                    except Exception:
+                        pass
+                elif out:
+                    context_lines.append(f"OUTPUT: {out[:120]} from {snippet}")
                 else:
-                    out = feedback.get("output")
-                    if out:
-                        context_lines.append(f"OUTPUT: {out[:120]} from {code_snippet}")
-                    else:
-                        # No output or raw results, record summary and snippet
-                        summary = ev.get("summary") or "executed"
-                        context_lines.append(f"{summary}: {code_snippet}")
+                    summary = ev.get("summary") or "executed"
+                    context_lines.append(f"{summary}: {snippet}")
 
             # ------------------------------------------------------------
             # 2. Handle insight events – append to context so the LLM can
@@ -323,13 +400,16 @@ class AgentSessionManager:
 
             # 3.  For non‑python blocks (e.g. markdown, sql, etc.) we still
             #     add a short representation to the running context so the
-            #     FSM is aware the action was taken and doesn’t loop creating
+            #     FSM is aware the action was taken and doesn't loop creating
             #     the same markdown repeatedly.
             elif (
                 ev.get("event") == "action"
                 and ev.get("action") == "create_block"
                 and ev.get("blockType") != "python"
             ):
+                # Record non-python block in notebook history
+                notebook_cells.append(ev.get("content", ""))
+                # Add summary or content snippet to context
                 snippet = ev.get("summary") or ev.get("content", "")
                 if snippet:
                     context_lines.append(str(snippet)[:120])

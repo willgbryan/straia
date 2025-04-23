@@ -141,7 +141,7 @@ interface Props {
 }
 const RichTextBlock = (props: Props) => {
   const id = props.block.getAttribute('id')!
-  const content = props.block.getAttribute('content')!
+  const rawMarkdown = props.block.getAttribute('title') || ''
   const setTitle = useCallback(
     (title: string) => {
       props.block.setAttribute('title', title)
@@ -150,12 +150,23 @@ const RichTextBlock = (props: Props) => {
   )
 
   const [, editorAPI] = useEditorAwareness()
+  // Provide Yjs content fragment for the editor
+  const content: any = props.block
 
   const { editor } = useBlockEditor({
     content,
     setTitle,
     isEditable: props.isEditable,
   })
+  // If the collaboration fragment is empty but we have rawMarkdown, set editor content
+  useEffect(() => {
+    if (editor && rawMarkdown) {
+      const json = editor.getJSON()
+      if (!json.content || json.content.length === 0) {
+        editor.commands.setContent(rawMarkdown)
+      }
+    }
+  }, [editor, rawMarkdown])
 
   useEffect(() => {
     if (editor && props.isCursorInserting && props.isCursorWithin) {
@@ -183,6 +194,15 @@ const RichTextBlock = (props: Props) => {
       editor.off('blur', onBlur)
     }
   }, [editor, id, editorAPI.insert, editorAPI.blur])
+  
+  // If this block has narrative text, bypass editor and render raw markdown as plain text
+  if (rawMarkdown) {
+    return (
+      <div data-testid={`MarkdownBlock-${id}`} style={{ whiteSpace: 'pre-wrap' }}>
+        {rawMarkdown}
+      </div>
+    )
+  }
 
   const ringColor =
     editor?.isFocused && !props.belongsToMultiTabGroup && props.isEditable
@@ -223,6 +243,7 @@ const RichTextBlock = (props: Props) => {
       <div className={editor?.isFocused ? 'block' : 'hidden'}>
         <div>{editor && <FormattingToolbar editor={editor} />}</div>
       </div>
+      {/* Disable immediate render during SSR to avoid hydration mismatches */}
       <EditorContent editor={editor} />
     </div>
   )

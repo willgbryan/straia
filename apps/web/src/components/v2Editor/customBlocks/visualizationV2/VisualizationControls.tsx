@@ -82,13 +82,15 @@ function VisualizationControlsV2(props: Props) {
     const multiplierMap: Record<string, string> = {}
 
     props.yAxes.forEach((yAxis) => {
-      yAxis.series.forEach((series) => {
-        if (series.numberFormat) {
-          decimalPlacesMap[series.id] =
-            series.numberFormat.decimalPlaces.toString()
-          multiplierMap[series.id] = series.numberFormat.multiplier.toString()
-        }
-      })
+      if (Array.isArray(yAxis.series)) {
+        yAxis.series.forEach((series) => {
+          if (series.numberFormat) {
+            decimalPlacesMap[series.id] =
+              series.numberFormat.decimalPlaces.toString()
+            multiplierMap[series.id] = series.numberFormat.multiplier.toString()
+          }
+        })
+      }
     })
 
     setSeriesDecimalPlaces(decimalPlacesMap)
@@ -103,17 +105,19 @@ function VisualizationControlsV2(props: Props) {
     let hasUpdates = false
 
     props.yAxes.forEach((yAxis) => {
-      yAxis.series.forEach((series) => {
-        if (series.numberFormat && !decimalPlacesMap[series.id]) {
-          decimalPlacesMap[series.id] =
-            series.numberFormat.decimalPlaces.toString()
-          hasUpdates = true
-        }
-        if (series.numberFormat && !multiplierMap[series.id]) {
-          multiplierMap[series.id] = series.numberFormat.multiplier.toString()
-          hasUpdates = true
-        }
-      })
+      if (Array.isArray(yAxis.series)) {
+        yAxis.series.forEach((series) => {
+          if (series.numberFormat && !decimalPlacesMap[series.id]) {
+            decimalPlacesMap[series.id] =
+              series.numberFormat.decimalPlaces.toString()
+            hasUpdates = true
+          }
+          if (series.numberFormat && !multiplierMap[series.id]) {
+            multiplierMap[series.id] = series.numberFormat.multiplier.toString()
+            hasUpdates = true
+          }
+        })
+      }
     })
 
     // Only update state if something actually changed

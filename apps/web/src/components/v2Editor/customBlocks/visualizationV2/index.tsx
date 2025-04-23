@@ -595,7 +595,7 @@ function VisualizationBlockV2(props: Props) {
   )
 
   const hasAValidYAxis = attrs.input.yAxes.some((yAxis) =>
-    yAxis.series.some((s) => s.column !== null)
+    Array.isArray(yAxis.series) && yAxis.series.some((s) => s.column !== null)
   )
 
   const onToggleIsBlockHiddenInPublished = useCallback(() => {
@@ -619,12 +619,9 @@ function VisualizationBlockV2(props: Props) {
   const onChangeSeries = useCallback(
     (id: SeriesV2['id'], series: SeriesV2) => {
       const yAxes = attrs.input.yAxes.map((yAxis) => {
-        const newSeries = yAxis.series.map((s) => {
-          if (s.id === id) {
-            return series
-          }
-          return s
-        })
+        const newSeries = Array.isArray(yAxis.series)
+          ? yAxis.series.map((s) => (s.id === id ? series : s))
+          : []
         return { ...yAxis, series: newSeries }
       })
 
@@ -634,16 +631,15 @@ function VisualizationBlockV2(props: Props) {
   )
 
   const onChangeAllSeries = useCallback(
-    (yIndex: number, series: SeriesV2[]) => {
-      setVisualizationV2Input(props.block, {
-        yAxes: attrs.input.yAxes.map((yAxis, index) => {
-          if (index === yIndex) {
-            return { ...yAxis, series }
-          }
-
-          return yAxis
-        }),
+    (yIndex: number, seriesArr: SeriesV2[]) => {
+      const yAxes = attrs.input.yAxes.map((yAxis, index) => {
+        const baseSeries = Array.isArray(yAxis.series) ? yAxis.series : []
+        if (index === yIndex) {
+          return { ...yAxis, series: seriesArr }
+        }
+        return { ...yAxis, series: baseSeries }
       })
+      setVisualizationV2Input(props.block, { yAxes })
     },
     [props.block, attrs.input.yAxes]
   )

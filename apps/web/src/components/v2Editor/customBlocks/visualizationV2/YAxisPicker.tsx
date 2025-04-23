@@ -50,12 +50,14 @@ export function getAggFunction(
 }
 
 function YAxisPickerV2(props: Props) {
+  const seriesArr = Array.isArray(props.yAxis.series) ? props.yAxis.series : []
+
   const onChangeColumn = useCallback(
     (column: DataFrameColumn | null, index: number) => {
       props.onChange(
         {
           ...props.yAxis,
-          series: props.yAxis.series.map((s, i) =>
+          series: seriesArr.map((s, i) =>
             i === index
               ? {
                   ...s,
@@ -78,7 +80,7 @@ function YAxisPickerV2(props: Props) {
         props.onChange(
           {
             ...props.yAxis,
-            series: props.yAxis.series.map((s, i) =>
+            series: seriesArr.map((s, i) =>
               i === index ? { ...s, aggregateFunction: func.data } : s
             ),
           },
@@ -97,7 +99,7 @@ function YAxisPickerV2(props: Props) {
       props.onChange(
         {
           ...props.yAxis,
-          series: props.yAxis.series.map((s, i) =>
+          series: seriesArr.map((s, i) =>
             i === index ? { ...s, groupBy: column } : s
           ),
         },
@@ -112,12 +114,12 @@ function YAxisPickerV2(props: Props) {
       props.onChange(
         {
           ...props.yAxis,
-          series: props.yAxis.series.filter((_, i) => i !== index),
+          series: seriesArr.filter((_, i) => i !== index),
         },
         props.index
       )
 
-      if (props.onRemove && props.yAxis.series.length === 1) {
+      if (props.onRemove && seriesArr.length === 1) {
         props.onRemove(props.index)
       }
     },
@@ -129,7 +131,7 @@ function YAxisPickerV2(props: Props) {
       {
         ...props.yAxis,
         series: [
-          ...props.yAxis.series,
+          ...seriesArr,
           createDefaultSeries(),
         ],
       },
@@ -142,7 +144,7 @@ function YAxisPickerV2(props: Props) {
       props.onChange(
         {
           ...props.yAxis,
-          series: props.yAxis.series.map((s, i) =>
+          series: seriesArr.map((s, i) =>
             i === index ? { ...s, chartType } : s
           ),
         },
@@ -228,7 +230,7 @@ function YAxisPickerV2(props: Props) {
         )}
       </div>
       <div className="flex flex-col space-y-6">
-        {props.yAxis.series
+        {(seriesArr)
           .slice(
             0,
             props.defaultChartType === 'trend' ||
@@ -258,7 +260,7 @@ function YAxisPickerV2(props: Props) {
                   />
                 </div>
 
-                {(props.yAxis.series.length > 1 || props.onRemove) && (
+                {((seriesArr.length > 1 || props.onRemove)) && (
                   <button
                     className="flex items-center jutify-center cursor-pointer text-gray-400 hover:text-red-600 text-[10px] absolute top-1 right-1 underline"
                     onClick={() => onRemoveSerie(i)}
@@ -269,7 +271,7 @@ function YAxisPickerV2(props: Props) {
               </div>
               {props.defaultChartType !== 'trend' &&
                 props.defaultChartType !== 'number' &&
-                (props.yAxis.series.length > 1 ||
+                ((seriesArr.length > 1 ||
                   !props.onAddYAxis ||
                   (s.chartType && s.chartType !== props.defaultChartType)) && (
                   <ChartTypeSelector
@@ -278,7 +280,7 @@ function YAxisPickerV2(props: Props) {
                     onChange={(t) => onChartTypeChange(t, i)}
                     isEditable={props.isEditable}
                   />
-                )}
+                ))}
               {s.column && (
                 <div className="flex flex-col gap-y-1 pt-1.5 px-0.5">
                   <AxisModifierSelector
@@ -328,8 +330,8 @@ function YAxisPickerV2(props: Props) {
       </div>
       {props.defaultChartType !== 'trend' &&
         props.defaultChartType !== 'number' &&
-        (props.yAxis.series.length > 1 ||
-          props.yAxis.series[0]?.column !== null) && (
+        ((seriesArr.length > 1 ||
+          (seriesArr[0]?.column != null)) && (
           <div className="flex justify-end pt-2">
             <button
               onClick={onAddSerie}
@@ -338,7 +340,7 @@ function YAxisPickerV2(props: Props) {
               + Series
             </button>
           </div>
-        )}
+        ))}
     </div>
   )
 }

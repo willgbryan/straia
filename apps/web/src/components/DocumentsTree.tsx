@@ -247,7 +247,7 @@ function NodeComponent(props: NodeComponentProps) {
   const [, drag, dragPreview] = useDrag({
     type: 'document',
     item: props.document,
-    collect: (monitor) => ({
+    collect: (monitor: any) => ({
       isDragging: monitor.isDragging(),
     }),
     canDrag: () => !props.flat,
@@ -267,8 +267,8 @@ function NodeComponent(props: NodeComponentProps) {
     { isDropping: boolean }
   >(
     {
-      accept: 'document',
-      drop: (item, monitor) => {
+    accept: 'document',
+    drop: (item: any, monitor: any) => {
         if (monitor.didDrop()) {
           return
         }
@@ -311,8 +311,8 @@ function NodeComponent(props: NodeComponentProps) {
         )
         return {}
       },
-      canDrop: (item) => !props.flat && item.id !== props.document.id,
-      hover: (_item, monitor) => {
+      canDrop: (item: any) => !props.flat && item.id !== props.document.id,
+      hover: (_item: any, monitor: any) => {
         if (!linkRef.current || !containerRef.current) {
           return
         }
@@ -337,7 +337,7 @@ function NodeComponent(props: NodeComponentProps) {
           setDropHoverState('center')
         }
       },
-      collect: (monitor) => ({
+      collect: (monitor: any) => ({
         isDropping:
           monitor.isOver({ shallow: true }) &&
           monitor.getItem().id !== props.document.id,
