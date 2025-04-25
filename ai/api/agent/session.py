@@ -14,16 +14,14 @@ from langchain.output_parsers.json import SimpleJsonOutputParser
 import os
 import csv
 from typing import Optional
+import json
 
 class StartAgentSessionRequest(BaseModel):
     """
     Schema for starting an agent session with an initial query and context.
     """
     question: str  # Main user question or intent
-    why: str       # User explanation for why they are asking
-    what: str      # Description of what the user is trying to solve
     workspace_id: Optional[str] = None  # New: workspace context for file fallback
-    notebook_blocks: Optional[list] = None  # <-- Added
 
 class AgentSessionManager:
     """
@@ -190,63 +188,34 @@ class AgentSessionManager:
         Stream a sequence of agent-generated events for the session.
         Each event is a dict that may represent a clarification request, action, or insight.
         """
-        # Debug: log entry into astream
-        print(f"[agent_debug] AgentSessionManager.astream called with: question={request.question!r}, why={request.why!r}, what={request.what!r}, workspace_id={request.workspace_id!r}")
-        # Acknowledge session start
+        print(f"[agent_debug] AgentSessionManager.astream called with: question={request.question!r}, workspace_id={request.workspace_id!r}")
         yield {"event": "session_started", "message": f"Agent session started: {request.question}"}
-        # Detect DB/datasource -- here just simulating: set table_info from files if no DB is available.
-        # PATCH: Use files-as-tables as fallback schema for agent.
         table_info = self._table_info_from_files(request.workspace_id)
-        # Debug: log table_info fetched
         print(f"[agent_debug] table_info fetched: {table_info!r}")
-        # Initialize local notebook cell history and context summaries
+        data_schema = self._gather_data_schema(request.workspace_id)
+        print(f"[agent_debug] data_schema: {data_schema!r}")
         notebook_cells: list[str] = []
-
-        notebook_blocks = request.notebook_blocks or []
-        notebook_blocks_str = ""
-        if notebook_blocks:
-            import json
-            notebook_blocks_str = json.dumps(notebook_blocks, indent=2)
 
         # Stage 1: Clarification using current agent prompt
         print(f"[agent_debug] Running clarification prompt")
-        clar_prompt = PromptTemplate(
-            template=clarify_template,
-            input_variables=["question", "why", "what", "notebook_blocks"],
-        )
-        clar_text = clar_prompt.format(
-            question=request.question,
-            why=request.why,
-            what=request.what,
-            notebook_blocks=notebook_blocks_str,
-        )
-        # Call LLM synchronously
-        raw_clar = None
-        try:
-            # ChatOpenAI/AzureChatOpenAI support invoke(messages)
-            raw_clar = self.llm.invoke([("system", clar_text)])
-        except Exception:
-            raw_clar = self.llm(clar_text)
-        # Extract text from LLM result
-        if hasattr(raw_clar, 'content'):
-            clar_text_out = raw_clar.content
-        else:
-            clar_text_out = raw_clar if isinstance(raw_clar, str) else str(raw_clar)
-        clar_data = SimpleJsonOutputParser().parse(clar_text_out)
+        from api.chains.stream.agent_clarify import create_clarification_stream_query_chain
+        clar_chain = create_clarification_stream_query_chain(self.llm)
+        clar_data = clar_chain.invoke({
+            "question": request.question,
+            "why": "",
+            "what": "",
+            "data_schema": data_schema,
+        })
         print(f"[agent_debug] clarification response: {clar_data}")
-        # Yield clarifications and wait for user response
         clar_list = clar_data.get("clarifications", [])
-        # store expected terms so we can wait for all answers
         self._expected_terms = [c.get("term") for c in clar_list if c.get("term")]
         yield {"event": "clarification", "clarifications": clar_list}
 
-        # If there are clarification terms, wait for user input; otherwise we
-        # continue immediately.
+        # Wait for clarifications if needed
+        answers = {}
         if self._expected_terms:
             print(f"[agent_debug] Waiting for user clarification answers...")
             answers = await self._wait_for_clarification()
-        else:
-            answers = {}
         print(f"[agent_debug] Received clarification answers: {answers}")
 
         # ---------------- CSV discovery (once) ----------------
@@ -282,11 +251,11 @@ class AgentSessionManager:
             step = self._next_step_chain.invoke(
                 {
                     "question": request.question,
-                    "why": request.why,
-                    "what": request.what,
+                    "why": "",
+                    "what": "",
                     "context": full_ctx,
                     "table_info": table_info or "",
-                    "notebook_blocks": notebook_blocks_str,
+                    "data_schema": data_schema,
                 }
             )
 
@@ -457,3 +426,49 @@ class AgentSessionManager:
         """Await user clarification answers."""
         self._clarification_future = asyncio.get_event_loop().create_future()
         return await self._clarification_future
+
+    def _gather_data_schema(self, workspace_id: Optional[str]) -> str:
+        """
+        Return a JSON string summarizing available files and their columns.
+        Example:
+        {
+            "files": [
+                {
+                    "name": "global_video_game_sales.csv",
+                    "columns": ["Rank", "Name", ...]
+                }
+            ]
+        }
+        """
+        base = f"/data/{workspace_id}/files" if workspace_id else None
+        proj_base = os.path.join(os.getcwd(), "jupyterfiles")
+        if os.path.exists(proj_base):
+            base = proj_base
+        elif base and not os.path.exists(base):
+            for alt in ["data/psql/ecommerce", "data/mysql/ecommerce"]:
+                if os.path.exists(alt):
+                    base = alt
+                    break
+        if not base or not os.path.exists(base):
+            home_base = "/home/jupyteruser"
+            if os.path.exists(home_base):
+                base = home_base
+            else:
+                repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, os.pardir))
+                repo_jup = os.path.join(repo_root, "jupyterfiles")
+                if os.path.exists(repo_jup):
+                    base = repo_jup
+                else:
+                    return json.dumps({"files": []})
+
+        files = []
+        for fname in os.listdir(base):
+            if fname.lower().endswith('.csv'):
+                try:
+                    with open(os.path.join(base, fname), "r") as f:
+                        reader = csv.reader(f)
+                        headers = next(reader)
+                        files.append({"name": fname, "columns": headers})
+                except Exception:
+                    continue
+        return json.dumps({"files": files})

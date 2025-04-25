@@ -139,7 +139,7 @@ async def v1_stream_agent_session(
     This POST endpoint consumes a JSON body with question, why, what, and optional workspace_id.
     """
     # Debug: log incoming agent session POST request
-    print(f"[agent_debug] POST /v1/agent/session/stream called with: question={data.question!r}, why={data.why!r}, what={data.what!r}, workspace_id={data.workspace_id!r}")
+    print(f"[agent_debug] POST /v1/agent/session/stream called with: question={data.question!r}, workspace_id={data.workspace_id!r}")
     llm = initialize_llm()
     manager = AgentSessionManager(llm)
     # Register session for clarifications
