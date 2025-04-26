@@ -188,16 +188,16 @@ class AgentSessionManager:
         Stream a sequence of agent-generated events for the session.
         Each event is a dict that may represent a clarification request, action, or insight.
         """
-        print(f"[agent_debug] AgentSessionManager.astream called with: question={request.question!r}, workspace_id={request.workspace_id!r}")
+        print(f"[agent_debug][session] AgentSessionManager.astream called with: question={request.question!r}, workspace_id={request.workspace_id!r}")
         yield {"event": "session_started", "message": f"Agent session started: {request.question}"}
         table_info = self._table_info_from_files(request.workspace_id)
-        print(f"[agent_debug] table_info fetched: {table_info!r}")
+        print(f"[agent_debug][session] table_info fetched: {table_info!r}")
         data_schema = self._gather_data_schema(request.workspace_id)
-        print(f"[agent_debug] data_schema: {data_schema!r}")
+        print(f"[agent_debug][session] data_schema: {data_schema!r}")
         notebook_cells: list[str] = []
 
         # Stage 1: Clarification using current agent prompt
-        print(f"[agent_debug] Running clarification prompt")
+        print(f"[agent_debug][session] Running clarification prompt")
         from api.chains.stream.agent_clarify import create_clarification_stream_query_chain
         clar_chain = create_clarification_stream_query_chain(self.llm)
         clar_data = clar_chain.invoke({
@@ -206,7 +206,7 @@ class AgentSessionManager:
             "what": "",
             "data_schema": data_schema,
         })
-        print(f"[agent_debug] clarification response: {clar_data}")
+        print(f"[agent_debug][clarification] clarification response: {clar_data}")
         clar_list = clar_data.get("clarifications", [])
         self._expected_terms = [c.get("term") for c in clar_list if c.get("term")]
         yield {"event": "clarification", "clarifications": clar_list}
@@ -214,9 +214,9 @@ class AgentSessionManager:
         # Wait for clarifications if needed
         answers = {}
         if self._expected_terms:
-            print(f"[agent_debug] Waiting for user clarification answers...")
+            print(f"[agent_debug][clarification] Waiting for user clarification answers...")
             answers = await self._wait_for_clarification()
-        print(f"[agent_debug] Received clarification answers: {answers}")
+        print(f"[agent_debug][clarification] Received clarification answers: {answers}")
 
         # ---------------- CSV discovery (once) ----------------
         csv_files: list[str] = []
@@ -234,7 +234,7 @@ class AgentSessionManager:
         context_lines: list[str] = []
         MAX_STEPS = 12
 
-        for _ in range(MAX_STEPS):
+        for step_idx in range(MAX_STEPS):
             # Build 'notebook context' from actual cell contents
             recent_ctx = "\n\n".join(notebook_cells[-20:])
             # Append recent execution/insight summaries (including errors) to context
@@ -244,23 +244,25 @@ class AgentSessionManager:
                 recent_lines = context_lines[-10:]
                 full_ctx += "\n\n" + "\n".join(recent_lines)
             # DEBUG: show combined context passed to next-step chain
-            print(f"[agent_debug] FSM recent_ctx: {recent_ctx[:500]!r}")
-            print(f"[agent_debug] FSM context_lines: {context_lines[-10:]!r}")
-            print(f"[agent_debug] FSM full_ctx: {full_ctx[:500]!r}")
+            print(f"[agent_debug][context] FSM step {step_idx}: recent_ctx: {recent_ctx[:500]!r}")
+            print(f"[agent_debug][context] FSM step {step_idx}: context_lines: {context_lines[-10:]!r}")
+            print(f"[agent_debug][context] FSM step {step_idx}: full_ctx: {full_ctx[:500]!r}")
+            # Log notebook_blocks for deduplication
+            print(f"[agent_debug][dedup] FSM step {step_idx}: notebook_blocks (summarized):")
+            # TODO: If you have a notebook_blocks summary, print it here
+            # (This is handled on the frontend, but you can log the context here if available)
             # Invoke LLM for the next step using combined context
-            step = self._next_step_chain.invoke(
-                {
-                    "question": request.question,
-                    "why": "",
-                    "what": "",
-                    "context": full_ctx,
-                    "table_info": table_info or "",
-                    "data_schema": data_schema,
-                }
-            )
+            step = self._next_step_chain({
+                "question": request.question,
+                "why": "",
+                "what": "",
+                "context": full_ctx,
+                "table_info": table_info or "",
+                "data_schema": data_schema,
+            })
 
             ev = step
-            print("[agent_debug] next step:", ev)
+            print(f"[agent_debug][llm_output] FSM step {step_idx}: next step: {ev}")
 
             if ev.get("event") == "done":
                 yield {"event": "session_completed", "message": "Agent session completed."}
@@ -276,39 +278,89 @@ class AgentSessionManager:
 
             # --- PATCH: Normalize yAxes for visualizationV2 blocks ---
             def normalize_yaxes(yaxes):
+                """Return a *stable* normalized yAxes structure.
+
+                The previous implementation generated fresh UUID4 values for
+                every axis and series on each call.  That made otherwise-
+                identical visualization configs look different which, in
+                turn, defeated deduplication logic and confused the
+                front-end (it disposed an ECharts instance and created a new
+                one with a slightly different shape, sometimes missing the
+                expected xAxis).
+
+                We now generate deterministic UUID5 values based on the
+                semantic content (column, aggregate function, groupBy, …).
+                If a caller already provided ids we keep them as-is to avoid
+                breaking persisted documents.
+                """
+
                 import uuid
+
+                def _stable_uuid(*parts: str) -> str:
+                    """Return a stable UUID5 derived from the given parts."""
+                    seed = "|".join(parts)
+                    # Using NAMESPACE_DNS gives a constant namespace while
+                    # still producing a real UUID object.
+                    return str(uuid.uuid5(uuid.NAMESPACE_DNS, seed))
+
                 def ensure_series_fields(s):
+                    # Normalise field aliases first
+                    column = s.get("column") or s.get("field")
+                    aggregate_fn = s.get("aggregateFunction", "sum")
+                    group_by = s.get("groupBy", "") or ""
+
+                    # Preserve an existing id or generate a stable one
+                    sid = s.get("id") or _stable_uuid(column or "", aggregate_fn, str(group_by))
+
                     return {
-                        'id': s.get('id', str(uuid.uuid4())),
-                        'column': s.get('column') or s.get('field'),
-                        'aggregateFunction': s.get('aggregateFunction', 'sum'),
-                        'groupBy': s.get('groupBy', None),
-                        'chartType': s.get('chartType', None),
-                        'name': s.get('name', None),
-                        'color': s.get('color', None),
-                        'groups': s.get('groups', None),
-                        'dateFormat': s.get('dateFormat', None),
-                        'numberFormat': s.get('numberFormat', None),
+                        "id": sid,
+                        "column": column,
+                        "aggregateFunction": aggregate_fn,
+                        "groupBy": group_by if group_by else None,
+                        "chartType": s.get("chartType", None),
+                        "name": s.get("name", None),
+                        "color": s.get("color", None),
+                        "groups": s.get("groups", None),
+                        "dateFormat": s.get("dateFormat", None),
+                        "numberFormat": s.get("numberFormat", None),
                     }
+
                 normalized = []
-                for idx, y in enumerate(yaxes):
-                    if isinstance(y, dict) and 'series' in y and isinstance(y['series'], list):
-                        y['series'] = [ensure_series_fields(s) for s in y['series']]
-                        normalized.append(y)
+
+                for y in yaxes:
+                    # The axis may already be in full form -> normalise series ids
+                    if isinstance(y, dict) and "series" in y and isinstance(y["series"], list):
+                        y_series = [ensure_series_fields(s) for s in y["series"]]
+
+                        # Derive a stable axis id from the ordered series ids
+                        axis_id = y.get("id") or _stable_uuid(*(s["id"] for s in y_series))
+
+                        normalized.append({
+                            **{k: v for k, v in y.items() if k != "series" and k != "id" and k != "name"},
+                            "id": axis_id,
+                            "name": y.get("name", None),
+                            "series": y_series,
+                        })
                         continue
+
+                    # Shorthand forms --------------------------------------------------
                     if isinstance(y, str):
-                        series = [ensure_series_fields({'column': y})]
-                    elif isinstance(y, dict) and ('column' in y or 'field' in y):
-                        series = [ensure_series_fields(y)]
+                        series_list = [ensure_series_fields({"column": y})]
+                    elif isinstance(y, dict) and ("column" in y or "field" in y):
+                        series_list = [ensure_series_fields(y)]
                     elif isinstance(y, list):
-                        series = [ensure_series_fields(s) for s in y]
+                        series_list = [ensure_series_fields(s) for s in y]
                     else:
-                        series = []
+                        series_list = []
+
+                    axis_id = _stable_uuid(*(s["id"] for s in series_list)) if series_list else _stable_uuid("empty")
+
                     normalized.append({
-                        'id': str(uuid.uuid4()),
-                        'name': None,
-                        'series': series
+                        "id": axis_id,
+                        "name": None,
+                        "series": series_list,
                     })
+
                 return normalized
 
             if (
@@ -318,8 +370,189 @@ class AgentSessionManager:
                 and isinstance(ev.get("input"), dict)
                 and "yAxes" in ev["input"]
             ):
+                # Log axis mapping before normalization
+                print(f"[agent_debug][axis] FSM step {step_idx}: visualizationV2 input before normalization: {ev['input']}")
                 ev["input"]["yAxes"] = normalize_yaxes(ev["input"]["yAxes"])
-                print("[agent_debug] visualizationV2 yAxes payload:", ev["input"]["yAxes"])
+                print(f"[agent_debug][axis] FSM step {step_idx}: visualizationV2 yAxes after normalization: {ev['input']['yAxes']}")
+
+                # ----------------------------------------------------
+                #   Deduplicate identical visualization blocks
+                # ----------------------------------------------------
+                if not hasattr(self, "_seen_viz_signatures"):
+                    self._seen_viz_signatures: set[str] = set()
+
+                def _strip_ids(obj):
+                    """Return a copy of *obj* without volatile keys (id, name, color)."""
+                    if isinstance(obj, dict):
+                        return {k: _strip_ids(v) for k, v in obj.items() if k not in ("id", "name", "color")}
+                    if isinstance(obj, list):
+                        return [_strip_ids(x) for x in obj]
+                    return obj
+
+                import json as _json
+
+                signature = _json.dumps(_strip_ids(ev["input"]), sort_keys=True)
+
+                if signature in self._seen_viz_signatures:
+                    # Skip emitting this duplicate block, but still allow the
+                    # FSM to continue with next iterations.
+                    print(
+                        f"[agent_debug][dedup][viz] FSM step {step_idx}: duplicate visualizationV2 block suppressed"
+                    )
+                    continue  # Skip yielding
+
+                self._seen_viz_signatures.add(signature)
+                # ----------------------------------------------------
+                # Axis sanity-check – make sure there is a *different*
+                # column on the X axis than what we are plotting on Y.
+                # If the agent omitted the xAxis or accidentally picked
+                # the same numeric column (Global_Sales vs Global_Sales)
+                # we try to auto-fix it so charts remain readable.
+                # ----------------------------------------------------
+
+                chart_type = ev["input"].get("chartType")
+                x_axis = ev["input"].get("xAxis")
+                df_name = ev["input"].get("dataframeName")
+                data_schema_obj = None
+                try:
+                    data_schema_obj = json.loads(data_schema)
+                except Exception:
+                    data_schema_obj = None
+                # Apply validation to *all* discrete-x charts.  Line charts
+                # can live with a numeric x-axis (e.g. Year) but if it is
+                # the exact same column as Y (Global_Sales) we still fix.
+
+                ALL_CHARTS_CHECK = [
+                    "bar",
+                    "groupedColumn",
+                    "stackedColumn",
+                    "line",
+                    "area",
+                    "scatter",
+                ]
+
+                if chart_type in ALL_CHARTS_CHECK:
+                    # Helper: get columns for this dataframe
+                    import pandas as _pd
+                    _pandas = _pd  # alias for type inspection convenience
+
+                    def get_columns_for_df(df_name, data_schema_obj):
+                        """Return list of columns for a given dataframe name.
+
+                        1. If the dataframe exists in the live python globals
+                           (created earlier in this session) inspect it
+                           directly – this covers derived dataframes like
+                           *sales_by_genre* that do not appear in the schema.
+                        2. Otherwise fall back to the original file schema we
+                           sent to the LLM (files entry in data_schema).
+                        """
+
+                        # 1️⃣  inspect live pandas dataframe
+                        if df_name and df_name in self._py_globals:
+                            obj = self._py_globals[df_name]
+                            if isinstance(obj, _pd.DataFrame):
+                                return obj  # return dataframe itself for rich inspection
+
+                        # 2️⃣  fall back to schema for original CSV files
+                        if not data_schema_obj or "files" not in data_schema_obj:
+                            return []
+                        for f in data_schema_obj["files"]:
+                            if (
+                                f.get("name") == df_name or
+                                (df_name and df_name in f.get("name", ""))
+                            ):
+                                return f.get("columns", [])
+                        return []
+                    # Determine if x_axis is missing or numeric
+                    x_type = x_axis.get("type") if isinstance(x_axis, dict) else None
+                    y_first_col = None
+                    if ev["input"].get("yAxes"):
+                        try:
+                            y_first_col = ev["input"]["yAxes"][0]["series"][0]["column"]
+                        except Exception:
+                            pass
+
+                    is_numeric_axis = isinstance(x_type, str) and (
+                        x_type.startswith("int") or x_type.startswith("float") or x_type == "number"
+                    )
+
+                    # For bar / column charts we require categorical (non-numeric)
+                    requires_categorical = chart_type in [
+                        "bar",
+                        "groupedColumn",
+                        "stackedColumn",
+                    ]
+
+                    is_invalid = (
+                        not x_axis or  # missing completely
+                        (isinstance(x_axis, dict) and not x_axis.get("field")) or  # missing field key
+                        (y_first_col and isinstance(x_axis, dict) and x_axis.get("field") == y_first_col) or  # same as y
+                        (requires_categorical and is_numeric_axis)
+                    )
+                    if is_invalid:
+                        # Try to find a categorical column
+                        columns = get_columns_for_df(df_name, data_schema_obj)
+                        # If columns are dicts, get type; if strings, skip
+                        # We'll assume columns are list of dicts with 'name' and 'type', or just names
+                        cat_col = None
+                        df_ref = None
+                        if isinstance(columns, _pd.DataFrame):
+                            df_ref = columns
+                            col_iter = list(df_ref.columns)
+                        else:
+                            col_iter = columns
+
+                        for col in col_iter:
+                            col_name = col["name"] if isinstance(col, dict) else col
+
+                            if not col_name or col_name == y_first_col:
+                                continue
+
+                            # If we have dtype info (from live df or schema) and
+                            # it is numeric, skip – we want categorical.
+                            is_numeric = False
+                            if df_ref is not None:
+                                try:
+                                    is_numeric = _pandas.api.types.is_numeric_dtype(
+                                        df_ref[col_name]
+                                    )
+                                except Exception:
+                                    pass
+                            elif isinstance(col, dict):
+                                col_type = str(col.get("type", "")).lower()
+                                is_numeric = any(
+                                    tok in col_type for tok in ("int", "float", "number")
+                                )
+
+                            if is_numeric:
+                                continue
+
+                            cat_col = {"name": col_name, "type": "str"}
+                            break
+                        if cat_col:
+                            # Patch the xAxis to the first categorical column
+                            ev["input"]["xAxis"] = {
+                                "field": cat_col["name"],
+                                "name": cat_col["name"],
+                                "type": cat_col.get("type", "str"),
+                            }
+                            print(f"[agent_debug][axis][FIXED] FSM step {step_idx}: Patched invalid xAxis for {chart_type} to categorical column: {ev['input']['xAxis']}")
+                    else:
+                        # No valid categorical column, skip block creation and yield insight
+                        msg = (
+                            f"Cannot create {chart_type} chart: could not find a suitable categorical x-axis "
+                            f"for dataframe '{df_name}'."
+                        )
+                        print(f"[agent_debug][axis][ERROR] FSM step {step_idx}: {msg}")
+                        yield {
+                            "event": "action",
+                            "action": "insight",
+                            "blockType": "",
+                            "content": msg,
+                            "summary": msg,
+                            "table_info": table_info,
+                        }
+                        continue  # Skip yielding the invalid block
 
             yield ev
 

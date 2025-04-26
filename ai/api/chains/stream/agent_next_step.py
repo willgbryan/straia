@@ -18,15 +18,25 @@ What: {what}
 Current notebook blocks (JSON list, most recent last):
 Each block is an object with at least a 'type' field. For visualizations, you will see: {{ type, chartType, dataframe, xAxis, yAxes, title }}. For code, you will see: {{ type, firstLine }}.
 
+IMPORTANT: For code (python/sql) blocks, you may also see an 'output' object with structured information:
+  - columns: array of column names (e.g., ["Year", "Global_Sales"])
+  - rows: up to 3 sample rows (array of objects)
+  - variable: the DataFrame variable name if assigned (e.g., 'sales_by_year')
+Use this output to inform your next step—especially when planning visualizations or further analysis. For example, if a previous block outputs a DataFrame with columns ['Year', 'Global_Sales'], you can use those columns for chart axes or further calculations. Always use the actual columns and variable names from previous blocks when planning the next step.
+
 Example notebook_blocks:
 [
   {{"type": "visualizationV2", "chartType": "line", "dataframe": "sales_by_year", "xAxis": {{"field": "Year"}}, "yAxes": [{{"field": "Sales"}}], "title": "Sales by Year"}},
-  {{"type": "python", "firstLine": "import pandas as pd"}}
+  {{"type": "python", "firstLine": "sales_by_year = last_5_years_df.groupby('Year')['Global_Sales'].sum().reset_index()", "output": {{"columns": ["Year", "Global_Sales"], "rows": [{{"Year": 2016, "Global_Sales": 49.76}}, {{"Year": 2017, "Global_Sales": 0.04}}], "variable": "sales_by_year"}}}}
 ]
 
-IMPORTANT: Before using a dataframe or table in a visualization or analysis step, check if it is already present in notebook_blocks (look for a Python block that loads or creates the dataframe, or a visualization that uses it). If the dataframe is not present, first create a Python block to load the data (e.g., with pd.read_csv('filename.csv')). Only proceed to analysis or visualization after the data is loaded in the notebook.
+IMPORTANT: Before using a dataframe or table in a visualization or analysis step, check if it is already present in notebook_blocks (look for a Python block that loads or creates the dataframe, or a visualization that uses it). If the dataframe is not present, first create a Python block to load or create the data (e.g., with pd.read_csv('filename.csv')). Only proceed to analysis or visualization after the data is loaded in the notebook.
+
+IMPORTANT: When planning a visualization, always use the actual columns and variable names from the most recent relevant python/sql block's output. For example, if you want to plot a line chart of sales by year, use the variable and columns from the latest block that created or loaded that data.
 
 IMPORTANT: Before proposing a new block, check notebook_blocks. Do NOT create a block (especially a visualization or code block) if a block with the same type and key properties (e.g., chartType, dataframe, axes, or content) already exists. Only create new blocks that add new value or move the analysis forward.
+
+IMPORTANT: When creating a grouped, stacked, bar, or column chart (e.g., groupedColumn, stackedColumn, bar), the xAxis must be a categorical column (such as 'Genre', 'Platform', or another string/object type column), and the yAxis must be a numeric column (such as 'Global_Sales', 'Sales', or any column with numeric values). Never use a numeric column as the xAxis for these chart types. Never use the same column for both xAxis and yAxis. Never output xAxis: undefined. Always select valid, distinct columns for x and y axes based on the DataFrame's columns.
 
 If a visualization with the same dataframe, chartType, xAxis, and yAxes already exists in notebook_blocks, do NOT create another one. Only create a new visualization if it is different in at least one of these properties.
 
@@ -73,4 +83,9 @@ def create_next_step_chain(llm):
         template=template,
         input_variables=["question", "why", "what", "notebook_blocks", "context", "table_info"],
     )
-    return prompt | llm | SimpleJsonOutputParser()
+    def log_and_run(inputs):
+        print(f"[agent_debug][prompt_input] agent_next_step prompt input: {inputs}")
+        result = (prompt | llm | SimpleJsonOutputParser()).invoke(inputs)
+        print(f"[agent_debug][prompt_output] agent_next_step LLM output: {result}")
+        return result
+    return log_and_run
