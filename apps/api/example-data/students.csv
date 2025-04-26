@@ -1,0 +1,11 @@
+student_id,first_name,last_name,first_gen,parent_bachelors,first_gen_flag,institutional_first_gen,commuter_status,residence,zip_code,credits_enrolled
+1001,Alice,Nguyen,TRUE,FALSE,TRUE,FALSE,Hybrid,Off-Campus,02134,15
+1002,Bob,Smith,FALSE,TRUE,FALSE,FALSE,Hybrid,On-Campus,02139,12
+1003,Carla,Lopez,TRUE,FALSE,TRUE,TRUE,Hybrid,Off-Campus,02140,9
+1004,David,Kim,FALSE,TRUE,FALSE,FALSE,ZIP,Off-Campus,02141,12
+1005,Emily,Patel,TRUE,FALSE,TRUE,FALSE,Residence,On-Campus,02142,18
+1006,Frank,Garcia,TRUE,FALSE,TRUE,TRUE,Hybrid,Off-Campus,02143,6
+1007,Grace,Lee,FALSE,TRUE,FALSE,FALSE,ZIP,Off-Campus,02144,12
+1008,Hannah,Chen,TRUE,FALSE,TRUE,FALSE,Hybrid,Off-Campus,02145,15
+1009,Ian,Martinez,FALSE,TRUE,FALSE,FALSE,Residence,On-Campus,02146,15
+1010,Julia,White,TRUE,FALSE,TRUE,TRUE,Hybrid,Off-Campus,02147,12 

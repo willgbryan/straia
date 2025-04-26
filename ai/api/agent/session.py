@@ -265,6 +265,11 @@ class AgentSessionManager:
             # (This is handled on the frontend, but you can log the context here if available)
             # Invoke LLM for the next step using combined context
             # Call next-step chain, include structured notebook_blocks history
+            # DEBUG: show notebook_blocks payload
+            try:
+                print(f"[agent_debug] Sending notebook_blocks to LLM: {json.dumps(self._notebook_blocks)}")
+            except Exception:
+                print(f"[agent_debug] Sending notebook_blocks to LLM: {self._notebook_blocks}")
             step = self._next_step_chain({
                 "question": request.question,
                 "why": "",

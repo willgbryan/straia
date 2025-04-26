@@ -8,6 +8,7 @@ import { ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
 import { getAgentNotebookBlocks } from '@/utils/agentNotebookBlocks'
 import * as Y from 'yjs'
 import { YBlock } from '@briefer/editor'
+import { LightBulbIcon, Cog6ToothIcon, CheckCircleIcon, ExclamationCircleIcon, UserCircleIcon, SparklesIcon } from '@heroicons/react/24/outline'
 
 interface Props {
   workspaceId: string
@@ -32,6 +33,41 @@ type ChatMessage =
       question: string
       options: { label: string; value: string; tooltip?: string }[]
     }
+
+// Helper: get icon and label for event type (compact)
+function getBubbleMeta(type: string, status?: string) {
+  if (type === 'action') return { icon: <Cog6ToothIcon className="w-4 h-4 text-indigo-400 mr-1" />, label: 'Action' }
+  if (type === 'execution_result') {
+    if (status === 'error') return { icon: <ExclamationCircleIcon className="w-4 h-4 text-red-400 mr-1" />, label: 'Error' }
+    return { icon: <CheckCircleIcon className="w-4 h-4 text-green-400 mr-1" />, label: 'Result' }
+  }
+  if (type === 'insight') return { icon: <LightBulbIcon className="w-4 h-4 text-yellow-400 mr-1" />, label: 'Insight' }
+  if (type === 'clarification') return { icon: <SparklesIcon className="w-4 h-4 text-indigo-300 mr-1" />, label: 'Clarification' }
+  return { icon: null, label: '' }
+}
+
+// Group agent events per user turn, group actions/results into a single analysis bubble, keep last insight per turn
+function groupAgentEvents(messages: ChatMessage[]) {
+  const groups: any[] = []
+  let currentGroup: any = null
+  messages.forEach((msg, idx) => {
+    if (msg.role === 'user') {
+      if (currentGroup) groups.push(currentGroup)
+      currentGroup = { user: msg, clarifications: [], analysis: [], insight: null }
+    } else {
+      if (!currentGroup) currentGroup = { user: null, clarifications: [], analysis: [], insight: null }
+      if (msg.role === 'assistant_clarify') {
+        currentGroup.clarifications.push(msg)
+      } else if (msg.role === 'assistant' && msg.summary) {
+        currentGroup.insight = msg
+      } else if (msg.role === 'assistant') {
+        currentGroup.analysis.push(msg)
+      }
+    }
+  })
+  if (currentGroup) groups.push(currentGroup)
+  return groups
+}
 
 export default function AgentSidebar({
   workspaceId,
@@ -290,6 +326,10 @@ export default function AgentSidebar({
     }
   }, [messages, streamingMessage])
 
+  // New: Grouped agent/user turns
+  const groupedTurns = useMemo(() => groupAgentEvents(messages), [messages])
+  const [expandedAnalysisIdx, setExpandedAnalysisIdx] = useState<number | null>(null)
+
   return (
     <Transition
       show={visible}
@@ -321,83 +361,30 @@ export default function AgentSidebar({
 
           {/* Messages */}
           <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-4 py-2 space-y-4 min-h-0">
-            {messages.map((msg, idx) => {
-              if (msg.role === 'assistant') {
-                const hasDetails = msg.details && (msg.details.reasoning || msg.details.sql || msg.details.chart)
-                const expanded = expandedIdx === idx
-                return (
-                  <div key={idx} className="flex flex-col space-y-1">
-                    <span className="text-xs text-gray-400 flex items-center gap-x-1">
-                      Assistant
-                    </span>
-                    <div className="flex">
-                      <div className="bg-gray-100 text-gray-900 p-2 rounded-lg text-sm max-w-[85%] w-full">
-                        {/* Summary always visible */}
-                        <div>{msg.summary || msg.content}</div>
-                        {/* Toggle for details if present */}
-                        {hasDetails && (
-                          <button
-                            className="mt-2 text-xs text-indigo-600 underline hover:text-indigo-800 focus:outline-none"
-                            onClick={() => setExpandedIdx(expanded ? null : idx)}
-                          >
-                            {expanded ? 'Hide details' : 'Show details'}
-                          </button>
-                        )}
-                        {/* Details section */}
-                        {hasDetails && expanded && msg.details && (
-                          <div className="mt-2 space-y-2">
-                            {msg.details.reasoning && (
-                              <div>
-                                <div className="font-semibold text-xs text-gray-500 mb-1">Reasoning</div>
-                                <div className="bg-white border border-gray-200 rounded p-2 text-xs whitespace-pre-line">{msg.details.reasoning}</div>
-                              </div>
-                            )}
-                            {msg.details.sql && (
-                              <div>
-                                <div className="font-semibold text-xs text-gray-500 mb-1">SQL</div>
-                                <pre className="bg-gray-900 text-green-200 rounded p-2 text-xs overflow-x-auto"><code>{msg.details.sql}</code></pre>
-                              </div>
-                            )}
-                            {msg.details.chart && (
-                              <div>
-                                <div className="font-semibold text-xs text-gray-500 mb-1">Chart</div>
-                                <div className="bg-gray-50 border border-gray-200 rounded p-2 text-xs">[Chart output placeholder]</div>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
+            {groupedTurns.map((turn, turnIdx) => (
+              <div key={turnIdx} className="flex flex-col space-y-1 pb-2">
+                {/* User bubble */}
+                {turn.user && (
+                  <div className="flex items-end gap-x-2">
+                    <UserCircleIcon className="w-5 h-5 text-indigo-300" />
+                    <div className="bg-indigo-100 text-indigo-900 p-1.5 rounded-lg text-sm max-w-[85%]">
+                      {turn.user.content}
                     </div>
                   </div>
-                )
-              }
-              if (msg.role === 'user') {
-                return (
-                  <div key={idx} className="flex flex-col items-end space-y-1">
-                    <span className="text-xs text-gray-400">You</span>
-                    <div className="flex justify-end">
-                      <div className="bg-indigo-500 text-white p-2 rounded-lg text-sm max-w-[85%]">
-                        {msg.content}
-                      </div>
-                    </div>
-                  </div>
-                )
-              }
-              // assistant clarification with options
-              if (msg.role === 'assistant_clarify') {
-                const selected = answeredClarifications[msg.term]
-                // For all clarifications, show quick-reply buttons if options exist
-                if (msg.options && msg.options.length > 0 && !selected) {
-                  return (
-                    <div key={idx} className="flex flex-col space-y-1">
-                      <span className="text-xs text-gray-400 flex items-center gap-x-1">
-                        Assistant
-                      </span>
-                      <div className="flex">
-                        <div className="bg-gray-100 p-2 rounded-lg text-sm max-w-[85%] space-y-2">
-                          <p>{msg.question}</p>
-                          <div className="flex flex-col space-y-1">
-                            {msg.options.map((opt, j) => (
+                )}
+                {/* Clarification bubbles */}
+                {turn.clarifications.map((msg: any, idx: number) => {
+                  const selected = answeredClarifications[msg.term]
+                  const { icon, label } = getBubbleMeta('clarification')
+                  if (msg.options && msg.options.length > 0 && !selected) {
+                    return (
+                      <div key={idx} className="flex items-start gap-x-1 bg-gray-100 p-1.5 rounded-lg text-sm max-w-[85%]">
+                        {icon}
+                        <div>
+                          <div className="font-semibold text-xs text-gray-500 mb-0.5">{label}</div>
+                          <div>{msg.question}</div>
+                          <div className="flex flex-col space-y-1 mt-1">
+                            {msg.options.map((opt: any, j: number) => (
                               <button
                                 key={j}
                                 className={`text-left border border-indigo-500 rounded px-2 py-1 hover:bg-indigo-50 ${selected === (opt.value ?? opt.label)
@@ -412,41 +399,123 @@ export default function AgentSidebar({
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )
-                }
-                // For all clarifications, if already answered, show the answer
-                if (selected) {
-                  return (
-                    <div key={idx} className="flex flex-col space-y-1">
-                      <span className="text-xs text-gray-400 flex items-center gap-x-1">
-                        Assistant
-                      </span>
-                      <div className="flex">
-                        <div className="bg-gray-100 p-2 rounded-lg text-sm max-w-[85%] space-y-2">
-                          <p>{msg.question}</p>
+                    )
+                  }
+                  // Already answered
+                  if (selected) {
+                    return (
+                      <div key={idx} className="flex items-start gap-x-1 bg-gray-100 p-1.5 rounded-lg text-sm max-w-[85%]">
+                        {icon}
+                        <div>
+                          <div className="font-semibold text-xs text-gray-500 mb-0.5">{label}</div>
+                          <div>{msg.question}</div>
                         </div>
                       </div>
-                    </div>
-                  )
-                }
-                // For clarifications with no options and not yet answered, just show the question (input is at bottom)
-                return (
-                  <div key={idx} className="flex flex-col space-y-1">
-                    <span className="text-xs text-gray-400 flex items-center gap-x-1">
-                      Assistant
-                    </span>
-                    <div className="flex">
-                      <div className="bg-gray-100 p-2 rounded-lg text-sm max-w-[85%] space-y-2">
-                        <p>{msg.question}</p>
+                    )
+                  }
+                  // Free text clarification
+                  return (
+                    <div key={idx} className="flex items-start gap-x-1 bg-gray-100 p-1.5 rounded-lg text-sm max-w-[85%]">
+                      {icon}
+                      <div>
+                        <div className="font-semibold text-xs text-gray-500 mb-0.5">{label}</div>
+                        <div>{msg.question}</div>
                       </div>
                     </div>
+                  )
+                })}
+                {/* Analysis bubble (grouped actions/results) */}
+                {turn.analysis && turn.analysis.length > 0 && (
+                  <div className="flex items-start gap-x-1 bg-indigo-50 p-1.5 rounded-lg text-sm max-w-[85%]">
+                    <Cog6ToothIcon className="w-4 h-4 text-indigo-400 mr-1 mt-0.5" />
+                    <div className="flex-1">
+                      <div className="font-semibold text-xs text-indigo-700 mb-0.5">Analysis</div>
+                      <button
+                        className="text-xs text-indigo-600 underline hover:text-indigo-800 focus:outline-none mb-1"
+                        onClick={() => setExpandedAnalysisIdx(expandedAnalysisIdx === turnIdx ? null : turnIdx)}
+                      >
+                        {expandedAnalysisIdx === turnIdx ? 'Hide steps' : 'Show steps'}
+                      </button>
+                      {/* Collapsed summary: show last action/result, or 'Analysis in progress...' */}
+                      {expandedAnalysisIdx !== turnIdx && (
+                        <div className="text-xs text-gray-700">
+                          {turn.analysis && turn.analysis.length > 0 ? (turn.analysis[turn.analysis.length - 1]?.content) : 'Analysis in progress...'}
+                        </div>
+                      )}
+                      {/* Expanded: show all steps */}
+                      {expandedAnalysisIdx === turnIdx && (
+                        <div className="flex flex-col gap-y-1 mt-1">
+                          {turn.analysis.map((msg: any, idx: number) => {
+                            // Action/Result/Error
+                            let type = 'action', status
+                            if (msg.content && msg.content.toLowerCase().includes('executed successfully')) type = 'execution_result', status = 'ok'
+                            if (msg.content && msg.content.toLowerCase().includes('error')) type = 'execution_result', status = 'error'
+                            const { icon, label } = getBubbleMeta(type, status)
+                            return (
+                              <div key={idx} className="flex items-start gap-x-1">
+                                {icon}
+                                <div>
+                                  <div className="font-semibold text-xs text-gray-500 mb-0.5">{label}</div>
+                                  <div>{msg.content}</div>
+                                </div>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                )
-              }
-              return null
-            })}
-            {/* Streaming/typing indicator and streaming message bubble */}
+                )}
+                {/* Insight bubble */}
+                {turn.insight && (
+                  <div className="flex items-start gap-x-1 bg-gray-100 p-1.5 rounded-lg text-sm max-w-[85%]">
+                    <LightBulbIcon className="w-4 h-4 text-yellow-400 mr-1" />
+                    <div className="flex-1">
+                      <div className="font-semibold text-xs text-gray-500 mb-0.5">Insight</div>
+                      <div>{turn.insight.summary || turn.insight.content}</div>
+                      {turn.insight.details && (turn.insight.details.reasoning || turn.insight.details.sql || turn.insight.details.chart) && (
+                        <button
+                          className="mt-1 text-xs text-indigo-600 underline hover:text-indigo-800 focus:outline-none"
+                          onClick={() => setExpandedIdx(expandedIdx === turnIdx ? null : turnIdx)}
+                        >
+                          {expandedIdx === turnIdx ? 'Hide details' : 'Show details'}
+                        </button>
+                      )}
+                      {turn.insight.details && expandedIdx === turnIdx && (
+                        <div className="mt-1 space-y-1">
+                          {turn.insight.details.reasoning && (
+                            <div>
+                              <div className="font-semibold text-xs text-gray-500 mb-0.5">Reasoning</div>
+                              <div className="bg-white border border-gray-200 rounded p-1 text-xs whitespace-pre-line">{turn.insight.details.reasoning}</div>
+                            </div>
+                          )}
+                          {turn.insight.details.sql && (
+                            <div>
+                              <div className="font-semibold text-xs text-gray-500 mb-0.5">SQL</div>
+                              <pre className="bg-gray-900 text-green-200 rounded p-1 text-xs overflow-x-auto"><code>{turn.insight.details.sql}</code></pre>
+                            </div>
+                          )}
+                          {turn.insight.details.chart && (
+                            <div>
+                              <div className="font-semibold text-xs text-gray-500 mb-0.5">Chart</div>
+                              <div className="bg-gray-50 border border-gray-200 rounded p-1 text-xs">[Chart output placeholder]</div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+                {/* Thinking indicator (if last agent turn and isStreaming) */}
+                {turnIdx === groupedTurns.length - 1 && isStreaming && (
+                  <div className="flex items-start gap-x-1 bg-gray-50 p-1.5 rounded-lg text-sm max-w-[85%] animate-pulse">
+                    <SparklesIcon className="w-4 h-4 text-indigo-300 mr-1" />
+                    <div className="font-semibold text-xs text-gray-500 mb-0.5">Assistant is thinking…</div>
+                  </div>
+                )}
+              </div>
+            ))}
+            {/* Streaming/typing indicator and streaming message bubble (legacy, fallback) */}
             {isStreaming && streamingMessage !== null && (
               <div className="flex flex-col space-y-1">
                 <span className="text-xs text-gray-400 flex items-center gap-x-1">

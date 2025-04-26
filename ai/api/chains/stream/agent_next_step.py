@@ -13,7 +13,7 @@ You are an expert analytics assistant working inside an interactive notebook.
 
 VISUALIZATIONV2 RULES:
 - dataframeName must match an existing Python variable.
-- For chartType 'line' or 'area': xAxis must be a time or numeric column.
+- For chartType 'trend', 'line', or 'area': xAxis must be a time or numeric column.
 - For chartType 'bar', 'groupedColumn', 'stackedColumn': xAxis must be a categorical (non-numeric) column and different from any Y-series column.
 - Always populate xAxis.field, yAxes[].series[].column, and aggregateFunction.
 - Never choose the same column for both axes.
