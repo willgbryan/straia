@@ -91,7 +91,7 @@ export const OnboardingTutorial = () => {
 
   return (
     <Tutorial
-      name={'Welcome to Briefer'}
+      name={'Welcome to Straia'}
       onAdvanceTutorial={advanceTutorial}
       totalSteps={Object.values(tutorialState.stepStates).length}
       completedSteps={
@@ -372,7 +372,7 @@ export const Tutorial = (props: TutorialProps) => {
         )}
       >
         <div className="text-sm flex gap-x-2 items-center">
-          <span className="text-gray-600 font-medium ">Welcome to Briefer</span>
+          <span className="text-gray-600 font-medium ">Welcome to Straia</span>
           <button
             className="text-gray-400 text-xs font-medium inline-block"
             onClick={props.onAdvanceTutorial}

@@ -11,11 +11,19 @@ from langchain.output_parsers.json import SimpleJsonOutputParser
 template = """
 You are an expert analytics assistant working inside an interactive notebook.
 
+VISUALIZATIONV2 RULES:
+- dataframeName must match an existing Python variable.
+- For chartType 'line' or 'area': xAxis must be a time or numeric column.
+- For chartType 'bar', 'groupedColumn', 'stackedColumn': xAxis must be a categorical (non-numeric) column and different from any Y-series column.
+- Always populate xAxis.field, yAxes[].series[].column, and aggregateFunction.
+- Never choose the same column for both axes.
+
 User question: {question}
 Why: {why}
 What: {what}
 
 Current notebook blocks (JSON list, most recent last):
+{notebook_blocks}
 Each block is an object with at least a 'type' field. For visualizations, you will see: {{ type, chartType, dataframe, xAxis, yAxes, title }}. For code, you will see: {{ type, firstLine }}.
 
 IMPORTANT: For code (python/sql) blocks, you may also see an 'output' object with structured information:
@@ -46,6 +54,9 @@ Previous context (what has already happened):
 Table information / available CSV files (if any):
 {table_info}
 
+Derived dataframe schemas (variables and columns):
+{data_schema}
+
 IMPORTANT: For loading and preprocessing CSV files, prefer Python blocks (use blockType "python" with pandas, e.g. pd.read_csv). Use SQL blocks (blockType "sql") only when querying an existing database datasource.
 For any plotting or charting tasks, never propose Python plotting code (e.g., matplotlib); always use blockType "visualizationV2" with a structured `input` object specifying the dataframe, axes, and chartType (do NOT emit matplotlib code).
 
@@ -64,8 +75,24 @@ If you create a block provide:
   content   : string payload (python code, SQL text, or Vega-Lite JSON spec for visualization blocks)
   input     : JSON object for visualizationV2 blocks with keys dataframeName, chartType, xAxis, yAxes, etc.
 
+# --- UPDATE: For insight events ---
+If you choose event: "insight", your JSON output SHOULD include:
+  - summary: a short, plain-language summary of the insight (required)
+  - reasoning: (optional) a detailed explanation of how you arrived at the insight, or your thought process
+  - sql: (optional) the SQL query (if relevant to the insight)
+  - chart: (optional) a chart spec or description (if relevant)
+
+Example:
+{{
+  "event": "insight",
+  "summary": "Sales increased 20% year-over-year.",
+  "reasoning": "I compared the total sales for each year and found a 20% increase from 2021 to 2022.",
+  "sql": "SELECT year, SUM(sales) FROM ... GROUP BY year",
+  "chart": {{"type": "bar", "data": ...}}
+}}
+
 Return a JSON object with keys:
-  event      – "action" or "done"
+  event      – "action", "insight", or "done"
   action     – if event=="action", set to "create_block"
   blockType  – one of "python", "sql", "visualizationV2"
   content    – string payload:
@@ -73,6 +100,9 @@ Return a JSON object with keys:
                   * SQL text for sql blocks
                   * Vega-Lite JSON spec for visualization blocks
   summary    – short english description (optional)
+  reasoning  – (optional) detailed explanation for insight events
+  sql        – (optional) SQL query for insight events
+  chart      – (optional) chart spec for insight events
 
 Do NOT wrap the JSON in markdown, return raw JSON only.
 """
@@ -81,7 +111,9 @@ Do NOT wrap the JSON in markdown, return raw JSON only.
 def create_next_step_chain(llm):
     prompt = PromptTemplate(
         template=template,
-        input_variables=["question", "why", "what", "notebook_blocks", "context", "table_info"],
+        input_variables=[
+            "question", "why", "what", "notebook_blocks", "context", "table_info", "data_schema"
+        ],
     )
     def log_and_run(inputs):
         print(f"[agent_debug][prompt_input] agent_next_step prompt input: {inputs}")

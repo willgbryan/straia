@@ -20,6 +20,11 @@ type ChatMessage =
   | {
       role: 'assistant' | 'user'
       content: string
+      summary?: string
+      reasoning?: string
+      sql?: string
+      chart?: any
+      details?: { reasoning?: string; sql?: string; chart?: any }
     }
   | {
       role: 'assistant_clarify'
@@ -115,13 +120,44 @@ export default function AgentSidebar({
       }
       if (ev.event === 'insight') {
         hasProgressRef.current = true
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: 'assistant',
-            content: ev.summary ?? 'Here are the insights I found.',
-          },
-        ])
+        // Streaming logic: stream the summary content
+        if (ev.summary) {
+          setIsStreaming(true)
+          setStreamingMessage('')
+          const fullText = ev.summary
+          const details = {
+            reasoning: ev.reasoning,
+            sql: ev.sql,
+            chart: ev.chart,
+          }
+          let idx = 0
+          const streamInterval = setInterval(() => {
+            setStreamingMessage(fullText.slice(0, idx + 1))
+            idx++
+            if (idx >= fullText.length) {
+              clearInterval(streamInterval)
+              setIsStreaming(false)
+              setMessages((prev) => [
+                ...prev,
+                {
+                  role: 'assistant',
+                  content: fullText,
+                  summary: fullText,
+                  details,
+                },
+              ])
+              setStreamingMessage(null)
+            }
+          }, 15) // 15ms per character for demo; adjust as needed
+        } else {
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: 'assistant',
+              content: 'Here are the insights I found.',
+            },
+          ])
+        }
       } else if (ev.event === 'execution_result') {
         const status: string = ev.status
         if (status === 'error') {
@@ -238,6 +274,22 @@ export default function AgentSidebar({
     }
   }, [activeClar?.term, question, status])
 
+  const [streamingMessage, setStreamingMessage] = useState<string | null>(null)
+  const [isStreaming, setIsStreaming] = useState(false)
+
+  // 2. Collapsed/expanded state for each message
+  const [expandedIdx, setExpandedIdx] = useState<number | null>(null)
+
+  // Ref for auto-scrolling chat
+  const chatContainerRef = useRef<HTMLDivElement | null>(null)
+
+  // Auto-scroll to bottom when messages or streamingMessage change
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+    }
+  }, [messages, streamingMessage])
+
   return (
     <Transition
       show={visible}
@@ -268,17 +320,52 @@ export default function AgentSidebar({
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-2 space-y-4 min-h-0">
+          <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-4 py-2 space-y-4 min-h-0">
             {messages.map((msg, idx) => {
               if (msg.role === 'assistant') {
+                const hasDetails = msg.details && (msg.details.reasoning || msg.details.sql || msg.details.chart)
+                const expanded = expandedIdx === idx
                 return (
                   <div key={idx} className="flex flex-col space-y-1">
                     <span className="text-xs text-gray-400 flex items-center gap-x-1">
                       Assistant
                     </span>
                     <div className="flex">
-                      <div className="bg-gray-100 text-gray-900 p-2 rounded-lg text-sm max-w-[85%]">
-                        {msg.content}
+                      <div className="bg-gray-100 text-gray-900 p-2 rounded-lg text-sm max-w-[85%] w-full">
+                        {/* Summary always visible */}
+                        <div>{msg.summary || msg.content}</div>
+                        {/* Toggle for details if present */}
+                        {hasDetails && (
+                          <button
+                            className="mt-2 text-xs text-indigo-600 underline hover:text-indigo-800 focus:outline-none"
+                            onClick={() => setExpandedIdx(expanded ? null : idx)}
+                          >
+                            {expanded ? 'Hide details' : 'Show details'}
+                          </button>
+                        )}
+                        {/* Details section */}
+                        {hasDetails && expanded && msg.details && (
+                          <div className="mt-2 space-y-2">
+                            {msg.details.reasoning && (
+                              <div>
+                                <div className="font-semibold text-xs text-gray-500 mb-1">Reasoning</div>
+                                <div className="bg-white border border-gray-200 rounded p-2 text-xs whitespace-pre-line">{msg.details.reasoning}</div>
+                              </div>
+                            )}
+                            {msg.details.sql && (
+                              <div>
+                                <div className="font-semibold text-xs text-gray-500 mb-1">SQL</div>
+                                <pre className="bg-gray-900 text-green-200 rounded p-2 text-xs overflow-x-auto"><code>{msg.details.sql}</code></pre>
+                              </div>
+                            )}
+                            {msg.details.chart && (
+                              <div>
+                                <div className="font-semibold text-xs text-gray-500 mb-1">Chart</div>
+                                <div className="bg-gray-50 border border-gray-200 rounded p-2 text-xs">[Chart output placeholder]</div>
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -338,7 +425,6 @@ export default function AgentSidebar({
                       <div className="flex">
                         <div className="bg-gray-100 p-2 rounded-lg text-sm max-w-[85%] space-y-2">
                           <p>{msg.question}</p>
-                          <div className="text-xs text-green-600 pt-1">Selected: {selected}</div>
                         </div>
                       </div>
                     </div>
@@ -360,6 +446,20 @@ export default function AgentSidebar({
               }
               return null
             })}
+            {/* Streaming/typing indicator and streaming message bubble */}
+            {isStreaming && streamingMessage !== null && (
+              <div className="flex flex-col space-y-1">
+                <span className="text-xs text-gray-400 flex items-center gap-x-1">
+                  Assistant
+                </span>
+                <div className="flex">
+                  <div className="bg-gray-100 text-gray-900 p-2 rounded-lg text-sm max-w-[85%]">
+                    {streamingMessage}
+                    <span className="inline-block animate-pulse ml-1 text-gray-400">...</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Unified input area at the bottom */}

@@ -409,6 +409,7 @@ export default function Layout({
               minWidth: `${Math.max(MIN_SIDEBAR_WIDTH, sideBarWidth)}px`,
               maxWidth: `${Math.min(MAX_SIDEBAR_WIDTH, sideBarWidth)}px`,
               transition: 'width 0.2s ease-in-out',
+              background: 'rgb(var(--tw-color-primary-light))',
             }}
           >
             <div className="flex items-center justify-between pt-0.5 pl-4 pr-5">
@@ -542,7 +543,7 @@ export default function Layout({
                 <li>
                   <a
                     href="#"
-                    className="text-gray-500 hover:bg-ceramic-100/80 group text-sm font-medium leading-6 w-full flex py-1 rounded-sm hover:text-ceramic-600"
+                    className="text-gray-500 hover:bg-[rgb(var(--tw-color-primary-100))] group text-sm font-medium leading-6 w-full flex py-1 rounded-sm hover:text-ceramic-600"
                   >
                     <div className="w-full flex items-center gap-x-2 px-4">
                       {user.picture ? (

@@ -50,6 +50,10 @@ class AgentSessionManager:
         # Execution context for python blocks – shared globals so subsequent
         # blocks can reference earlier variables just like a notebook.
         self._py_globals: Dict[str, any] = {}
+        # Derived DataFrame schemas from executed Python blocks
+        self._derived_schema: Dict[str, list] = {}
+        # Structured history of created notebook blocks for LLM context
+        self._notebook_blocks: list[dict] = []
     
     def _table_info_from_files(self, workspace_id: Optional[str]) -> str:
         """Fallback: synthesize SQL table info from CSV files for a workspace."""
@@ -181,6 +185,14 @@ class AgentSessionManager:
             os.chdir(cwd_backup)
             stdout_buf.close()
             stderr_buf.close()
+        # Update derived dataframe schemas for LLM context
+        try:
+            import pandas as _pd
+            for var_name, obj in self._py_globals.items():
+                if isinstance(obj, _pd.DataFrame):
+                    self._derived_schema[var_name] = list(obj.columns)
+        except Exception:
+            pass
         return result
 
     async def astream(self, request: StartAgentSessionRequest) -> AsyncGenerator[dict, None]:
@@ -252,10 +264,12 @@ class AgentSessionManager:
             # TODO: If you have a notebook_blocks summary, print it here
             # (This is handled on the frontend, but you can log the context here if available)
             # Invoke LLM for the next step using combined context
+            # Call next-step chain, include structured notebook_blocks history
             step = self._next_step_chain({
                 "question": request.question,
                 "why": "",
                 "what": "",
+                "notebook_blocks": self._notebook_blocks,
                 "context": full_ctx,
                 "table_info": table_info or "",
                 "data_schema": data_schema,
@@ -263,6 +277,22 @@ class AgentSessionManager:
 
             ev = step
             print(f"[agent_debug][llm_output] FSM step {step_idx}: next step: {ev}")
+            # Record structured block history for context
+            if ev.get("event") == "action" and ev.get("action") == "create_block":
+                bt = ev.get("blockType")
+                if bt == "python":
+                    first = ev.get("content", "").splitlines()[0] if ev.get("content") else ""
+                    self._notebook_blocks.append({"type": "python", "firstLine": first})
+                elif bt == "visualizationV2":
+                    inp = ev.get("input", {}) or {}
+                    self._notebook_blocks.append({
+                        "type": "visualizationV2",
+                        "chartType": inp.get("chartType"),
+                        "dataframe": inp.get("dataframeName"),
+                        "xAxis": inp.get("xAxis"),
+                        "yAxes": inp.get("yAxes"),
+                        "title": inp.get("title"),
+                    })
 
             if ev.get("event") == "done":
                 yield {"event": "session_completed", "message": "Agent session completed."}
@@ -422,14 +452,8 @@ class AgentSessionManager:
                 # can live with a numeric x-axis (e.g. Year) but if it is
                 # the exact same column as Y (Global_Sales) we still fix.
 
-                ALL_CHARTS_CHECK = [
-                    "bar",
-                    "groupedColumn",
-                    "stackedColumn",
-                    "line",
-                    "area",
-                    "scatter",
-                ]
+                # Disable auto-fix logic by setting empty chart check list
+                ALL_CHARTS_CHECK = []
 
                 if chart_type in ALL_CHARTS_CHECK:
                     # Helper: get columns for this dataframe
@@ -483,11 +507,20 @@ class AgentSessionManager:
                         "stackedColumn",
                     ]
 
-                    is_invalid = (
+                    # Basic validations common to all charts
+                    is_invalid_common = (
                         not x_axis or  # missing completely
                         (isinstance(x_axis, dict) and not x_axis.get("field")) or  # missing field key
-                        (y_first_col and isinstance(x_axis, dict) and x_axis.get("field") == y_first_col) or  # same as y
-                        (requires_categorical and is_numeric_axis)
+                        (
+                            y_first_col
+                            and isinstance(x_axis, dict)
+                            and x_axis.get("field") == y_first_col
+                        )  # identical to Y column
+                    )
+
+                    # Extra rule: categorical axis required
+                    is_invalid = is_invalid_common or (
+                        requires_categorical and is_numeric_axis
                     )
                     if is_invalid:
                         # Try to find a categorical column
@@ -607,6 +640,19 @@ class AgentSessionManager:
             #    build on previous insights.
             # ------------------------------------------------------------
             elif ev.get("event") == "insight":
+                # Always yield all available fields for insight events
+                insight_event = {
+                    "event": "insight",
+                    "summary": ev.get("summary"),
+                }
+                # Optionally include reasoning, sql, chart if present
+                if ev.get("reasoning") is not None:
+                    insight_event["reasoning"] = ev["reasoning"]
+                if ev.get("sql") is not None:
+                    insight_event["sql"] = ev["sql"]
+                if ev.get("chart") is not None:
+                    insight_event["chart"] = ev["chart"]
+                yield insight_event
                 context_lines.append(ev.get("summary", "insight"))
 
             # 3.  For non‑python blocks (e.g. markdown, sql, etc.) we still
@@ -692,7 +738,8 @@ class AgentSessionManager:
                 if os.path.exists(repo_jup):
                     base = repo_jup
                 else:
-                    return json.dumps({"files": []})
+                    # Return combined file and derived DataFrame schemas
+                    return json.dumps({"files": [], "derived": self._derived_schema})
 
         files = []
         for fname in os.listdir(base):
@@ -704,4 +751,5 @@ class AgentSessionManager:
                         files.append({"name": fname, "columns": headers})
                 except Exception:
                     continue
-        return json.dumps({"files": files})
+        # Return combined file and derived DataFrame schemas
+        return json.dumps({"files": files, "derived": self._derived_schema})
