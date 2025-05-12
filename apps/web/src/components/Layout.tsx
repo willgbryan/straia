@@ -414,11 +414,11 @@ export default function Layout({
           >
             <div className="flex items-center justify-between pt-0.5 pl-4 pr-5">
               <div className="font-trap tracking-tight text-2xl antialiased text-gray-800 flex items-center gap-x-1 scale-90">
-                <SparklesIcon className="h-4 w-4" />
-                <span className="leading-4 mt-1">briefer</span>
+                {/* <SparklesIcon className="h-4 w-4" /> */}
+                <span className="leading-4 mt-4">Straia</span>
               </div>
 
-              <div className="mt-2.5 scale-90 flex items-center">
+              {/* <div className="mt-2.5 scale-90 flex items-center">
                 <GitHubButton
                   href="https://github.com/briefercloud/briefer"
                   data-color-scheme="no-preference: light; light: light; dark: dark;"
@@ -428,7 +428,7 @@ export default function Layout({
                 >
                   Star
                 </GitHubButton>
-              </div>
+              </div> */}
             </div>
 
             <div className="flex-1 overflow-y-auto" ref={scrollRef}>
@@ -516,13 +516,13 @@ export default function Layout({
                 Configurations
               </div>
               <ul role="list">
-                <li>
+                {/* <li>
                   <ConfigurationsMenuButton
                     text="Upgrade Briefer"
                     icon={RocketLaunchIcon}
                     onClick={() => setUpgradeDialogOpen(true)}
                   />
-                </li>
+                </li> */}
                 {configs(workspaceId)
                   .filter(showConfigItem)
                   .map((item) => (

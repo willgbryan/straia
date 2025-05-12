@@ -250,29 +250,32 @@ export default function AgentSidebar({
   }, [chatInput, question, status, start])
 
   // Handle clarification answer (single-select, show selected state)
+  const [isThinking, setIsThinking] = useState(false)
   const answerClarification = useCallback(
     async (term: string, value: string) => {
-      // Prevent multiple answers for the same clarification
       if (answeredClarifications[term]) return
       setAnsweredClarifications((prev) => ({ ...prev, [term]: value }))
       setMessages((prev) => [...prev, { role: 'user', content: value }])
       await submitAnswer(term, value)
-      // Show next clarification if any
-      const next = clarQueueRef.current.shift()
-      if (next) {
-        setCurrentClar(next)
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: 'assistant_clarify',
-            term: next.term,
-            question: next.question,
-            options: next.options,
-          },
-        ])
-      } else {
-        setCurrentClar(undefined)
-      }
+      // Show thinking visual and wait 1.5s before next clarification
+      setIsThinking(true)
+      setCurrentClar(undefined)
+      setTimeout(() => {
+        setIsThinking(false)
+        const next = clarQueueRef.current.shift()
+        if (next) {
+          setCurrentClar(next)
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: 'assistant_clarify',
+              term: next.term,
+              question: next.question,
+              options: next.options,
+            },
+          ])
+        }
+      }, 1500)
     },
     [submitAnswer, answeredClarifications]
   )
@@ -361,6 +364,12 @@ export default function AgentSidebar({
 
           {/* Messages */}
           <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-4 py-2 space-y-4 min-h-0">
+            {isThinking && (
+              <div className="flex items-start gap-x-1 bg-gray-50 p-1.5 rounded-lg text-sm max-w-[85%] animate-pulse">
+                <SparklesIcon className="w-4 h-4 text-indigo-300 mr-1" />
+                <div className="font-semibold text-xs text-gray-500 mb-0.5">Assistant is thinking…</div>
+              </div>
+            )}
             {groupedTurns.map((turn, turnIdx) => (
               <div key={turnIdx} className="flex flex-col space-y-1 pb-2">
                 {/* User bubble */}
